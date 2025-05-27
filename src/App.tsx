@@ -43,7 +43,7 @@ function App() {
       <ProductList 
         products={featuredProducts}
         title="Ofertas destacadas" 
-        maxColumns={2}
+        maxColumns={4}
       />
       
       {/* All available products */}
