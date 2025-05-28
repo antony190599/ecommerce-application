@@ -181,7 +181,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   rating
 }) => {
     return (
-        <Card>
+        <Card data-product-id={id}>
             <ImageWrapper>
                 <img src={imageUrl} alt={name} />
                 <AddButton aria-label="Agregar al carrito">

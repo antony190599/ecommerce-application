@@ -286,7 +286,7 @@ const Navbar: React.FC = () => {
       <MainBar>
         <Logo>
           <a href="/">
-            <img src="/public/img/MONTCARE-LOGO-FINAL.jpg" alt="Antokit" />
+            <img src="/img/MONTCARE-LOGO-FINAL.jpg" alt="Antokit" />
           </a>
         </Logo>
         
