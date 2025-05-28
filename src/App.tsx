@@ -1,17 +1,18 @@
 import styled from 'styled-components'
 import ProductList from './components/ProductList'
 import { products } from './data/products'
+import Navbar from './components/Navbar'
 
 // Styled Components
 const AppContainer = styled.div`
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 `;
 
-const AppHeader = styled.header`
-  margin-bottom: var(--spacing-xl);
+const MainContent = styled.main`
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
 `;
 
 const Title = styled.h1`
@@ -34,24 +35,26 @@ function App() {
   
   return (
     <AppContainer>
-      <AppHeader>
+      <Navbar />
+      
+      <MainContent>
         <Title>Mi Tienda Online</Title>
         <Subtitle>Los mejores productos para tu oficina y hogar</Subtitle>
-      </AppHeader>
-      
-      {/* Featured products section */}
-      <ProductList 
-        products={featuredProducts}
-        title="Ofertas destacadas" 
-        maxColumns={4}
-      />
-      
-      {/* All available products */}
-      <ProductList 
-        products={availableProducts}
-        title="Catálogo de productos" 
-        maxColumns={4}
-      />
+        
+        {/* Featured products section */}
+        <ProductList 
+          products={featuredProducts}
+          title="Ofertas destacadas" 
+          maxColumns={4}
+        />
+        
+        {/* All available products */}
+        <ProductList 
+          products={availableProducts}
+          title="Catálogo de productos" 
+          maxColumns={4}
+        />
+      </MainContent>
     </AppContainer>
   )
 }
