@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from 'styled-components'
 import ProductList from '../../components/ProductList'
 import { products } from '../../data/products'
@@ -11,9 +12,9 @@ const HomeContainer = styled.div`
 `;
 
 const MainContent = styled.main`
-  max-width: 1280px;
+  // max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 0;
 `;
 
 const Title = styled.h1`
@@ -39,8 +40,8 @@ function Home() {
       <Navbar />
       
       <MainContent>
-        <Title>Mi Tienda Online</Title>
-        <Subtitle>Los mejores productos para tu oficina y hogar</Subtitle>
+        {/* <Title>Mi Tienda Online</Title>
+        <Subtitle>Los mejores productos para tu oficina y hogar</Subtitle> */}
         
         {/* Featured products section */}
         <ProductList 

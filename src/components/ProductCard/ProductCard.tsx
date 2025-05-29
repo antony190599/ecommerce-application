@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router';
 import { formatPrice } from '../../utils/formatPrice';
 import ProductTag from '../ProductTag';
 
@@ -89,6 +90,15 @@ const FavButton = styled.button`
 
 const Info = styled.div`
   padding: 16px;
+`;
+
+const ProductLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
 const Name = styled.h3`
@@ -183,7 +193,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
     return (
         <Card data-product-id={id}>
             <ImageWrapper>
-                <img src={imageUrl} alt={name} />
+                <ProductLink to={`/product/${id}`}>
+                  <img src={imageUrl} alt={name} />
+                </ProductLink>
                 <AddButton aria-label="Agregar al carrito">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24" className="sc-e283704c-0 iMxoOo"><path d="M20.75 10.75h-7.5v-7.5a1.25 1.25 0 00-2.5 0v7.5h-7.5a1.25 1.25 0 000 2.5h7.5v7.5a1.25 1.25 0 002.5 0v-7.5h7.5a1.25 1.25 0 000-2.5z"></path></svg>
                 </AddButton>
@@ -198,7 +210,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 </TagsContainer>
             </ImageWrapper>
             <Info>
-                <Name>{name}</Name>
+                <ProductLink to={`/product/${id}`}>
+                  <Name>{name}</Name>
+                </ProductLink>
                 <Unit>{unit}</Unit>
                 <Meta>{meta}</Meta>
                 
