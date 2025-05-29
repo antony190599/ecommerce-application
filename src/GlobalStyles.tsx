@@ -4,6 +4,9 @@ const GlobalStyles = createGlobalStyle`
   :root {
     /* Base colors */
     --color-primary: #4a69bd;
+    --color-primary-light: rgba(74, 105, 189, 0.1);
+    --color-primary-lighter: rgba(74, 105, 189, 0.05);
+    --color-primary-medium: rgba(74, 105, 189, 0.2);
     --color-secondary: #1e3799;
     --color-accent: #fa8231;
     --color-text: #2c3e50;
