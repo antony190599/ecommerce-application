@@ -1,21 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import AddQuantityButton from '../AddQuantityButton/AddQuantityButton';
+import AddQuantityButton from '../AddQuantityButton';
+import { CartItem } from '../../types/cart';
+import { Link } from 'react-router-dom';
 
-// Types
-interface CartItem {
-  id: string;
-  name: string;
-  imageUrl: string;
-  price: number;
-  quantity: number;
-  unit: string;
-  discount?: number;
-}
-
+// Types (ahora importados desde types/cart.ts)
 interface CartModalProps {
   items: CartItem[];
   onQuantityChange: (id: string, quantity: number) => void;
@@ -24,51 +16,52 @@ interface CartModalProps {
   onClose: () => void;
 }
 
-// Animations
-const overlayShow = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const contentSlide = keyframes`
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-`;
-
 // Styled Components
 const StyledOverlay = styled(Dialog.Overlay)`
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   inset: 0;
-  animation: ${overlayShow} 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 1000;
+  z-index: 100;
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 `;
 
 const StyledContent = styled(Dialog.Content)`
   background-color: white;
-  box-shadow: -10px 0 30px -15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.15);
   position: fixed;
   top: 0;
   right: 0;
-  width: 100%;
+  bottom: 0;
+  width: 90%;
   max-width: 450px;
   height: 100vh;
-  padding: 0;
+  z-index: 101;
   display: flex;
   flex-direction: column;
-  animation: ${contentSlide} 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 1001;
-
-  @media (max-width: 500px) {
-    max-width: 100%;
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  @media (max-width: 576px) {
+    width: 100%;
+    max-width: none;
+  }
+  
+  @keyframes contentShow {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes overlayShow {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
@@ -119,7 +112,6 @@ const ProductList = styled.ul`
 
 const ProductItem = styled.li`
   display: flex;
-  gap: 15px;
   padding: 15px 0;
   border-bottom: 1px solid var(--color-gray-200);
   position: relative;
@@ -130,29 +122,30 @@ const ProductImage = styled.img`
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
-  background-color: var(--color-primary-lighter, rgba(74, 105, 189, 0.02));
+  margin-right: 15px;
 `;
 
 const ProductInfo = styled.div`
   flex: 1;
+  min-width: 0;
 `;
 
-const ProductName = styled.h4`
+const ProductName = styled.h3`
+  margin: 0 0 5px;
   font-size: 1rem;
-  margin: 0 0 5px 0;
-  font-weight: var(--font-weight-medium);
   color: var(--color-text);
+  font-weight: var(--font-weight-medium);
 `;
 
-const ProductUnit = styled.span`
-  display: block;
+const ProductUnit = styled.p`
+  margin: 0 0 8px;
   font-size: 0.8rem;
   color: var(--color-text-light);
-  margin-bottom: 8px;
 `;
 
-const ProductPrice = styled.div`
-  font-size: 1rem;
+const ProductPrice = styled.p`
+  margin: 0 0 10px;
+  font-size: 0.9rem;
   font-weight: var(--font-weight-medium);
   color: var(--color-primary);
 `;
@@ -163,7 +156,6 @@ const ProductControls = styled.div`
   justify-content: space-between;
   margin-top: 10px;
 `;
-
 
 const DiscountTag = styled.div`
   position: absolute;
@@ -216,7 +208,7 @@ const TotalLabel = styled.span`
 `;
 
 const TotalAmount = styled.span`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
 `;
@@ -242,7 +234,7 @@ const ContinueShoppingButton = styled.button`
   }
 `;
 
-const CheckoutButton = styled.button`
+const ViewCartLink = styled(Link)`
   flex: 2;
   padding: 12px;
   border: none;
@@ -252,6 +244,8 @@ const CheckoutButton = styled.button`
   font-weight: var(--font-weight-bold);
   cursor: pointer;
   transition: background-color var(--transition-fast);
+  text-align: center;
+  text-decoration: none;
 
   &:hover {
     background-color: var(--color-secondary);
@@ -306,8 +300,9 @@ const CartModal: React.FC<CartModalProps> = ({
                       <ProductControls>
                         <AddQuantityButton
                           initialQuantity={item.quantity}
-                          onQuantityChange={(quantity) => onQuantityChange(item.id, quantity)}
-                          showZero={true} // Always show the quantity control
+                          onQuantityChange={(quantity: number) => onQuantityChange(item.id, quantity)}
+                          showZero={true}
+                          maxQuantity={item.stock}
                         />
                       </ProductControls>
                     </ProductInfo>
@@ -342,9 +337,9 @@ const CartModal: React.FC<CartModalProps> = ({
               Seguir Comprando
             </ContinueShoppingButton>
             {hasItems && (
-              <CheckoutButton onClick={onCheckout}>
-                Finalizar Compra
-              </CheckoutButton>
+              <ViewCartLink to="/cart" onClick={onClose}>
+                Ver Carrito
+              </ViewCartLink>
             )}
           </ActionButtons>
         </CartFooter>

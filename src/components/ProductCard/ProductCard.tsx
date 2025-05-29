@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { formatPrice } from '../../utils/formatPrice';
 import ProductTag from '../ProductTag';
 import AddQuantityButton from '../AddQuantityButton';
+import { useCart } from '../../context/CartContext';
 
 // Types
 export interface ProductCardProps {
@@ -175,13 +176,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
   stock = 0,
   rating
 }) => {
-    const [quantity, setQuantity] = useState(0);
+    const { addItem, getItem, updateQuantity } = useCart();
+    const [quantity, setQuantity] = useState(() => {
+      const cartItem = getItem(id);
+      return cartItem ? cartItem.quantity : 0;
+    });
     
     const handleQuantityChange = (newQuantity: number) => {
       setQuantity(newQuantity);
       
-      // Here you could add cart management logic
-      console.log(`Product ${id}: quantity changed to ${newQuantity}`);
+      const cartItem = getItem(id);
+      
+      if (cartItem) {
+        updateQuantity(id, newQuantity);
+      } else if (newQuantity > 0) {
+        addItem({
+          id,
+          name,
+          imageUrl,
+          price,
+          unit: unit || 'UNIDAD',
+          stock
+        }, newQuantity);
+      }
     };
     
     return (

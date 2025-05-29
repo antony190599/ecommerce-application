@@ -4,6 +4,7 @@ import Breadcrumb from '../Breadcrumb';
 import { formatPrice } from '../../utils/formatPrice';
 import { ProductCardProps } from '../ProductCard';
 import AddQuantityButton from '../AddQuantityButton/AddQuantityButton';
+import { useCart } from '../../context/CartContext';
 
 // Types
 export interface ProductDetailProps {
@@ -372,9 +373,27 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
     { label: product.name }
   ];
   
+  const { addItem, getItem, updateQuantity } = useCart();
   
   const handleQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);
+    
+    if (product) {
+      const cartItem = getItem(product.id);
+      
+      if (cartItem) {
+        updateQuantity(product.id, newQuantity);
+      } else if (newQuantity > 0) {
+        addItem({
+          id: product.id,
+          name: product.name,
+          imageUrl: product.imageUrl,
+          price: product.price,
+          unit: product.unit || 'UNIDAD',
+          stock: product.stock
+        }, newQuantity);
+      }
+    }
   };
 
   return (

@@ -21,7 +21,7 @@ const ListTitle = styled.h2`
   margin-bottom: var(--spacing-lg);
 `;
 
-const Grid = styled.div<{ maxColumns: number }>`
+const Grid = styled.div<{ $maxColumns: number }>`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: var(--spacing-md);
@@ -31,11 +31,11 @@ const Grid = styled.div<{ maxColumns: number }>`
   }
   
   @media (min-width: 768px) {
-    grid-template-columns: repeat(${props => Math.min(3, props.maxColumns)}, 1fr);
+    grid-template-columns: repeat(${props => Math.min(3, props.$maxColumns)}, 1fr);
   }
   
   @media (min-width: 992px) {
-    grid-template-columns: repeat(${props => props.maxColumns}, 1fr);
+    grid-template-columns: repeat(${props => props.$maxColumns}, 1fr);
   }
 `;
 
@@ -64,7 +64,7 @@ const ProductList: React.FC<ProductListProps> = ({
   return (
     <ListContainer>
       {title && <ListTitle>{title}</ListTitle>}
-      <Grid maxColumns={maxColumns}>
+      <Grid $maxColumns={maxColumns}>
         {products.map(product => (
           <ProductCard
             key={product.id}
