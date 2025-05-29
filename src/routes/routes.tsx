@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { default as Home} from "../screens/home";
 import { default as ProductScreen} from "../screens/product";
 import { default as NotFound } from "../screens/notFound";
+import { default as AddQuantityButtonDemo } from "../screens/demo/AddQuantityButtonDemo";
 
 export const router = createBrowserRouter([
     {
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
     {
       path: "/product/:productId",
       element: <ProductScreen />,
+    },
+    {
+      path: "/demo/add-quantity-button",
+      element: <AddQuantityButtonDemo />,
     },
     {
       path: "*",
