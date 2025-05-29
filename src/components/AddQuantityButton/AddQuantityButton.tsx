@@ -7,6 +7,7 @@ interface AddQuantityButtonProps {
   initialQuantity?: number;
   maxQuantity?: number;
   disabled?: boolean;
+  showZero?: boolean; // New prop to control visibility of zero quantity
 }
 
 // Animations
@@ -142,7 +143,8 @@ const AddQuantityButton: React.FC<AddQuantityButtonProps> = ({
   onQuantityChange,
   initialQuantity = 0,
   maxQuantity = Infinity,
-  disabled = false
+  disabled = false,
+  showZero = false // Default to false to maintain backward compatibility
 }) => {
   const [quantity, setQuantity] = useState(initialQuantity);
   
@@ -168,10 +170,11 @@ const AddQuantityButton: React.FC<AddQuantityButtonProps> = ({
     onQuantityChange?.(newQuantity);
   };
   
-  // Render the Add button if quantity is 0, otherwise render the quantity selector
+  // Render the Add button if quantity is 0 and showZero is false,
+  // otherwise render the quantity selector
   return (
     <ButtonContainer>
-      {quantity === 0 ? (
+      {quantity === 0 && !showZero ? (
         <AddButton onClick={handleAddClick} disabled={disabled}>
           <PlusIcon />
         </AddButton>
@@ -180,6 +183,7 @@ const AddQuantityButton: React.FC<AddQuantityButtonProps> = ({
           <ControlButton 
             onClick={handleDecrease}
             isRemove={true}
+            disabled={quantity <= 0} // Disable the button when quantity is 0 or less
             aria-label="Disminuir cantidad"
           >
             {quantity === 1 ? <TrashIcon /> : <MinusIcon />}

@@ -12,7 +12,7 @@ const sampleCartItems = [
     price: 35.90,
     quantity: 1,
     unit: 'UNIDAD',
-    discount: 10
+    // discount: 10
   },
   {
     id: '2',
@@ -85,6 +85,7 @@ const CartButton: React.FC = () => {
       prevItems.map(item => 
         item.id === id ? { ...item, quantity } : item
       )
+      .filter(item => item.quantity > 0)
     );
   };
 

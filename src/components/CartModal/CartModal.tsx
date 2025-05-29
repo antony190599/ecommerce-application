@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
-import { Cross2Icon, TrashIcon, MinusIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Cross2Icon } from '@radix-ui/react-icons';
+import AddQuantityButton from '../AddQuantityButton/AddQuantityButton';
 
 // Types
 interface CartItem {
@@ -162,56 +164,6 @@ const ProductControls = styled.div`
   margin-top: 10px;
 `;
 
-const QuantityControls = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const QuantityButton = styled.button`
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-primary-light, rgba(74, 105, 189, 0.1));
-  color: var(--color-primary);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color var(--transition-fast);
-
-  &:hover {
-    background-color: var(--color-primary-medium, rgba(74, 105, 189, 0.2));
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-`;
-
-const QuantityDisplay = styled.span`
-  font-size: 0.9rem;
-  min-width: 20px;
-  text-align: center;
-`;
-
-const RemoveButton = styled.button`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--color-primary);
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  transition: background-color var(--transition-fast);
-
-  &:hover {
-    background-color: var(--color-primary-light, rgba(74, 105, 189, 0.1));
-  }
-`;
 
 const DiscountTag = styled.div`
   position: absolute;
@@ -352,23 +304,11 @@ const CartModal: React.FC<CartModalProps> = ({
                       <ProductUnit>{item.unit}</ProductUnit>
                       <ProductPrice>{formatCurrency(item.price)}</ProductPrice>
                       <ProductControls>
-                        <QuantityControls>
-                          <QuantityButton 
-                            onClick={() => onQuantityChange(item.id, item.quantity - 1)}
-                            disabled={item.quantity <= 1}
-                          >
-                            <MinusIcon width={14} height={14} />
-                          </QuantityButton>
-                          <QuantityDisplay>{item.quantity}</QuantityDisplay>
-                          <QuantityButton 
-                            onClick={() => onQuantityChange(item.id, item.quantity + 1)}
-                          >
-                            <PlusIcon width={14} height={14} />
-                          </QuantityButton>
-                        </QuantityControls>
-                        <RemoveButton onClick={() => onRemove(item.id)}>
-                          <TrashIcon width={16} height={16} />
-                        </RemoveButton>
+                        <AddQuantityButton
+                          initialQuantity={item.quantity}
+                          onQuantityChange={(quantity) => onQuantityChange(item.id, quantity)}
+                          showZero={true} // Always show the quantity control
+                        />
                       </ProductControls>
                     </ProductInfo>
                     <ItemTotal>{formatCurrency(item.price * item.quantity)}</ItemTotal>
