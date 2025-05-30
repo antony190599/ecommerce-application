@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useCart } from '../../context/CartContext';
 import AddQuantityButton from '../../components/AddQuantityButton';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Navbar from '../../components/Navbar';
 
 const CartContainer = styled.div`

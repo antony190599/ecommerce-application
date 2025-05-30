@@ -1,0 +1,277 @@
+import React, { useState, useRef, useEffect, ReactNode } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router';
+
+// Types
+interface Subcategory {
+  id: string;
+  name: string;
+  path?: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  icon?: ReactNode;
+  subcategories: Subcategory[];
+  path?: string;
+}
+
+interface CategoriesMenuProps {
+  categories: Category[];
+}
+
+// Styled Components
+const MenuContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const MenuButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-secondary);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  &[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+  }
+`;
+
+const MenuPanel = styled.div<{ isOpen: boolean }>`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  display: ${props => props.isOpen ? 'flex' : 'none'};
+  width: 700px;
+  max-width: 90vw;
+  background-color: var(--color-surface, white);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+
+const CategoriesList = styled.ul`
+  flex: 0 0 250px;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  max-height: 500px;
+  overflow-y: auto;
+`;
+
+const CategoryItem = styled.li<{ isActive: boolean }>`
+  padding: 0;
+  margin: 0;
+
+  a, button {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    width: 100%;
+    text-decoration: none;
+    border: none;
+    background-color: ${props => props.isActive ? 'var(--color-hover-surface, #f5f5f5)' : 'transparent'};
+    color: ${props => props.isActive ? 'var(--color-primary-text, #333)' : 'var(--color-text, #333)'};
+    font-weight: ${props => props.isActive ? 'var(--font-weight-medium)' : 'normal'};
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: var(--color-hover-surface, #f5f5f5);
+      color: var(--color-primary-text, #333);
+    }
+  }
+
+  .icon {
+    margin-right: 12px;
+    color: ${props => props.isActive ? 'var(--color-primary)' : 'var(--color-text-light)'};
+  }
+`;
+
+const SubcategoryPanel = styled.div`
+  flex: 1;
+  padding: 24px;
+  background-color: var(--color-surface, white);
+`;
+
+const SubcategoryTitle = styled.h3`
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+`;
+
+const SubcategoriesList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`;
+
+const SubcategoryItem = styled.li`
+  a {
+    display: block;
+    padding: 8px 0;
+    color: var(--color-muted-text, #666);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+  }
+`;
+
+// SVG icons
+const MenuIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+  </svg>
+);
+
+const ArrowDownIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M7 10l5 5 5-5H7z" />
+  </svg>
+);
+
+const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [isClickActivated, setIsClickActivated] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  
+  // Set the first category as active by default when menu opens
+  useEffect(() => {
+    if (isOpen && !activeCategory && categories.length > 0) {
+      setActiveCategory(categories[0].id);
+    }
+  }, [isOpen, activeCategory, categories]);
+
+  // Handle click outside to close the menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+        setIsClickActivated(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleButtonClick = () => {
+    setIsOpen(!isOpen);
+    setIsClickActivated(!isOpen);
+  };
+
+  const handleMouseEnter = () => {
+    if (!isClickActivated) {
+      setIsOpen(true);
+    }
+  };
+
+  const handleCategoryMouseEnter = (categoryId: string) => {
+    if (!isClickActivated) {
+      setActiveCategory(categoryId);
+    }
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategory(categoryId);
+    setIsClickActivated(true);
+    // Don't close the menu when clicking on a category
+    // This keeps the menu open while allowing category navigation
+  };
+
+  const activeSubcategories = categories.find(cat => cat.id === activeCategory)?.subcategories || [];
+  const activeCategoryName = categories.find(cat => cat.id === activeCategory)?.name || '';
+
+  return (
+    <MenuContainer ref={menuRef} onMouseEnter={handleMouseEnter}>
+      <MenuButton 
+        onClick={handleButtonClick}
+        aria-haspopup="true"
+        aria-expanded={isOpen}
+      >
+        <MenuIcon />
+        Categorías
+        <ArrowDownIcon />
+      </MenuButton>
+
+      <MenuPanel isOpen={isOpen} role="menu" aria-label="Categorías de productos">
+        <CategoriesList>
+          {categories.map((category) => (
+            <CategoryItem 
+              key={category.id} 
+              isActive={category.id === activeCategory}
+              onMouseEnter={() => handleCategoryMouseEnter(category.id)}
+              role="menuitem"
+            >
+              {category.path ? (
+                <Link to={category.path}>
+                  {category.icon && <span className="icon">{category.icon}</span>}
+                  {category.name}
+                </Link>
+              ) : (
+                <button onClick={() => handleCategoryClick(category.id)}>
+                  {category.icon && <span className="icon">{category.icon}</span>}
+                  {category.name}
+                </button>
+              )}
+            </CategoryItem>
+          ))}
+        </CategoriesList>
+
+        <SubcategoryPanel role="menu" aria-label={`Subcategorías de ${activeCategoryName}`}>
+          <SubcategoryTitle>{activeCategoryName}</SubcategoryTitle>
+          <SubcategoriesList>
+            {activeSubcategories.map((subcategory) => (
+              <SubcategoryItem key={subcategory.id} role="menuitem">
+                <Link to={subcategory.path || `/categoria/${activeCategory}/${subcategory.id}`}>
+                  {subcategory.name}
+                </Link>
+              </SubcategoryItem>
+            ))}
+          </SubcategoriesList>
+        </SubcategoryPanel>
+      </MenuPanel>
+    </MenuContainer>
+  );
+};
+
+export default CategoriesMenu;
