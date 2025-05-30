@@ -19,6 +19,7 @@ interface Category {
 
 interface CategoriesMenuProps {
   categories: Category[];
+  label?: string; // Optional label for the menu button
 }
 
 // Styled Components
@@ -35,7 +36,7 @@ const MenuButton = styled.button`
   background-color: var(--color-primary);
   color: white;
   border: none;
-  border-radius: var(--border-radius-sm);
+  //border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-weight: var(--font-weight-medium);
   transition: background-color 0.2s ease;
@@ -154,19 +155,14 @@ const SubcategoryItem = styled.li`
 `;
 
 // SVG icons
-const MenuIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-  </svg>
-);
 
 const ArrowDownIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M7 10l5 5 5-5H7z" />
+  <svg viewBox="0 0 24 24" fill="#FFF">
+    <path d="M5.666 7a1.661 1.661 0 011.179.488l4.939 4.798 4.926-4.798a1.667 1.667 0 012.357 2.357L11.783 17 4.489 9.845A1.667 1.667 0 015.666 7z"></path>
   </svg>
 );
 
-const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories }) => {
+const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isClickActivated, setIsClickActivated] = useState(false);
@@ -228,8 +224,7 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories }) => {
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <MenuIcon />
-        Categorías
+        {label || 'Categorías'}
         <ArrowDownIcon />
       </MenuButton>
 
