@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import CartButton from '../CartButton';
 
@@ -161,14 +161,22 @@ const NavLinks = styled.nav`
   background-color: var(--color-white);
   border-top: 1px solid var(--color-gray-200);
   border-bottom: 1px solid var(--color-gray-200);
+  position: relative;
+  overflow: hidden;
 `;
 
 const CategoryList = styled.ul`
   display: flex;
   list-style: none;
-  padding: 0;
+  padding: 0 40px; /* Space for navigation arrows */
   margin: 0;
-  overflow-x: auto;
+  overflow-x: scroll;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+  }
   
   @media (max-width: 768px) {
     flex-wrap: nowrap;
@@ -219,14 +227,91 @@ const CoverageButton = styled.a`
   }
 `;
 
+const NavArrowButton = styled.button<{ direction: 'left' | 'right' }>`
+  position: absolute;
+  top: 0;
+  ${({ direction }) => direction === 'left' ? 'left: 0;' : 'right: 0;'}
+  height: 100%;
+  width: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  color: var(--color-primary);
+  box-shadow: ${({ direction }) => 
+    direction === 'left' ? '2px 0 5px rgba(0,0,0,0.1)' : '-2px 0 5px rgba(0,0,0,0.1)'};
+  
+  &:hover {
+    color: var(--color-secondary);
+    background-color: rgba(255, 255, 255, 1);
+  }
+  
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+`;
+
 const Navbar: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const categoryListRef = useRef<HTMLUListElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
   
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Implement search functionality here
     console.log('Search for:', searchQuery);
   };
+  
+  const scrollCategories = (direction: 'left' | 'right') => {
+    if (categoryListRef.current) {
+      const scrollAmount = 300; // Adjust this value as needed
+      const newScrollPosition = direction === 'left' 
+        ? categoryListRef.current.scrollLeft - scrollAmount 
+        : categoryListRef.current.scrollLeft + scrollAmount;
+        
+      categoryListRef.current.scrollTo({
+        left: newScrollPosition,
+        behavior: 'smooth'
+      });
+      
+      // Check scroll position after animation
+      setTimeout(() => checkScrollPosition(), 300);
+    }
+  };
+  
+  const checkScrollPosition = () => {
+    if (categoryListRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = categoryListRef.current;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5); // Small buffer for rounding errors
+    }
+  };
+  
+  // Add scroll event listener to update arrow visibility
+  React.useEffect(() => {
+    const listElement = categoryListRef.current;
+    if (listElement) {
+      listElement.addEventListener('scroll', checkScrollPosition);
+      // Check initial state
+      checkScrollPosition();
+    }
+    
+    return () => {
+      if (listElement) {
+        listElement.removeEventListener('scroll', checkScrollPosition);
+      }
+    };
+  }, []);
   
   return (
     <NavbarContainer>
@@ -311,23 +396,83 @@ const Navbar: React.FC = () => {
       
       {/* Category links */}
       <NavLinks>
-        <CategoryList>
+        {showLeftArrow && (
+          <NavArrowButton 
+            direction="left" 
+            onClick={() => scrollCategories('left')}
+            aria-label="Scroll categories left"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+            </svg>
+          </NavArrowButton>
+        )}
+        
+        <CategoryList ref={categoryListRef}>
           <CategoryItem>
             <CategoryLink href="/categorias">Todas las categorías</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/accesorios-escritorio">Accesorios de Escritorio</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/papeleria">Papelería</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/escritura-caligrafia">Escritura y Caligrafía</CategoryLink>
           </CategoryItem>
           <CategoryItem>
             <CategoryLink href="/arte">Arte</CategoryLink>
           </CategoryItem>
           <CategoryItem>
-            <CategoryLink href="/cuadernos-y-blocks">Cuadernos y Blocks</CategoryLink>
+            <CategoryLink href="/archivo-organizacion">Archivo y Organización</CategoryLink>
           </CategoryItem>
           <CategoryItem>
-            <CategoryLink href="/higiene-y-limpieza">Higiene y Limpieza</CategoryLink>
+            <CategoryLink href="/cuadernos-blocks">Cuadernos y Blocks</CategoryLink>
           </CategoryItem>
           <CategoryItem>
-            <CategoryLink href="/mochilas-y-loncheras">Mochilas y Loncheras</CategoryLink>
+            <CategoryLink href="/agendas-otros">Agendas y Otros</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/cuadernos-anillados-empastados">Cuadernos Anillados y Empastados</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/cintas-pegamentos">Cintas y Pegamentos</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/materiales-didacticos">Materiales Didácticos y Educativos</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/computadoras-accesorios">Computadoras y Accesorios</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/higiene-limpieza">Higiene y Limpieza</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/manualidades">Manualidades</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/mochilas-loncheras">Mochilas y Loncheras</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/muebles-espacios-trabajo">Muebles y Espacios de Trabajo</CategoryLink>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryLink href="/blocks">Blocks</CategoryLink>
           </CategoryItem>
         </CategoryList>
+        
+        {showRightArrow && (
+          <NavArrowButton 
+            direction="right" 
+            onClick={() => scrollCategories('right')}
+            aria-label="Scroll categories right"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+            </svg>
+          </NavArrowButton>
+        )}
       </NavLinks>
     </NavbarContainer>
   );
