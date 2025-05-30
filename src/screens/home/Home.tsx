@@ -17,17 +17,6 @@ const MainContent = styled.main`
   padding: 0 0;
 `;
 
-const Title = styled.h1`
-  font-size: 2.5rem;
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-sm);
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.1rem;
-  color: var(--color-text-light);
-`;
-
 function Home() {
   // Get featured products (those that are on sale)
   const featuredProducts = products.filter(product => Boolean(product.isOnSale));
