@@ -27,7 +27,7 @@ const BannerCarousel = ({
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const totalSlides = images.length;
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const goToNext = useCallback(() => {
     setCurrent((prevCurrent) => (prevCurrent === totalSlides - 1 ? 0 : prevCurrent + 1));
