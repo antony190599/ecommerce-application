@@ -169,6 +169,7 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label, show
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isClickActivated, setIsClickActivated] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const closeTimeoutRef = useRef<number | null>(null);
   
   // Set the first category as active by default when menu opens
   useEffect(() => {
@@ -192,15 +193,40 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label, show
     };
   }, []);
 
+  // Clear any pending timeouts when component unmounts
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current !== null) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleButtonClick = () => {
     // setIsOpen(!isOpen);
     // setIsClickActivated(!isOpen);
   };
 
   const handleMouseEnter = () => {
+    // Clear any pending close timeouts
+    if (closeTimeoutRef.current !== null) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    
     if (!isClickActivated) {
       setIsOpen(true);
     }
+  };
+  
+  const handleMouseLeave = () => {
+    // Set a small timeout to prevent the menu from closing immediately
+    // This gives users a small grace period to move the cursor back to the menu
+    closeTimeoutRef.current = window.setTimeout(() => {
+      if (!isClickActivated) {
+        setIsOpen(false);
+      }
+    }, 150); // 150ms delay before closing
   };
 
   const handleCategoryMouseEnter = (categoryId: string) => {
@@ -220,7 +246,11 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label, show
   const activeCategoryName = categories.find(cat => cat.id === activeCategory)?.name || '';
 
   return (
-    <MenuContainer ref={menuRef} onMouseEnter={handleMouseEnter}>
+    <MenuContainer 
+      ref={menuRef} 
+      onMouseEnter={handleMouseEnter} 
+      onMouseLeave={handleMouseLeave}
+    >
       <MenuButton 
         onClick={handleButtonClick}
         aria-haspopup="true"
