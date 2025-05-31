@@ -35,6 +35,7 @@ const MenuButton = styled.span`
   gap: 8px;
   color: var(--color-text);
   padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-surface, white);
   border: none;
   cursor: pointer;
   white-space: nowrap;
@@ -61,13 +62,13 @@ const MenuPanel = styled.div<{ isOpen: boolean }>`
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 4px;
+  margin-top: 1px;
   display: ${props => props.isOpen ? 'flex' : 'none'};
   width: 700px;
   max-width: 90vw;
   background-color: var(--color-surface, white);
-  border-radius: var(--border-radius-md);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  // border-radius: var(--border-radius-sm);
+  // box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   overflow: hidden;
   animation: fadeIn 0.2s ease;
@@ -192,8 +193,8 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label, show
   }, []);
 
   const handleButtonClick = () => {
-    setIsOpen(!isOpen);
-    setIsClickActivated(!isOpen);
+    // setIsOpen(!isOpen);
+    // setIsClickActivated(!isOpen);
   };
 
   const handleMouseEnter = () => {

@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import CartButton from '../CartButton';
+import CategoriesMenu from '../CategoriesMenu';
+import categories from '../../data/categories';
 
 const NavbarContainer = styled.header`
   background-color: var(--color-primary);
@@ -159,8 +161,8 @@ const IconLink = styled.a`
 
 const NavLinks = styled.nav`
   background-color: var(--color-white);
-  border-top: 1px solid var(--color-gray-200);
-  border-bottom: 1px solid var(--color-gray-200);
+  // border-top: 1px solid var(--color-gray-200);
+  // border-bottom: 1px solid var(--color-gray-200);
   position: relative;
   overflow: hidden;
 `;
@@ -258,6 +260,15 @@ const NavArrowButton = styled.button<{ direction: 'left' | 'right' }>`
     opacity: 0.4;
     cursor: not-allowed;
   }
+`;
+
+const CategoryBar = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid var(--color-gray-200);
 `;
 
 const Navbar: React.FC = () => {
@@ -395,85 +406,90 @@ const Navbar: React.FC = () => {
       </MainBar>
       
       {/* Category links */}
-      <NavLinks>
-        {showLeftArrow && (
-          <NavArrowButton 
-            direction="left" 
-            onClick={() => scrollCategories('left')}
-            aria-label="Scroll categories left"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
-            </svg>
-          </NavArrowButton>
-        )}
-        
-        <CategoryList ref={categoryListRef}>
-          <CategoryItem>
-            <CategoryLink href="/categorias">Todas las categorías</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/accesorios-escritorio">Accesorios de Escritorio</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/papeleria">Papelería</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/escritura-caligrafia">Escritura y Caligrafía</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/arte">Arte</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/archivo-organizacion">Archivo y Organización</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/cuadernos-blocks">Cuadernos y Blocks</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/agendas-otros">Agendas y Otros</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/cuadernos-anillados-empastados">Cuadernos Anillados y Empastados</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/cintas-pegamentos">Cintas y Pegamentos</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/materiales-didacticos">Materiales Didácticos y Educativos</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/computadoras-accesorios">Computadoras y Accesorios</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/higiene-limpieza">Higiene y Limpieza</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/manualidades">Manualidades</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/mochilas-loncheras">Mochilas y Loncheras</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/muebles-espacios-trabajo">Muebles y Espacios de Trabajo</CategoryLink>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryLink href="/blocks">Blocks</CategoryLink>
-          </CategoryItem>
-        </CategoryList>
-        
-        {showRightArrow && (
-          <NavArrowButton 
-            direction="right" 
-            onClick={() => scrollCategories('right')}
-            aria-label="Scroll categories right"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-            </svg>
-          </NavArrowButton>
-        )}
-      </NavLinks>
+      <CategoryBar>
+        <CategoriesMenu label="Categorías" showArrowIcon={true} categories={categories}/>
+        <NavLinks>
+          {showLeftArrow && (
+            <NavArrowButton 
+              direction="left" 
+              onClick={() => scrollCategories('left')}
+              aria-label="Scroll categories left"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+              </svg>
+            </NavArrowButton>
+          )}
+          
+          <CategoryList ref={categoryListRef}>
+            <CategoryItem>
+              <CategoryLink href="/categorias">Todas las categorías</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/accesorios-escritorio">Accesorios de Escritorio</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/papeleria">Papelería</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/escritura-caligrafia">Escritura y Caligrafía</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/arte">Arte</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/archivo-organizacion">Archivo y Organización</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/cuadernos-blocks">Cuadernos y Blocks</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/agendas-otros">Agendas y Otros</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/cuadernos-anillados-empastados">Cuadernos Anillados y Empastados</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/cintas-pegamentos">Cintas y Pegamentos</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/materiales-didacticos">Materiales Didácticos y Educativos</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/computadoras-accesorios">Computadoras y Accesorios</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/higiene-limpieza">Higiene y Limpieza</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/manualidades">Manualidades</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/mochilas-loncheras">Mochilas y Loncheras</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/muebles-espacios-trabajo">Muebles y Espacios de Trabajo</CategoryLink>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryLink href="/blocks">Blocks</CategoryLink>
+            </CategoryItem>
+          </CategoryList>
+          
+          {showRightArrow && (
+            <NavArrowButton 
+              direction="right" 
+              onClick={() => scrollCategories('right')}
+              aria-label="Scroll categories right"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+              </svg>
+            </NavArrowButton>
+          )}
+        </NavLinks>
+
+      </CategoryBar>
+      
     </NavbarContainer>
   );
 };
