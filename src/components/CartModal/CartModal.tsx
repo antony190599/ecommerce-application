@@ -5,7 +5,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import AddQuantityButton from '../AddQuantityButton';
 import { CartItem } from '../../types/cart';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 // Types (ahora importados desde types/cart.ts)
 interface CartModalProps {
