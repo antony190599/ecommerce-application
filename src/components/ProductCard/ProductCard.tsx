@@ -37,11 +37,18 @@ const Card = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
+  width: 100%;
+  padding-top: 100%; // Creates a 1:1 aspect ratio box
+  overflow: hidden;
   
   img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    display: block;
+    height: 100%;
+    object-fit: contain; // Ensures image fits within container without distortion
+    background-color: var(--color-white);
   }
 `;
 
