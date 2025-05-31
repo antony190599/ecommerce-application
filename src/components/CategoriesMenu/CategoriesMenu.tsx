@@ -20,6 +20,7 @@ interface Category {
 interface CategoriesMenuProps {
   categories: Category[];
   label?: string; // Optional label for the menu button
+  showArrowIcon?: boolean; // Optional prop to show/hide the arrow icon
 }
 
 // Styled Components
@@ -28,21 +29,21 @@ const MenuContainer = styled.div`
   display: inline-block;
 `;
 
-const MenuButton = styled.button`
+const MenuButton = styled.span`
   display: flex;
   align-items: center;
   gap: 8px;
+  color: var(--color-text);
   padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--color-primary);
-  color: white;
   border: none;
-  //border-radius: var(--border-radius-sm);
   cursor: pointer;
-  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  font-weight: var(--font-weight-regular);
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--color-gray-100);
+    color: var(--color-primary);
   }
 
   svg {
@@ -157,12 +158,12 @@ const SubcategoryItem = styled.li`
 // SVG icons
 
 const ArrowDownIcon = () => (
-  <svg viewBox="0 0 24 24" fill="#FFF">
+  <svg viewBox="0 0 24 24" fill="var(--color-text)">
     <path d="M5.666 7a1.661 1.661 0 011.179.488l4.939 4.798 4.926-4.798a1.667 1.667 0 012.357 2.357L11.783 17 4.489 9.845A1.667 1.667 0 015.666 7z"></path>
   </svg>
 );
 
-const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label }) => {
+const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label, showArrowIcon = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isClickActivated, setIsClickActivated] = useState(false);
@@ -225,7 +226,9 @@ const CategoriesMenu: React.FC<CategoriesMenuProps> = ({ categories, label }) =>
         aria-expanded={isOpen}
       >
         {label || 'Categorías'}
-        <ArrowDownIcon />
+        {
+          showArrowIcon && <ArrowDownIcon />
+        }
       </MenuButton>
 
       <MenuPanel isOpen={isOpen} role="menu" aria-label="Categorías de productos">
