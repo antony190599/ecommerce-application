@@ -13,14 +13,9 @@ export const CarouselWrapper = styled.div`
   position: relative;
   width: 100%;
   padding-top: 25%; /* 4:1 aspect ratio */
-  border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow);
   overflow: hidden;
   
-  &:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
   
   @media (max-width: var(--breakpoint-sm)) {
     padding-top: 0;

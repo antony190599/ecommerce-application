@@ -46,17 +46,17 @@ function Home() {
         <Subtitle>Los mejores productos para tu oficina y hogar</Subtitle> */}
         
         {/* Featured products section */}
-        <ProductList 
+        {/* <ProductList 
           products={featuredProducts}
           title="Ofertas destacadas" 
           maxColumns={4}
-        />
+        /> */}
         
         {/* All available products */}
         <ProductList 
           products={availableProducts}
           title="Catálogo de productos" 
-          maxColumns={4}
+          maxColumns={5}
         />
       </MainContent>
     </HomeContainer>
