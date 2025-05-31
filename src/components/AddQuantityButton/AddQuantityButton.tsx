@@ -68,8 +68,8 @@ const QuantitySelectorContainer = styled.div`
   width: 176px;
   height: 52px;
   border-radius: 28px;
-  background-color: var(--color-primary-light);
-  padding: 0 var(--spacing-xs);
+  background-color: ${({ theme }) => theme.colors.primaryLight};
+  padding: 0 ${({ theme }) => theme.spacing.xs};
   animation: ${expandAnimation} 0.3s ease;
 `;
 
@@ -82,20 +82,20 @@ const ControlButton = styled.button<{ isRemove?: boolean }>`
   align-items: center;
   justify-content: center;
   background-color: ${props => props.isRemove 
-    ? 'var(--color-white)' 
-    : 'var(--color-primary)'
+    ? props.theme.colors.white
+    : props.theme.colors.primary
   };
   color: ${props => props.isRemove 
-    ? 'var(--color-primary)' 
-    : 'var(--color-white)'
+    ? props.theme.colors.primary
+    : props.theme.colors.white
   };
   cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color ${({ theme }) => theme.transitions.fast}, transform ${({ theme }) => theme.transitions.fast};
   
   &:hover {
     background-color: ${props => props.isRemove 
-      ? 'var(--color-gray-100)' 
-      : 'var(--color-secondary)'
+      ? props.theme.colors.gray100
+      : props.theme.colors.secondary
     };
     transform: scale(1.05);
   }

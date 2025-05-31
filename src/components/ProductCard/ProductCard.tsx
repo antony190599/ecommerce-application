@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router';
@@ -23,11 +22,11 @@ export interface ProductCardProps {
 
 // Styled Components
 const Card = styled.div`
-  background: var(--color-white);
+  background: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform var(--transition-fast);
+  transition: transform ${({ theme }) => theme.transitions.fast};
   
   &:hover {
     transform: translateY(-4px);
@@ -48,7 +47,7 @@ const ImageWrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: contain; // Ensures image fits within container without distortion
-    background-color: var(--color-white);
+    background-color: ${({ theme }) => theme.colors.white};
   }
 `;
 
@@ -73,7 +72,7 @@ const FavButton = styled.button`
   justify-content: center;
   font-size: 18px;
   cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color ${({ theme }) => theme.transitions.fast}, transform ${({ theme }) => theme.transitions.fast};
   
   &:hover {
     background: #FAFAFA;
@@ -138,13 +137,13 @@ const Price = styled.span`
 
 const OriginalPrice = styled.span`
   font-size: 14px;
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
   text-decoration: line-through;
 `;
 
 const StockInfo = styled.div<{ stock: number }>`
   font-size: 12px;
-  color: ${props => props.stock > 5 ? 'var(--color-success)' : 'var(--color-error)'};
+  color: ${props => props.stock > 5 ? props.theme.colors.success : props.theme.colors.error};
   margin-top: 4px;
 `;
 
@@ -157,7 +156,7 @@ const RatingContainer = styled.div`
 
 const Rating = styled.div`
   font-size: 12px;
-  color: var(--color-accent);
+  color: ${({ theme }) => theme.colors.accent};
   display: flex;
   align-items: center;
 `;

@@ -3,60 +3,60 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
   :root {
     /* Base colors */
-    --color-primary: #4a69bd;
-    --color-primary-light: #F6F7FC;
-    --color-primary-lighter: #F6F7FC;
-    --color-primary-medium: #DBE1F2;
-    --color-secondary: #1e3799;
-    --color-accent: #fa8231;
-    --color-text: #2c3e50;
-    --color-text-light: #7f8c8d;
-    --color-background: #f9f9f9;
-    --color-white: #ffffff;
-    --color-black: #000000;
-    --color-gray-100: #f7f7f7;
-    --color-gray-200: #e6e6e6;
-    --color-gray-300: #d1d1d1;
-    --color-gray-400: #bfbfbf;
-    --color-gray-500: #a6a6a6;
-    --color-gray-600: #8c8c8c;
-    --color-error: #e74c3c;
-    --color-success: #2ecc71;
+    --color-primary: ${ props => props.theme.colors.primary};
+    --color-primary-light: ${ props => props.theme.colors.primaryLight};
+    --color-primary-lighter: ${ props => props.theme.colors.primaryLighter};
+    --color-primary-medium: ${ props => props.theme.colors.primaryMedium};
+    --color-secondary: ${ props => props.theme.colors.secondary};
+    --color-accent: ${ props => props.theme.colors.accent};
+    --color-text: ${ props => props.theme.colors.text};
+    --color-text-light: ${ props => props.theme.colors.textLight};
+    --color-background: ${ props => props.theme.colors.background};
+    --color-white: ${ props => props.theme.colors.white};
+    --color-black: ${ props => props.theme.colors.black};
+    --color-gray-100: ${ props => props.theme.colors.gray100};
+    --color-gray-200: ${ props => props.theme.colors.gray200};
+    --color-gray-300: ${ props => props.theme.colors.gray300};
+    --color-gray-400: ${ props => props.theme.colors.gray400};
+    --color-gray-500: ${ props => props.theme.colors.gray500};
+    --color-gray-600: ${ props => props.theme.colors.gray600};
+    --color-error: ${ props => props.theme.colors.error};
+    --color-success: ${ props => props.theme.colors.success};
     
     /* Spacing */
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-xxl: 3rem;
+    --spacing-xs: ${ props => props.theme.spacing.xs};
+    --spacing-sm: ${ props => props.theme.spacing.sm};
+    --spacing-md: ${ props => props.theme.spacing.md};
+    --spacing-lg: ${ props => props.theme.spacing.lg};
+    --spacing-xl: ${ props => props.theme.spacing.xl};
+    --spacing-xxl: ${ props => props.theme.spacing.xxl};
     
     /* Border radius */
-    --border-radius-sm: 0.25rem;
-    --border-radius-md: 0.5rem;
-    --border-radius-lg: 1rem;
+    --border-radius-sm: ${ props => props.theme.borderRadius.sm};
+    --border-radius-md: ${ props => props.theme.borderRadius.md};
+    --border-radius-lg: ${ props => props.theme.borderRadius.lg};
     
     /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --shadow-sm: ${ props => props.theme.shadows.sm};
+    --shadow-md: ${ props => props.theme.shadows.md};
+    --shadow-lg: ${ props => props.theme.shadows.lg};
     
     /* Fonts */
-    --font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    --font-weight-regular: 400;
-    --font-weight-medium: 500;
-    --font-weight-bold: 700;
+    --font-family: ${ props => props.theme.typography.fontFamily};
+    --font-weight-regular: ${ props => props.theme.typography.fontWeight.regular};
+    --font-weight-medium: ${ props => props.theme.typography.fontWeight.medium};
+    --font-weight-bold: ${ props => props.theme.typography.fontWeight.bold};
     
     /* Transitions */
-    --transition-fast: 0.2s ease;
-    --transition-medium: 0.3s ease;
+    --transition-fast: ${ props => props.theme.transitions.fast};
+    --transition-medium: ${ props => props.theme.transitions.medium};
     
     /* Z-index layers */
-    --z-index-dropdown: 1000;
-    --z-index-sticky: 1020;
-    --z-index-modal: 1030;
-    --z-index-popover: 1040;
-    --z-index-tooltip: 1050;
+    --z-index-dropdown: ${ props => props.theme.zIndex.dropdown};
+    --z-index-sticky: ${ props => props.theme.zIndex.sticky};
+    --z-index-modal: ${ props => props.theme.zIndex.modal};
+    --z-index-popover: ${ props => props.theme.zIndex.popover};
+    --z-index-tooltip: ${ props => props.theme.zIndex.tooltip};
 
     font-family: var(--font-family);
     line-height: 1.5;
@@ -166,57 +166,19 @@ const GlobalStyles = createGlobalStyle`
   h5 { font-size: 1.25rem; }
   h6 { font-size: 1rem; }
   
-  /* Utility classes */
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
-  }
-  
-  /* Grid system */
-  .grid {
-    display: grid;
-    gap: var(--spacing-md);
-  }
-  
-  /* Buttons */
-  .btn {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    background-color: var(--color-primary);
-    color: var(--color-white);
-    border: none;
-    border-radius: var(--border-radius-sm);
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-  }
-  
-  .btn:hover {
-    background-color: var(--color-secondary);
-  }
-  
-  .btn-accent {
-    background-color: var(--color-accent);
-  }
-  
-  .btn-accent:hover {
-    background-color: #e67e22;
-  }
-  
   /* Form elements */
-  input, textarea, select {
-    padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--border-radius-sm);
-    width: 100%;
-    transition: border-color var(--transition-fast);
-  }
+  // input, textarea, select {
+  //   padding: var(--spacing-sm) var(--spacing-md);
+  //   border: 1px solid var(--color-gray-300);
+  //   border-radius: var(--border-radius-sm);
+  //   width: 100%;
+  //   transition: border-color var(--transition-fast);
+  // }
   
-  input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: var(--color-primary);
-  }
+  // input:focus, textarea:focus, select:focus {
+  //   outline: none;
+  //   border-color: var(--color-primary);
+  // }
   
   /* Responsive breakpoints */
   @media (max-width: 576px) {
@@ -226,21 +188,6 @@ const GlobalStyles = createGlobalStyle`
     h4 { font-size: 1.25rem; }
   }
   
-  @media (min-width: 768px) {
-    .grid-cols-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (min-width: 992px) {
-    .grid-cols-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .grid-cols-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
 `;
 
 export default GlobalStyles;

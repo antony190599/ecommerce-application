@@ -9,22 +9,22 @@ export interface ProductListProps {
 }
 
 const ListContainer = styled.section`
-  padding: var(--spacing-xl);
+  padding: ${({ theme }) => theme.spacing.xl};
   // max-width: 1200px;
   margin: 0 auto;
 `;
 
 const ListTitle = styled.h2`
   font-size: 24px;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text);
-  margin-bottom: var(--spacing-lg);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
 `;
 
 const Grid = styled.div<{ $maxColumns: number }>`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.md};
   
   @media (min-width: 576px) {
     grid-template-columns: repeat(2, 1fr);
@@ -40,11 +40,11 @@ const Grid = styled.div<{ $maxColumns: number }>`
 `;
 
 const EmptyState = styled.div`
-  padding: var(--spacing-xl);
+  padding: ${({ theme }) => theme.spacing.xl};
   text-align: center;
-  color: var(--color-text-light);
-  border: 1px dashed var(--color-gray-300);
-  border-radius: var(--border-radius-md);
+  color: ${({ theme }) => theme.colors.textLight};
+  border: 1px dashed ${({ theme }) => theme.colors.gray300};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
 `;
 
 const ProductList: React.FC<ProductListProps> = ({ 

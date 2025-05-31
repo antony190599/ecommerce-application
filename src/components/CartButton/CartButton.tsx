@@ -19,8 +19,8 @@ const CartIconButton = styled(Dialog.Trigger)`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color var(--transition-fast);
-  color: var(--color-primary);
+  transition: background-color ${({ theme }) => theme.transitions.fast};
+  color: ${({ theme }) => theme.colors.primary};
   position: relative;
 
   &:hover {
@@ -37,7 +37,7 @@ const CartCount = styled.span`
   position: absolute;
   top: -5px;
   right: -5px;
-  background-color: var(--color-primary);
+  background-color: ${({ theme }) => theme.colors.primary};
   color: white;
   border-radius: 50%;
   width: 20px;
@@ -46,7 +46,7 @@ const CartCount = styled.span`
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  font-weight: var(--font-weight-bold);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
 
 const CartButton: React.FC = () => {

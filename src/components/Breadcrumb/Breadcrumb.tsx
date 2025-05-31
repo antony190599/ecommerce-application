@@ -14,7 +14,7 @@ interface BreadcrumbProps {
 const BreadcrumbContainer = styled.nav`
   display: flex;
   align-items: center;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   font-size: 0.9rem;
 `;
 
@@ -32,22 +32,22 @@ const BreadcrumbItem = styled.li`
   
   &:not(:last-child)::after {
     content: '>';
-    margin: 0 var(--spacing-xs);
-    color: var(--color-gray-300);
+    margin: 0 ${({ theme }) => theme.spacing.xs};
+    color: ${({ theme }) => theme.colors.gray300};
   }
   
   &:last-child {
-    color: var(--color-text);
-    font-weight: var(--font-weight-medium);
+    color: ${({ theme }) => theme.colors.text};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   }
 `;
 
 const BreadcrumbLink = styled(Link)`
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
   text-decoration: none;
   
   &:hover {
-    color: var(--color-primary);
+    color: ${({ theme }) => theme.colors.primary};
     text-decoration: underline;
   }
 `;

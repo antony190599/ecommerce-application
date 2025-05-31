@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ThemeType } from '../../styles/theme';
 
 export type TagType = 'sale' | 'new' | 'limited' | 'soldout';
 
@@ -7,27 +8,22 @@ interface ProductTagProps {
   type: TagType;
 }
 
-interface TagStyles {
-  backgroundColor: string;
-  color: string;
-}
-
-const tagStyles: Record<TagType, TagStyles> = {
+const tagStyles = {
   sale: {
-    backgroundColor: 'var(--color-accent)',
-    color: 'var(--color-white)'
+    backgroundColor: (theme: ThemeType) => theme.colors.accent,
+    color: (theme: ThemeType) => theme.colors.white
   },
   new: {
-    backgroundColor: 'var(--color-primary)',
-    color: 'var(--color-white)'
+    backgroundColor: (theme: ThemeType) => theme.colors.primary,
+    color: (theme: ThemeType) => theme.colors.white
   },
   limited: {
-    backgroundColor: 'var(--color-error)',
-    color: 'var(--color-white)'
+    backgroundColor: (theme: ThemeType) => theme.colors.error,
+    color: (theme: ThemeType) => theme.colors.white
   },
   soldout: {
-    backgroundColor: 'var(--color-gray-300)',
-    color: 'var(--color-text)'
+    backgroundColor: (theme: ThemeType) => theme.colors.gray300,
+    color: (theme: ThemeType) => theme.colors.text
   }
 };
 
@@ -42,10 +38,10 @@ const TagContainer = styled.div<{ tagType: TagType }>`
   display: inline-block;
   padding: 4px 8px;
   font-size: 12px;
-  font-weight: var(--font-weight-bold);
-  border-radius: var(--border-radius-sm);
-  background-color: ${props => tagStyles[props.tagType].backgroundColor};
-  color: ${props => tagStyles[props.tagType].color};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background-color: ${props => tagStyles[props.tagType].backgroundColor(props.theme)};
+  color: ${props => tagStyles[props.tagType].color(props.theme)};
   text-transform: uppercase;
 `;
 

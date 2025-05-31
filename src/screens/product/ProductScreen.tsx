@@ -13,33 +13,33 @@ const ProductScreenContainer = styled.div`
 const MainContent = styled.main`
 //   max-width: 1280px;
   margin: 0 auto;
-  padding: var(--spacing-lg);
+  padding: ${({ theme }) => theme.spacing.lg};
 `;
 
 const ProductNotFound = styled.div`
   text-align: center;
-  padding: var(--spacing-xl);
+  padding: ${({ theme }) => theme.spacing.xl};
   
   h2 {
     font-size: 1.5rem;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
   
   p {
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-lg);
+    color: ${({ theme }) => theme.colors.textLight};
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
   
   a {
     display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    background-color: var(--color-primary);
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
+    background-color: ${({ theme }) => theme.colors.primary};
     color: white;
-    border-radius: var(--border-radius-sm);
+    border-radius: ${({ theme }) => theme.borderRadius.sm};
     text-decoration: none;
     
     &:hover {
-      background-color: var(--color-secondary);
+      background-color: ${({ theme }) => theme.colors.secondary};
     }
   }
 `;

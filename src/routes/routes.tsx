@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 import { default as Home} from "../screens/home";
 import { default as ProductScreen} from "../screens/product";
 import { default as NotFound } from "../screens/notFound";
-import { default as CartPage } from "../screens/cart";
+import { default as CartScreen } from "../screens/cart";
 import { default as AddQuantityButtonDemo } from "../screens/demo/AddQuantityButtonDemo";
 import { default as CategoriesMenuScreen } from "../screens/demo/CategoriesMenuScreen";
 
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
     },
     {
       path: '/cart',
-      element: <CartPage />,
+      element: <CartScreen />,
     },
     {
       path: "*",

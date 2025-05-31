@@ -18,12 +18,12 @@ export interface ProductDetailProps {
 // Styled Components
 const ProductDetailContainer = styled.section`
   display: grid;
-  background-color: var(--color-white);
-  border-radius: var(--border-radius-sm);
-  padding: var(--spacing-lg);
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  padding: ${({ theme }) => theme.spacing.lg};
   grid-template-columns: 1fr;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-xl);
+  gap: ${({ theme }) => theme.spacing.lg};
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
   
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
@@ -39,10 +39,10 @@ const ProductImageContainer = styled.div`
 `;
 
 const MainImage = styled.div`
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--border-radius-md);
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   overflow: hidden;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   width: 400px;
   
   img {
@@ -55,21 +55,21 @@ const MainImage = styled.div`
 
 const Thumbnails = styled.div`
   display: flex;
-  gap: var(--spacing-sm);
+  gap: ${({ theme }) => theme.spacing.sm};
   overflow-x: auto;
-  padding-bottom: var(--spacing-xs);
+  padding-bottom: ${({ theme }) => theme.spacing.xs};
   
   &::-webkit-scrollbar {
     height: 4px;
   }
   
   &::-webkit-scrollbar-track {
-    background: var(--color-gray-100);
+    background: ${({ theme }) => theme.colors.gray100};
     border-radius: 10px;
   }
   
   &::-webkit-scrollbar-thumb {
-    background-color: var(--color-gray-300);
+    background-color: ${({ theme }) => theme.colors.gray300};
     border-radius: 10px;
   }
 `;
@@ -77,15 +77,15 @@ const Thumbnails = styled.div`
 const Thumbnail = styled.div<{ active: boolean }>`
   width: 70px;
   height: 70px;
-  border: 1px solid ${props => props.active ? 'var(--color-primary)' : 'var(--color-gray-200)'};
-  border-radius: var(--border-radius-sm);
+  border: 1px solid ${props => props.active ? props.theme.colors.primary : props.theme.colors.gray200};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   overflow: hidden;
   cursor: pointer;
   flex-shrink: 0;
-  transition: border-color var(--transition-fast);
+  transition: border-color ${({ theme }) => theme.transitions.fast};
   
   &:hover {
-    border-color: var(--color-primary-light);
+    border-color: ${({ theme }) => theme.colors.primaryLight};
   }
   
   img {
@@ -98,12 +98,12 @@ const Thumbnail = styled.div<{ active: boolean }>`
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 const Title = styled.h1`
   font-size: 1.75rem;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
   
   @media (min-width: 768px) {
     font-size: 2rem;
@@ -112,54 +112,54 @@ const Title = styled.h1`
 
 const SKUInfo = styled.p`
   font-size: 0.9rem;
-  color: var(--color-text-light);
-  margin-bottom: var(--spacing-sm);
+  color: ${({ theme }) => theme.colors.textLight};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
 `;
 
 const PriceContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 `;
 
 const Price = styled.span`
   font-size: 1.75rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const OriginalPrice = styled.span`
   font-size: 1.25rem;
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
   text-decoration: line-through;
 `;
 
 const Discount = styled.span`
-  background-color: var(--color-accent);
+  background-color: ${({ theme }) => theme.colors.accent};
   color: white;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   font-size: 0.9rem;
-  font-weight: var(--font-weight-medium);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const MetaInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
-  padding: var(--spacing-md);
-  background-color: var(--color-gray-100);
-  border-radius: var(--border-radius-md);
+  gap: ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.md};
+  background-color: ${({ theme }) => theme.colors.gray100};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
 `;
 
 const MetaItem = styled.div`
   display: flex;
-  gap: var(--spacing-sm);
+  gap: ${({ theme }) => theme.spacing.sm};
   
   svg {
-    color: var(--color-primary);
+    color: ${({ theme }) => theme.colors.primary};
     flex-shrink: 0;
     width: 20px;
     height: 20px;
@@ -174,22 +174,22 @@ const MetaItem = styled.div`
 const QuantitySelectorContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 `;
 
 const QuantityLabel = styled.label`
   font-size: 1rem;
-  font-weight: var(--font-weight-medium);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const StockWarning = styled.div<{ lowStock: boolean }>`
   font-size: 0.9rem;
-  color: ${props => props.lowStock ? 'var(--color-error)' : 'var(--color-success)'};
-  margin-top: var(--spacing-xs);
+  color: ${props => props.lowStock ? props.theme.colors.error : props.theme.colors.success};
+  margin-top: ${({ theme }) => theme.spacing.xs};
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: ${({ theme }) => theme.spacing.xs};
   
   svg {
     width: 16px;
@@ -200,7 +200,7 @@ const StockWarning = styled.div<{ lowStock: boolean }>`
 const ActionButtons = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.md};
   
   @media (min-width: 768px) {
     flex-direction: row;
@@ -211,15 +211,15 @@ const FavoriteButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing.md};
   background-color: white;
-  color: var(--color-text);
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--border-radius-sm);
-  font-weight: var(--font-weight-medium);
+  color: ${({ theme }) => theme.colors.text};
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all ${({ theme }) => theme.transitions.fast};
   width: 100%;
   
   @media (min-width: 768px) {
@@ -227,50 +227,50 @@ const FavoriteButton = styled.button`
   }
   
   &:hover {
-    background-color: var(--color-gray-100);
-    border-color: var(--color-gray-300);
+    background-color: ${({ theme }) => theme.colors.gray100};
+    border-color: ${({ theme }) => theme.colors.gray300};
   }
   
   svg {
     width: 20px;
     height: 20px;
-    color: var(--color-error);
+    color: ${({ theme }) => theme.colors.error};
   }
 `;
 
 const ProductDescriptionSection = styled.section`
-  margin-bottom: var(--spacing-xl);
-  background-color: var(--color-white);
-  border-radius: var(--border-radius-sm);
-  padding: var(--spacing-lg);
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  padding: ${({ theme }) => theme.spacing.lg};
 `;
 
 const SectionTitle = styled.h2`
   font-size: 1.5rem;
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--color-gray-200);
+  margin-bottom: ${({ theme }) => theme.spacing.md};
+  padding-bottom: ${({ theme }) => theme.spacing.sm};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
 `;
 
 const Description = styled.div`
   line-height: 1.6;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.colors.text};
   
   p {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: ${({ theme }) => theme.spacing.md};
   }
   
   ul {
-    margin-bottom: var(--spacing-md);
-    padding-left: var(--spacing-lg);
+    margin-bottom: ${({ theme }) => theme.spacing.md};
+    padding-left: ${({ theme }) => theme.spacing.lg};
   }
 `;
 
 const FeaturesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  gap: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
   
   @media (min-width: 576px) {
     grid-template-columns: repeat(2, 1fr);
@@ -284,15 +284,15 @@ const FeaturesGrid = styled.div`
 const FeatureItem = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  background-color: var(--color-gray-100);
-  border-radius: var(--border-radius-md);
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing.md};
+  background-color: ${({ theme }) => theme.colors.gray100};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   
   svg {
     width: 24px;
     height: 24px;
-    color: var(--color-primary);
+    color: ${({ theme }) => theme.colors.primary};
     margin-top: 2px;
   }
   
@@ -302,37 +302,37 @@ const FeatureItem = styled.div`
   
   h4 {
     font-size: 1rem;
-    font-weight: var(--font-weight-medium);
-    margin-bottom: var(--spacing-xs);
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    margin-bottom: ${({ theme }) => theme.spacing.xs};
   }
   
   p {
     font-size: 0.9rem;
     margin: 0;
-    color: var(--color-text-light);
+    color: ${({ theme }) => theme.colors.textLight};
   }
 `;
 
 const SpecificationsTable = styled.div`
-  margin-top: var(--spacing-lg);
+  margin-top: ${({ theme }) => theme.spacing.lg};
 `;
 
 const SpecRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
   
   &:last-child {
     border-bottom: none;
   }
   
   div {
-    padding: var(--spacing-sm);
+    padding: ${({ theme }) => theme.spacing.sm};
   }
   
   div:first-child {
-    font-weight: var(--font-weight-medium);
-    background-color: var(--color-gray-100);
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+    background-color: ${({ theme }) => theme.colors.gray100};
   }
 `;
 

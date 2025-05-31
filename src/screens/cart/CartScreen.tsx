@@ -20,8 +20,8 @@ const CartHeader = styled.div`
 
 const CartTitle = styled.h1`
   font-size: 2rem;
-  color: var(--color-text);
-  font-weight: var(--font-weight-bold);
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   margin: 0;
 `;
 
@@ -46,9 +46,9 @@ const CartItemsHeader = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;
   padding: 15px 20px;
-  background-color: var(--color-primary-light, rgba(74, 105, 189, 0.05));
+  background-color: ${({ theme }) => theme.colors.primaryLight || 'rgba(74, 105, 189, 0.05)'};
   border-bottom: 1px solid #eee;
-  font-weight: var(--font-weight-medium);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const CartItemsList = styled.div`
@@ -86,24 +86,24 @@ const ItemName = styled.h3`
 const ItemUnit = styled.p`
   margin: 0;
   font-size: 0.8rem;
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
 `;
 
 const ItemPrice = styled.div`
-  font-weight: var(--font-weight-medium);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const ItemQuantity = styled.div``;
 
 const ItemTotal = styled.div`
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const RemoveButton = styled.button`
   background: none;
   border: none;
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
   cursor: pointer;
   font-size: 0.8rem;
   padding: 0;
@@ -111,7 +111,7 @@ const RemoveButton = styled.button`
   text-decoration: underline;
 
   &:hover {
-    color: var(--color-error);
+    color: ${({ theme }) => theme.colors.error};
   }
 `;
 
@@ -135,18 +135,18 @@ const SummaryRow = styled.div`
 `;
 
 const SummaryLabel = styled.span`
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
 `;
 
 const SummaryValue = styled.span`
-  font-weight: var(--font-weight-medium);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const SummaryTotal = styled(SummaryRow)`
   border-top: 1px solid #eee;
   margin-top: 15px;
   padding-top: 15px;
-  font-weight: var(--font-weight-bold);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
 
 const TotalLabel = styled.span`
@@ -155,23 +155,23 @@ const TotalLabel = styled.span`
 
 const TotalValue = styled.span`
   font-size: 1.1rem;
-  color: var(--color-primary);
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const CheckoutButton = styled.button`
   width: 100%;
   padding: 15px;
-  background-color: var(--color-primary);
+  background-color: ${({ theme }) => theme.colors.primary};
   color: white;
   border: none;
   border-radius: 8px;
-  font-weight: var(--font-weight-bold);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   cursor: pointer;
   margin-top: 20px;
-  transition: background-color var(--transition-fast);
+  transition: background-color ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background-color: var(--color-secondary);
+    background-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
 
@@ -187,15 +187,15 @@ const EmptyCartTitle = styled.h2`
 const ShopNowButton = styled(Link)`
   display: inline-block;
   padding: 10px 20px;
-  background-color: var(--color-primary);
+  background-color: ${({ theme }) => theme.colors.primary};
   color: white;
   border-radius: 8px;
   text-decoration: none;
-  font-weight: var(--font-weight-medium);
-  transition: background-color var(--transition-fast);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  transition: background-color ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background-color: var(--color-secondary);
+    background-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
 
@@ -203,7 +203,7 @@ const formatCurrency = (value: number) => {
   return `S/ ${value.toFixed(2)}`;
 };
 
-const CartPage: React.FC = () => {
+const CartScreen: React.FC = () => {
   const { items, updateQuantity, removeItem, totalItems, totalAmount } = useCart();
 
   const handleCheckout = () => {
@@ -289,4 +289,4 @@ const CartPage: React.FC = () => {
   );
 };
 
-export default CartPage;
+export default CartScreen;

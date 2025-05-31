@@ -13,11 +13,10 @@ export const CarouselWrapper = styled.div`
   position: relative;
   width: 100%;
   padding-top: 25%; /* 4:1 aspect ratio */
-  box-shadow: var(--box-shadow);
   overflow: hidden;
   
   
-  @media (max-width: var(--breakpoint-sm)) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     padding-top: 0;
     height: 180px;
   }
@@ -55,7 +54,7 @@ export const GradientOverlay = styled.div`
     90deg,
     transparent 0%,
     transparent 50%,
-    var(--color-background) 100%
+    ${({ theme }) => theme.colors.background} 100%
   );
 `;
 
@@ -73,8 +72,8 @@ export const ArrowButton = styled.button<ArrowButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-surface, white);
-  color: var(--color-primary, #333);
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.primary};
   border: none;
   border-radius: 50%;
   font-size: 20px;
@@ -83,17 +82,17 @@ export const ArrowButton = styled.button<ArrowButtonProps>`
   transition: all 0.2s ease;
   
   &:hover, &:focus {
-    background-color: var(--color-hover-surface, #f5f5f5);
+    background-color: ${({ theme }) => theme.colors.hoverSurface};
     transform: translateY(-50%) scale(1.1);
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   }
   
   &:focus {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 2px;
   }
   
-  @media (max-width: var(--breakpoint-sm)) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 30px;
     height: 30px;
     font-size: 16px;
@@ -110,7 +109,7 @@ export const Dots = styled.div`
   gap: 8px;
   z-index: 2;
   
-  @media (max-width: var(--breakpoint-sm)) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     bottom: 10px;
     flex-wrap: wrap;
     justify-content: center;
@@ -126,8 +125,8 @@ export const Dot = styled.button<DotProps>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: ${({ isActive }) =>
-    isActive ? 'var(--color-prymary)' : 'var(--color-gray-500)'};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.primary : theme.colors.gray500};
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -138,11 +137,11 @@ export const Dot = styled.button<DotProps>`
   }
   
   &:focus {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid ${({ theme }) => theme.colors.primary};
     outline-offset: 2px;
   }
   
-  @media (max-width: var(--breakpoint-sm)) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 10px;
     height: 10px;
     margin: 2px;

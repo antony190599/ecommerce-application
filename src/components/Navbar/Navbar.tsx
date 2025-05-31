@@ -5,8 +5,8 @@ import CategoriesMenu from '../CategoriesMenu';
 import categories from '../../data/categories';
 
 const NavbarContainer = styled.header`
-  background-color: var(--color-primary);
-  color: var(--color-white);
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
   width: 100%;
 `;
 
@@ -14,25 +14,25 @@ const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem var(--spacing-lg);
+  padding: 0.5rem ${({ theme }) => theme.spacing.lg};
   
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: ${({ theme }) => theme.spacing.sm};
   }
 `;
 
 const ContactInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.md};
   font-size: 0.9rem;
   
   a {
-    color: var(--color-white);
+    color: ${({ theme }) => theme.colors.white};
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: ${({ theme }) => theme.spacing.xs};
     
     &:hover {
       text-decoration: underline;
@@ -48,15 +48,15 @@ const ContactInfo = styled.div`
 const SocialLinks = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: ${({ theme }) => theme.spacing.sm};
   
   span {
-    margin-right: var(--spacing-xs);
+    margin-right: ${({ theme }) => theme.spacing.xs};
     font-size: 0.9rem;
   }
   
   a {
-    color: var(--color-white);
+    color: ${({ theme }) => theme.colors.white};
     
     &:hover {
       opacity: 0.8;
@@ -73,12 +73,12 @@ const MainBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem var(--spacing-lg);
-  background-color: var(--color-white);
+  padding: 0.5rem ${({ theme }) => theme.spacing.lg};
+  background-color: ${({ theme }) => theme.colors.white};
   
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: ${({ theme }) => theme.spacing.sm};
   }
 `;
 
@@ -92,20 +92,20 @@ const Logo = styled.div`
 const SearchBar = styled.div`
   flex: 1;
   max-width: 700px;
-  margin: 0 var(--spacing-lg);
+  margin: 0 ${({ theme }) => theme.spacing.lg};
   position: relative;
   
   @media (max-width: 768px) {
     width: 100%;
-    margin: var(--spacing-sm) 0;
+    margin: ${({ theme }) => theme.spacing.sm} 0;
   }
 `;
 
 const SearchForm = styled.form`
   display: flex;
-  border-radius: var(--border-radius-sm);
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   overflow: hidden;
-  border: 1px solid var(--color-gray-300);
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
 `;
 
 const SearchInput = styled.input`
@@ -116,36 +116,36 @@ const SearchInput = styled.input`
 `;
 
 const SearchButton = styled.button`
-  background-color: var(--color-white);
+  background-color: ${({ theme }) => theme.colors.white};
   border: none;
-  padding: 0 var(--spacing-md);
+  padding: 0 ${({ theme }) => theme.spacing.md};
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   
   svg {
-    color: var(--color-gray-300);
+    color: ${({ theme }) => theme.colors.gray300};
     height: 1.5rem;
     width: auto;
   }
   
   &:hover svg {
-    color: var(--color-primary);
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
 const IconGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 const IconLink = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--color-primary);
+  color: ${({ theme }) => theme.colors.primary};
   text-decoration: none;
   position: relative;
   
@@ -160,9 +160,7 @@ const IconLink = styled.a`
 `;
 
 const NavLinks = styled.nav`
-  background-color: var(--color-white);
-  // border-top: 1px solid var(--color-gray-200);
-  // border-bottom: 1px solid var(--color-gray-200);
+  background-color: ${({ theme }) => theme.colors.white};
   position: relative;
   overflow: hidden;
 `;
@@ -190,40 +188,40 @@ const CategoryItem = styled.li`
   position: relative;
   
   &:hover > a {
-    background-color: var(--color-gray-100);
+    background-color: ${({ theme }) => theme.colors.gray100};
   }
 `;
 
 const CategoryLink = styled.a`
   display: block;
-  padding: var(--spacing-sm) var(--spacing-md);
-  color: var(--color-text);
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
   white-space: nowrap;
   
   &:hover {
-    color: var(--color-primary);
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
 const CoverageButton = styled.a`
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  padding: var(--spacing-xs) var(--spacing-md);
-  margin-left: var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  margin-left: ${({ theme }) => theme.spacing.sm};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   text-decoration: none;
   display: flex;
   align-items: center;
   font-size: 0.9rem;
   
   &:hover {
-    background-color: var(--color-secondary);
-    color: var(--color-white);
+    background-color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.white};
   }
   
   svg {
-    margin-left: var(--spacing-xs);
+    margin-left: ${({ theme }) => theme.spacing.xs};
     height: 1rem;
     width: auto;
   }
@@ -242,12 +240,12 @@ const NavArrowButton = styled.button<{ direction: 'left' | 'right' }>`
   align-items: center;
   justify-content: center;
   z-index: 5;
-  color: var(--color-primary);
+  color: ${({ theme }) => theme.colors.primary};
   box-shadow: ${({ direction }) => 
     direction === 'left' ? '2px 0 5px rgba(0,0,0,0.1)' : '-2px 0 5px rgba(0,0,0,0.1)'};
   
   &:hover {
-    color: var(--color-secondary);
+    color: ${({ theme }) => theme.colors.secondary};
     background-color: rgba(255, 255, 255, 1);
   }
   
@@ -266,9 +264,9 @@ const CategoryBar = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
-  background-color: var(--color-white);
-  border-top: 1px solid var(--color-gray-200);
-  border-bottom: 1px solid var(--color-gray-200);
+  background-color: ${({ theme }) => theme.colors.white};
+  border-top: 1px solid ${({ theme }) => theme.colors.gray200};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
 `;
 
 const Navbar: React.FC = () => {

@@ -33,18 +33,18 @@ const MenuButton = styled.span`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-text);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--color-surface, white);
+  color: ${({ theme }) => theme.colors.text};
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  background-color: ${({ theme }) => theme.colors.white};
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  font-weight: var(--font-weight-regular);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: var(--color-gray-100);
-    color: var(--color-primary);
+    background-color: ${({ theme }) => theme.colors.gray100};
+    color: ${({ theme }) => theme.colors.primary};
   }
 
   svg {
@@ -66,9 +66,7 @@ const MenuPanel = styled.div<{ isOpen: boolean }>`
   display: ${props => props.isOpen ? 'flex' : 'none'};
   width: 700px;
   max-width: 90vw;
-  background-color: var(--color-surface, white);
-  // border-radius: var(--border-radius-sm);
-  // box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background-color: ${({ theme }) => theme.colors.white};
   z-index: 1000;
   overflow: hidden;
   animation: fadeIn 0.2s ease;
@@ -100,36 +98,48 @@ const CategoryItem = styled.li<{ isActive: boolean }>`
     width: 100%;
     text-decoration: none;
     border: none;
-    background-color: ${props => props.isActive ? 'var(--color-hover-surface, #f5f5f5)' : 'transparent'};
-    color: ${props => props.isActive ? 'var(--color-primary-text, #333)' : 'var(--color-text, #333)'};
-    font-weight: ${props => props.isActive ? 'var(--font-weight-medium)' : 'normal'};
+    background-color: ${props => props.isActive 
+      ? props.theme.colors.hoverSurface 
+      : 'transparent'
+    };
+    color: ${props => props.isActive 
+      ? props.theme.colors.primaryText
+      : props.theme.colors.text
+    };
+    font-weight: ${props => props.isActive 
+      ? props.theme.typography.fontWeight.medium 
+      : 'normal'
+    };
     text-align: left;
     cursor: pointer;
     transition: all 0.2s ease;
     
     &:hover {
-      background-color: var(--color-hover-surface, #f5f5f5);
-      color: var(--color-primary-text, #333);
+      background-color: ${({ theme }) => theme.colors.hoverSurface};
+      color: ${({ theme }) => theme.colors.primaryText};
     }
   }
 
   .icon {
     margin-right: 12px;
-    color: ${props => props.isActive ? 'var(--color-primary)' : 'var(--color-text-light)'};
+    color: ${props => props.isActive 
+      ? props.theme.colors.primary 
+      : props.theme.colors.textLight
+    };
   }
 `;
 
 const SubcategoryPanel = styled.div`
   flex: 1;
   padding: 24px;
-  background-color: var(--color-surface, white);
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const SubcategoryTitle = styled.h3`
   margin: 0 0 16px;
   font-size: 1.1rem;
-  color: var(--color-primary);
-  font-weight: var(--font-weight-medium);
+  color: ${({ theme }) => theme.colors.primary};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const SubcategoriesList = styled.ul`
@@ -145,12 +155,12 @@ const SubcategoryItem = styled.li`
   a {
     display: block;
     padding: 8px 0;
-    color: var(--color-muted-text, #666);
+    color: ${({ theme }) => theme.colors.mutedText};
     text-decoration: none;
     transition: color 0.2s ease;
     
     &:hover {
-      color: var(--color-primary);
+      color: ${({ theme }) => theme.colors.primary};
       text-decoration: underline;
     }
   }
@@ -159,7 +169,7 @@ const SubcategoryItem = styled.li`
 // SVG icons
 
 const ArrowDownIcon = () => (
-  <svg viewBox="0 0 24 24" fill="var(--color-text)">
+  <svg viewBox="0 0 24 24" fill="currentColor">
     <path d="M5.666 7a1.661 1.661 0 011.179.488l4.939 4.798 4.926-4.798a1.667 1.667 0 012.357 2.357L11.783 17 4.489 9.845A1.667 1.667 0 015.666 7z"></path>
   </svg>
 );

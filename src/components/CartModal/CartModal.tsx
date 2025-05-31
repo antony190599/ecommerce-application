@@ -70,28 +70,28 @@ const CartHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid var(--color-gray-200);
-  background-color: var(--color-primary-light, rgba(74, 105, 189, 0.05));
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
+  background-color: ${({ theme }) => theme.colors.primaryLight || 'rgba(74, 105, 189, 0.05)'};
 `;
 
 const CartTitle = styled(Dialog.Title)`
   margin: 0;
   font-size: 1.5rem;
-  color: var(--color-text);
-  font-weight: var(--font-weight-bold);
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
 `;
 
 const CloseButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.colors.text};
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: background-color var(--transition-fast);
+  transition: background-color ${({ theme }) => theme.transitions.fast};
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
@@ -113,7 +113,7 @@ const ProductList = styled.ul`
 const ProductItem = styled.li`
   display: flex;
   padding: 15px 0;
-  border-bottom: 1px solid var(--color-gray-200);
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
   position: relative;
 `;
 
@@ -133,21 +133,21 @@ const ProductInfo = styled.div`
 const ProductName = styled.h3`
   margin: 0 0 5px;
   font-size: 1rem;
-  color: var(--color-text);
-  font-weight: var(--font-weight-medium);
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const ProductUnit = styled.p`
   margin: 0 0 8px;
   font-size: 0.8rem;
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
 `;
 
 const ProductPrice = styled.p`
   margin: 0 0 10px;
   font-size: 0.9rem;
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const ProductControls = styled.div`
@@ -161,38 +161,38 @@ const DiscountTag = styled.div`
   position: absolute;
   top: 15px;
   right: 0;
-  background-color: var(--color-primary);
+  background-color: ${({ theme }) => theme.colors.primary};
   color: white;
   font-size: 0.7rem;
   padding: 3px 8px;
   border-radius: 12px;
-  font-weight: var(--font-weight-medium);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
 const ItemTotal = styled.div`
   font-size: 1rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.primary};
   margin-left: auto;
   min-width: 70px;
   text-align: right;
 `;
 
 const MinimumOrderMessage = styled.div`
-  background-color: var(--color-primary-lighter, rgba(74, 105, 189, 0.05));
-  border: 1px dashed var(--color-primary-light, rgba(74, 105, 189, 0.2));
+  background-color: ${({ theme }) => theme.colors.primaryLighter || 'rgba(74, 105, 189, 0.05)'};
+  border: 1px dashed ${({ theme }) => theme.colors.primaryLight || 'rgba(74, 105, 189, 0.2)'};
   border-radius: 8px;
   padding: 12px;
   margin: 20px 0;
   font-size: 0.9rem;
-  color: var(--color-text);
+  color: ${({ theme }) => theme.colors.text};
   text-align: center;
 `;
 
 const CartFooter = styled.div`
   padding: 20px;
-  border-top: 1px solid var(--color-gray-200);
-  background-color: var(--color-primary-light, rgba(74, 105, 189, 0.05));
+  border-top: 1px solid ${({ theme }) => theme.colors.gray200};
+  background-color: ${({ theme }) => theme.colors.primaryLight || 'rgba(74, 105, 189, 0.05)'};
 `;
 
 const TotalRow = styled.div`
@@ -203,14 +203,14 @@ const TotalRow = styled.div`
 
 const TotalLabel = styled.span`
   font-size: 1.1rem;
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const TotalAmount = styled.span`
   font-size: 1.1rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const ActionButtons = styled.div`
@@ -221,16 +221,16 @@ const ActionButtons = styled.div`
 const ContinueShoppingButton = styled.button`
   flex: 1;
   padding: 12px;
-  border: 1px solid var(--color-primary);
+  border: 1px solid ${({ theme }) => theme.colors.primary};
   background-color: white;
-  color: var(--color-primary);
+  color: ${({ theme }) => theme.colors.primary};
   border-radius: 8px;
-  font-weight: var(--font-weight-medium);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   cursor: pointer;
-  transition: background-color var(--transition-fast);
+  transition: background-color ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background-color: var(--color-primary-light, rgba(74, 105, 189, 0.1));
+    background-color: ${({ theme }) => theme.colors.primaryLight || 'rgba(74, 105, 189, 0.1)'};
   }
 `;
 
@@ -238,24 +238,24 @@ const ViewCartLink = styled(Link)`
   flex: 2;
   padding: 12px;
   border: none;
-  background-color: var(--color-primary);
+  background-color: ${({ theme }) => theme.colors.primary};
   color: white;
   border-radius: 8px;
-  font-weight: var(--font-weight-bold);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   cursor: pointer;
-  transition: background-color var(--transition-fast);
+  transition: background-color ${({ theme }) => theme.transitions.fast};
   text-align: center;
   text-decoration: none;
 
   &:hover {
-    background-color: var(--color-secondary);
+    background-color: ${({ theme }) => theme.colors.secondary};
   }
 `;
 
 const EmptyCartMessage = styled.div`
   text-align: center;
   padding: 40px 0;
-  color: var(--color-text-light);
+  color: ${({ theme }) => theme.colors.textLight};
 `;
 
 const formatCurrency = (value: number) => {
