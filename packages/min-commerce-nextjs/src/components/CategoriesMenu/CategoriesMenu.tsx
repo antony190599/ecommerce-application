@@ -59,7 +59,9 @@ const MenuButton = styled.span`
   }
 `;
 
-const MenuPanel = styled.div<{ isOpen: boolean }>`
+const MenuPanel = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isOpen",
+})<{ isOpen: boolean }>`
   position: absolute;
   top: 100%;
   left: 0;
@@ -88,7 +90,9 @@ const CategoriesList = styled.ul`
   overflow-y: auto;
 `;
 
-const CategoryItem = styled.li<{ isActive: boolean }>`
+const CategoryItem = styled.li.withConfig({
+  shouldForwardProp: (prop) => prop !== "isActive",
+})<{ isActive: boolean }>`
   padding: 0;
   margin: 0;
 

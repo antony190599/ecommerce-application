@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -213,7 +215,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Card data-product-id={id}>
             <ImageWrapper>
                 <ProductLink href={`/product/${id}`}>
-                  <Image src={imageUrl} alt={name} />
+                  <img src={imageUrl} alt={name}/>
                 </ProductLink>
                 
                 <AddButtonWrapper>

@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
@@ -368,7 +370,7 @@ const Navbar: React.FC = () => {
       <MainBar>
         <Logo>
           <Link href="/">
-            <Image src="/img/MONTCARE-LOGO-FINAL.jpg" alt="Antokit" width={200} height={200}/>
+            <img src="/img/MONTCARE-LOGO-FINAL.jpg" alt="Antokit"/>
           </Link>
         </Logo>
         

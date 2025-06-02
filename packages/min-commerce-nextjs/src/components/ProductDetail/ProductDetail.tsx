@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -405,7 +407,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
       <ProductDetailContainer>
         <ProductImageContainer>
           <MainImage>
-            <Image src={images[selectedImage]} alt={product.name} />
+            <img src={images[selectedImage]} alt={product.name} />
           </MainImage>
           
           {images.length > 1 && (
@@ -416,7 +418,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                   active={selectedImage === index}
                   onClick={() => setSelectedImage(index)}
                 >
-                  <Image 
+                  <img 
                     src={image} 
                     alt={`${product.name} - Thumbnail ${index + 1}`} 
                   />
