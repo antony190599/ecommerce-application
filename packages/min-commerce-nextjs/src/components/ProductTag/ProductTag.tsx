@@ -35,7 +35,9 @@ const TagContent: Record<TagType, string> = {
   soldout: 'Agotado'
 };
 
-const TagContainer = styled.div<{ tagType: TagType }>`
+const TagContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "tagType",
+})<{ tagType: TagType }>`
   display: inline-block;
   padding: 4px 8px;
   font-size: 12px;

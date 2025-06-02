@@ -26,7 +26,9 @@ interface SlideProps {
   isActive: boolean;
 }
 
-export const Slide = styled.div<SlideProps>`
+export const Slide = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isActive",
+})<SlideProps>`
   position: absolute;
   top: 0;
   left: 0;
@@ -121,7 +123,9 @@ interface DotProps {
   isActive: boolean;
 }
 
-export const Dot = styled.button<DotProps>`
+export const Dot = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== "isActive",
+})<DotProps>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
