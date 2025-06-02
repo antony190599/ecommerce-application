@@ -110,6 +110,11 @@ const ControlButton = styled.button<{ isRemove?: boolean }>`
     width: 20px;
     height: 20px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 44px;
+    height: 44px;
+  }
 `;
 
 const QuantityDisplay = styled.div`
@@ -152,7 +157,7 @@ const AddQuantityButton: React.FC<AddQuantityButtonProps> = ({
     if (quantity < maxQuantity) {
       const newQuantity = quantity + 1;
       setQuantity(newQuantity);
-      onQuantityChange?.(newQuantity);
+      if (onQuantityChange) onQuantityChange(newQuantity);
     }
   };
   
@@ -160,47 +165,59 @@ const AddQuantityButton: React.FC<AddQuantityButtonProps> = ({
     if (quantity > 0) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
-      onQuantityChange?.(newQuantity);
+      if (onQuantityChange) onQuantityChange(newQuantity);
     }
   };
   
-  const handleAddClick = () => {
-    const newQuantity = 1;
-    setQuantity(newQuantity);
-    onQuantityChange?.(newQuantity);
+  const handleRemove = () => {
+    setQuantity(0);
+    if (onQuantityChange) onQuantityChange(0);
   };
   
   // Render the Add button if quantity is 0 and showZero is false,
   // otherwise render the quantity selector
   return (
     <ButtonContainer>
-      {quantity === 0 && !showZero ? (
-        <AddButton onClick={handleAddClick} disabled={disabled}>
-          <PlusIcon />
-        </AddButton>
-      ) : (
-        <QuantitySelectorContainer>
-          <ControlButton 
-            onClick={handleDecrease}
-            isRemove={true}
-            disabled={quantity <= 0} // Disable the button when quantity is 0 or less
-            aria-label="Disminuir cantidad"
-          >
-            {quantity === 1 ? <TrashIcon /> : <MinusIcon />}
-          </ControlButton>
+      {(quantity > 0 || showZero) ? (
+        <QuantitySelectorContainer role="group" aria-label="Product quantity controls">
+          {quantity === 1 ? (
+            <ControlButton 
+              isRemove={true}
+              onClick={handleRemove}
+              aria-label="Remove product"
+            >
+              <TrashIcon />
+            </ControlButton>
+          ) : (
+            <ControlButton 
+              isRemove={true}
+              onClick={handleDecrease}
+              aria-label="Decrease quantity"
+            >
+              <MinusIcon />
+            </ControlButton>
+          )}
           
           <QuantityDisplay aria-live="polite">
             {quantity}
           </QuantityDisplay>
           
           <ControlButton 
+            disabled={!!maxQuantity && quantity >= maxQuantity}
             onClick={handleIncrease}
-            disabled={quantity >= maxQuantity}
-            aria-label="Aumentar cantidad"
+            aria-label="Increase quantity"
           >
             <PlusIcon />
           </ControlButton>
         </QuantitySelectorContainer>
+      ) : (
+        <AddButton
+          onClick={handleIncrease}
+          disabled={disabled}
+          aria-label="Add to cart"
+        >
+          <PlusIcon />
+        </AddButton>
       )}
     </ButtonContainer>
   );

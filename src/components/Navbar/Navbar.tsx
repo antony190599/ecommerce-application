@@ -420,9 +420,7 @@ const Navbar: React.FC = () => {
           )}
           
           <CategoryList ref={categoryListRef}>
-            <CategoryItem>
-              <CategoryLink href="/categorias">Todas las categorías</CategoryLink>
-            </CategoryItem>
+            
             <CategoryItem>
               <CategoryLink href="/accesorios-escritorio">Accesorios de Escritorio</CategoryLink>
             </CategoryItem>
