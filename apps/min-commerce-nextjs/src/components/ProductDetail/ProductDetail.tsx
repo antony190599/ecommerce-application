@@ -78,10 +78,10 @@ const Thumbnails = styled.div`
   }
 `;
 
-const Thumbnail = styled.div<{ actived: boolean }>`
+const Thumbnail = styled.div<{ actived: string }>`
   width: 70px;
   height: 70px;
-  border: 1px solid ${props => props.actived ? props.theme.colors.primary : props.theme.colors.gray200};
+  border: 1px solid ${props => props.actived === "true" ? props.theme.colors.primary : props.theme.colors.gray200};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   overflow: hidden;
   cursor: pointer;
@@ -187,7 +187,9 @@ const QuantityLabel = styled.label`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
-const StockWarning = styled.div<{ lowStock: boolean }>`
+const StockWarning = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "lowStock",
+})<{ lowStock: boolean }>`
   font-size: 0.9rem;
   color: ${props => props.lowStock ? props.theme.colors.error : props.theme.colors.success};
   margin-top: ${({ theme }) => theme.spacing.xs};
@@ -415,7 +417,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
               {images.map((image, index) => (
                 <Thumbnail 
                   key={index} 
-                  actived={selectedImage === index}
+                  actived={selectedImage === index ? "true" : "false"}
                   onClick={() => setSelectedImage(index)}
                 >
                   <img 

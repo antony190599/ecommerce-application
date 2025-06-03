@@ -63,7 +63,9 @@ export const QuantitySelectorContainer = styled.div`
   animation: ${expandAnimation} 0.3s ease;
 `;
 
-export const ControlButton = styled.button<{ isRemove?: boolean }>`
+export const ControlButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== "isRemove",
+})<{ isRemove?: boolean }>`
   width: 40px;
   height: 40px;
   border-radius: 50%;
