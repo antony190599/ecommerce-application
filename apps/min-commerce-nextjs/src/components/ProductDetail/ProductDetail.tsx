@@ -78,10 +78,10 @@ const Thumbnails = styled.div`
   }
 `;
 
-const Thumbnail = styled.div<{ active: boolean }>`
+const Thumbnail = styled.div<{ actived: boolean }>`
   width: 70px;
   height: 70px;
-  border: 1px solid ${props => props.active ? props.theme.colors.primary : props.theme.colors.gray200};
+  border: 1px solid ${props => props.actived ? props.theme.colors.primary : props.theme.colors.gray200};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   overflow: hidden;
   cursor: pointer;
@@ -415,7 +415,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
               {images.map((image, index) => (
                 <Thumbnail 
                   key={index} 
-                  active={selectedImage === index}
+                  actived={selectedImage === index}
                   onClick={() => setSelectedImage(index)}
                 >
                   <img 

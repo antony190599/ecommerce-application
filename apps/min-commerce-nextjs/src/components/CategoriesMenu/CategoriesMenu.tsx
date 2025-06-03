@@ -60,7 +60,7 @@ const MenuButton = styled.span`
 `;
 
 const MenuPanel = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "isOpen",
+  shouldForwardProp: (prop) => prop !== "lowStock, isRemove",
 })<{ isOpen: boolean }>`
   position: absolute;
   top: 100%;
