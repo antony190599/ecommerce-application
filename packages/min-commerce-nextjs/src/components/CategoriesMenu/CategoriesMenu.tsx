@@ -174,7 +174,7 @@ const SubcategoryItem = styled.li`
 // SVG icons
 
 const ArrowDownIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor">
+  <svg width={15} height={15} viewBox="0 0 24 24" fill="currentColor">
     <path d="M5.666 7a1.661 1.661 0 011.179.488l4.939 4.798 4.926-4.798a1.667 1.667 0 012.357 2.357L11.783 17 4.489 9.845A1.667 1.667 0 015.666 7z"></path>
   </svg>
 );
