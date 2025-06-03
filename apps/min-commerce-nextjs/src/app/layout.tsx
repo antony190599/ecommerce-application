@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import "./globals.css";
-import {AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter';
+// import {AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter';
 import { useEffect, useState, Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppRouterCacheProvider>
+        {/* <AppRouterCacheProvider> */}
           <ThemeProvider theme={theme}>
             <GlobalStyles />
             <CartProvider>
@@ -29,7 +29,7 @@ export default function RootLayout({
               </ConfigProvider>
             </CartProvider>
           </ThemeProvider>
-        </AppRouterCacheProvider>
+        {/* </AppRouterCacheProvider> */}
         
       </body>
     </html>
