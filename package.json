@@ -12,8 +12,8 @@
       "start": "turbo run dev --parallel",
       "start:nextjs": "turbo run dev --filter=min-commerce-nextjs",
       "start:react": "turbo run dev --filter=ecommerce-application",
-      "build:ui": "turbo run build --filter=brick-theme-ui",
-      "build:theme": "turbo run build --filter=brick-ui",
+      "build:theme": "turbo run build --filter=brick-theme-ui",
+      "build:ui": "turbo run build --filter=brick-ui",
       "clean": "turbo run clean && rm -rf node_modules",
       "lint": "turbo run lint"
     },
