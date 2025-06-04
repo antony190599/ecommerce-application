@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import styled from 'styled-components';
-import { ThemeType } from '../../styles/theme';
+import { ThemeType } from 'brick-theme-ui';
 
 export type TagType = 'sale' | 'new' | 'limited' | 'soldout';
 

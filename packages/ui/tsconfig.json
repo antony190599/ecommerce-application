@@ -1,0 +1,11 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        "@commerce-app/*": ["../../apps/min-commerce-nextjs/src/*"],
+      }
+    },
+    "include": ["."],
+    "exclude": ["dist", "build", "node_modules"]
+  }

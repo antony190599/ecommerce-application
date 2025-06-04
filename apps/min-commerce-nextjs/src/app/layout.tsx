@@ -4,7 +4,7 @@ import "./globals.css";
 // import {AppRouterCacheProvider} from '@mui/material-nextjs/v15-appRouter';
 import { useEffect, useState, Suspense } from "react";
 import { ThemeProvider } from "styled-components";
-import { theme } from "@/styles/theme";
+import { theme } from "brick-theme-ui";
 import GlobalStyles from "@/GlobalStyles";
 import { CartProvider } from "@/providers/CartProvider";
 import { ConfigProvider } from "@/providers/ConfigProvider";

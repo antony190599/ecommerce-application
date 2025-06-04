@@ -1,0 +1,21 @@
+{
+  "name": "brick-ui",
+  "$schema": "https://json.schemastore.org/package.json",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+  },
+  "dependencies": {
+    "styled-components": "^6.1.8",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "engines": {
+      "node": ">=20",
+      "npm": "please-use-yarn",
+      "yarn": "1.X.X"
+    },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

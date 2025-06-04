@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      "strict": true,
+      "target": "ES6",
+      "types": ["node"],
+      "sourceMap": true,
+      "rootDir": "src",
+      "module": "ESNext",
+      "jsx": "react-jsx",
+      "declaration": true,
+      "outDir": "dist/esm",
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true,
+      "lib": ["es2020", "dom"],
+      "skipLibCheck": true,
+    },
+    "include": ["src/**/*"],
+    "exclude": [
+      "src/**/*.stories.tsx",
+      "node_modules"
+    ]
+  }

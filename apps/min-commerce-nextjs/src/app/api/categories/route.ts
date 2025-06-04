@@ -1,7 +1,7 @@
 import { categories } from '@/data/categories';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export const  GET = async() => {
   try {
     return NextResponse.json({
       data: categories,

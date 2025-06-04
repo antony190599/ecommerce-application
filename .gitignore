@@ -47,3 +47,6 @@ docker/Dockerfile
 .yarn/
 .yarnrc
 .yarn-1.19.0.cjs
+
+/build
+packages/**/dist

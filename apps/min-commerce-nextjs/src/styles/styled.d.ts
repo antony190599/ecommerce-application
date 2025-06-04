@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import "styled-components";
-import { ThemeType } from "./theme";
+import { ThemeType } from "brick-theme-ui";
 
 /**
  * 1. Extendemos DefaultTheme para que incluya todas las propiedades
