@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const id = await params.id;
     
     // Find the product by ID
     const product = products.find(product => product.id === id);
