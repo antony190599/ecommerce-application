@@ -48,10 +48,10 @@ const ProductNotFound = styled.div`
 
 const ProductPage: React.FC = () => {
   // Get the product ID from the URL parameters
-  const { productId } = useParams<{ productId: string }>();
+  const { productSlug } = useParams<{ productSlug: string }>();
   
   // Find the product by ID
-  const product = products.find(p => p.id === productId);
+  const product = products.find(p => p.slug === productSlug);
   
   // Example of extended product data with description, features and specifications
   const extendedProduct = product 

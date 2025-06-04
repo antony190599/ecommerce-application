@@ -4,6 +4,7 @@ export const products: ProductCardProps[] = [
   {
     id: "1",
     name: "Block Arcoiris A4 90 g x 40 Hojas",
+    slug: "block-arcoiris-a4-90g-x-40-hojas",
     unit: "UNIDAD",
     meta: "STANDFORD, x 40 hojas, Encolado, 90 g, A4, Arcoiris, SKU: 023030",
     price: 12.5,
@@ -15,6 +16,7 @@ export const products: ProductCardProps[] = [
   {
     id: "2",
     name: "Cinta Masking Tape 500 3/4 in x 40 yd",
+    slug: "cinta-masking-tape-500-3-4-in-x-40-yd",
     unit: "UNIDAD",
     meta: "PEGAFAN, 500, Blister x 1 unidad, 1.91cm x 36.58m, 3/4 in x 40 yd, Adhesiva, Masking Tape, SKU: 001339",
     price: 3.9,
@@ -25,6 +27,7 @@ export const products: ProductCardProps[] = [
   {
     id: "3",
     name: "Colores Triangulares Caja x 24 Unidades",
+    slug: "colores-triangulares-caja-x-24-unidades",
     unit: "UNIDAD",
     meta: "FABER C., Triangular 2B, Caja x 24 unidades, Largos, Regulares, SKU: 017892",
     price: 19.4,
@@ -35,6 +38,7 @@ export const products: ProductCardProps[] = [
   {
     id: "4",
     name: "Cuaderno Junior Book Triple Renglón A4 Grapado x 80 Hojas",
+    slug: "cuaderno-junior-book-triple-renglon-a4-grapado-x-80-hojas",
     unit: "UNIDAD",
     meta: "STANDFORD, Amarillo, Azul, Azulino, Lila, SKU: 086554",
     price: 6.6,
@@ -46,6 +50,7 @@ export const products: ProductCardProps[] = [
   {
     id: "5",
     name: "Cuaderno Empastado de Índice A5 x 200 Hojas",
+    slug: "cuaderno-empastado-de-indice-a5-x-200-hojas",
     unit: "UNIDAD",
     meta: "RAYPERU, x 200 hojas, Empastado, A5, De índice, SKU: 015640",
     price: 10.8,
@@ -56,6 +61,7 @@ export const products: ProductCardProps[] = [
   {
     id: "6",
     name: "Cuaderno Empastado de Índice A5 x 100 Hojas",
+    slug: "cuaderno-empastado-de-indice-a5-x-100-hojas",
     unit: "UNIDAD",
     meta: "RAYPERU, x 100 hojas, Empastado, A5, De índice, SKU: 015638",
     price: 6.2,
@@ -66,6 +72,7 @@ export const products: ProductCardProps[] = [
   {
     id: "7",
     name: "Lápiz de Grafito Swano 2B con Borrador",
+    slug: "lapiz-de-grafito-swano-2b-con-borrador",
     unit: "UNIDAD",
     meta: "STABILO, Con borrador, 2B, Swano, SKU: 002150",
     price: 1.2,
@@ -76,6 +83,7 @@ export const products: ProductCardProps[] = [
   {
     id: "8",
     name: "Papel Etiqueta Adhesivo Mate A4 x 25 Hojas Blanco",
+    slug: "papel-etiqueta-adhesivo-mate-a4-x-25-hojas-blanco",
     unit: "PAQUETE",
     meta: "OFFICE PAPER, x 25 hojas, 180 g, A4, Autoadhesivo, Adhesivo Mate, Para etiquetas, Impresora laser, SKU: 026215",
     price: 31.4,
@@ -86,6 +94,7 @@ export const products: ProductCardProps[] = [
   {
     id: "9",
     name: "Pegamento en Barra x 40g",
+    slug: "pegamento-en-barra-x-40g",
     unit: "UNIDAD",
     meta: "UHU, x 40 g, Barra x 40 g, TPE170, En barra, SKU: 002439",
     price: 11.9,
@@ -96,6 +105,7 @@ export const products: ProductCardProps[] = [
   {
     id: "10",
     name: "Plumón Jumbo 47 Estuche x 6 Unidades",
+    slug: "plumon-jumbo-47-estuche-x-6-unidades",
     unit: "UNIDAD",
     meta: "FABER C., Jumbo 47, Estuche x 6 unidades, Grueso, al Agua, Para papelógrafo, SKU: 040158",
     price: 28.1,

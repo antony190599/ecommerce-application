@@ -8,11 +8,12 @@ import ProductTag from '../ProductTag';
 import AddQuantityButton from '../AddQuantityButton';
 import { useCart } from '@/providers/CartProvider';
 import { AddButtonWrapper, Card, FavButton, ImageWrapper, Info, Meta, Name, OriginalPrice, Price, PriceContainer, ProductLink, Rating, RatingContainer, StockInfo, TagsContainer, Unit } from './styled';
-
+import { getDefaultProductImage } from '@/utils/productImageUtils';
 // Types
 export interface ProductCardProps {
     id: string;
     name: string;
+    slug: string;
     unit: string;
     meta: string;
     price: number;
@@ -28,6 +29,7 @@ export interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
   name,
+  slug,
   unit,
   meta,
   price,
@@ -37,6 +39,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   stock = 0,
   rating
 }) => {
+    // Obtener la imagen por defecto (si existe) o usar la proporcionada
+    const defaultImage = getDefaultProductImage(id);
+    const displayImageUrl = defaultImage ? defaultImage.imageUrl : imageUrl;
     const { addItem, getItem, updateQuantity } = useCart();
     const [quantity, setQuantity] = useState(() => {
       const cartItem = getItem(id);
@@ -65,8 +70,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
     return (
         <Card data-product-id={id}>
             <ImageWrapper>
-                <ProductLink href={`/product/${id}`}>
-                  <img src={imageUrl} alt={name}/>
+                <ProductLink href={`/product/${slug}`}>
+                  <img src={displayImageUrl} alt={name}/>
                 </ProductLink>
                 
                 <AddButtonWrapper>
@@ -89,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 </TagsContainer>
             </ImageWrapper>
             <Info>
-                <ProductLink href={`/product/${id}`}>
+                <ProductLink href={`/product/${slug}`}>
                   <Name>{name}</Name>
                 </ProductLink>
                 <Unit>{unit}</Unit>
