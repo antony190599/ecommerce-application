@@ -13,6 +13,7 @@ const meta: Meta<typeof BrickInputBase> = {
       // page: undefined,
     },
   },
+  tags: ['autodocs'],
 };
 
 export default meta;
@@ -34,68 +35,7 @@ const baseArgs = {
   onBlur: () => console.log("Input blurred"),
 };
 
-// export const Default: Story = {
-//   args: {
-//     ...baseArgs,
-//   },
-// };
-
-// export const Disabled: Story = {
-//   args: {
-//     ...baseArgs,
-//     disabled: true,
-//     // If you want some visible text inside a disabled input,
-//     // you can override `value` too:
-//     value: "I'm disabled",
-//   },
-// };
-
-// export const WithError: Story = {
-//   args: {
-//     ...baseArgs,
-//     error: true,
-//     errorText: "This field is required.",
-//     // Typically, you’d clear `value` when showing an error on a required field:
-//     value: "",
-//   },
-// };
-
-// export const Required: Story = {
-//   args: {
-//     ...baseArgs,
-//     required: true,
-//   },
-// };
-
-// export const Filled: Story = {
-//   args: {
-//     ...baseArgs,
-//     value: "Filled input",
-//   },
-// };
-
-// export const Placeholder: Story = {
-//   args: {
-//     ...baseArgs,
-//     placeholder: "Placeholder text",
-//   },
-// };
-
-// export const WithType: Story = {
-//   args: {
-//     ...baseArgs,
-//     type: "email",
-//   },
-// };
-
-/**
- * AllVariants
- *
- * This story manually renders each of our “states” in one place.
- * In the Docs tab it will show all of them as a series of rendered inputs,
- * making it easy to compare them at a glance.
- */
-export const AllVariants: Story = {
+export const BrickInputStory: Story = {
     name: "Brick Inout Base",
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: "400px" }}>

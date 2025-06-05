@@ -9,52 +9,52 @@ interface InputProps {
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${({ theme }) => (theme as ThemeType).spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   width: 100%;
 `;
 
 export const StyledLabel = styled.label<{ required?: boolean }>`
   font-size: 0.9rem;
-  font-weight: ${({ theme }) => (theme as ThemeType).typography.fontWeight.medium};
-  color: ${({ theme }) => (theme as ThemeType).colors.text};
-  margin-bottom: ${({ theme }) => (theme as ThemeType).spacing.xs};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.text};
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
   display: flex;
   align-items: center;
   
   ${props => props.required && css`
     &:after {
       content: '*';
-      color: ${({ theme }) => (theme as ThemeType).colors.error};
-      margin-left: ${({ theme }) => (theme as ThemeType).spacing.xs};
+      color: ${({ theme }) => theme.colors.error};
+      margin-left: ${({ theme }) => theme.spacing.xs};
     }
   `}
 `;
 
 export const StyledInput = styled.input<InputProps>`
-  padding: ${({ theme }) => `${(theme as ThemeType).spacing.sm} ${(theme as ThemeType).spacing.md}`};
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
   font-size: 1rem;
-  border: 1px solid ${({ theme }) => (theme as ThemeType).colors.gray300};
-  border-radius: ${({ theme }) => (theme as ThemeType).borderRadius.md};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   width: 100%;
-  background-color: ${({ theme }) => (theme as ThemeType).colors.white};
-  color: ${({ theme }) => (theme as ThemeType).colors.text};
-  transition: all ${({ theme }) => (theme as ThemeType).transitions.fast};
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.text};
+  transition: all ${({ theme }) => theme.transitions.fast};
   
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => (theme as ThemeType).colors.primary};
-    box-shadow: 0 0 0 2px ${({ theme }) => (theme as ThemeType).colors.primaryLighter};
+    border-color: ${({ theme }) => theme.colors.primary};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.primaryLighter};
   }
   
   &:disabled {
-    background-color: ${({ theme }) => (theme as ThemeType).colors.gray100};
+    background-color: ${({ theme }) => theme.colors.gray100};
     cursor: not-allowed;
-    color: ${({ theme }) => (theme as ThemeType).colors.gray500};
-    border-color: ${({ theme }) => (theme as ThemeType).colors.gray200};
+    color: ${({ theme }) => theme.colors.gray500};
+    border-color: ${({ theme }) => theme.colors.gray200};
   }
   
   &::placeholder {
-    color: ${({ theme }) => (theme as ThemeType).colors.gray500};
+    color: ${({ theme }) => theme.colors.gray500};
   }
   
   ${props => props.error && css`
@@ -72,15 +72,15 @@ export const StyledInput = styled.input<InputProps>`
 
 export const HelpText = styled.span`
   font-size: 0.8rem;
-  color: ${({ theme }) => (theme as ThemeType).colors.textLight};
+  color: ${({ theme }) => theme.colors.textLight};
   margin-top: 2px;
-  margin-bottom: ${({ theme }) => (theme as ThemeType).spacing.xs};
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
   display: block;
 `;
 
 export const ErrorText = styled.span`
   font-size: 0.8rem;
-  color: ${({ theme }) => (theme as ThemeType).colors.error};
-  margin-top: ${({ theme }) => (theme as ThemeType).spacing.xs};
+  color: ${({ theme }) => theme.colors.error};
+  margin-top: ${({ theme }) => theme.spacing.xs};
   display: block;
 `;
