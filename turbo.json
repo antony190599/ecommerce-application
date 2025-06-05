@@ -9,6 +9,12 @@
         "env": ["NEXT_PUBLIC_API_HOST"],
         "cache": false
       },
+      "storybook": {
+        "cache": false,
+        "persistent": true,
+        "dependsOn": ["^build"]
+
+      },
       "lint": {
         "cache": false,
         "dependsOn": ["^build"]

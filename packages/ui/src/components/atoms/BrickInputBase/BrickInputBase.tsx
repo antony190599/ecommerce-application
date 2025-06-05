@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback } from 'react';
-import { InputContainer, StyledLabel, StyledInput, HelpText, ErrorText } from './styled';
+import { InputContainer, StyledLabel, StyledInput, HelpText, ErrorText } from './BrickInputBase.styled';
+import { useTheme } from 'styled-components';
+import { ThemeType } from 'brick-theme-ui';
 
 export interface BrickInputBaseProps {
   label?: string;
@@ -16,7 +18,7 @@ export interface BrickInputBaseProps {
   onBlur?: () => void;
 }
 
-const BrickInputBase: React.FC<BrickInputBaseProps> = ({
+export const BrickInputBase: React.FC<BrickInputBaseProps> = ({
   label,
   helpText,
   placeholder,
@@ -29,6 +31,8 @@ const BrickInputBase: React.FC<BrickInputBaseProps> = ({
   onFocus,
   onBlur,
 }) => {
+  const theme = useTheme() as ThemeType;
+
   const [isFocused, setIsFocused] = useState(false);
   const isFilled = value !== '';
 
@@ -70,5 +74,3 @@ const BrickInputBase: React.FC<BrickInputBaseProps> = ({
     </InputContainer>
   );
 };
-
-export default BrickInputBase;

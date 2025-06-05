@@ -2,6 +2,7 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
       "baseUrl": "./src",
+      "declaration": true,
       "paths": {
         "@commerce-app/*": ["../../apps/min-commerce-nextjs/src/*"],
       }

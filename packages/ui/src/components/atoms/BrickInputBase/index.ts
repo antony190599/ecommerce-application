@@ -1,1 +1,1 @@
-export { default } from './BrickInputBase';
+export * from './BrickInputBase';

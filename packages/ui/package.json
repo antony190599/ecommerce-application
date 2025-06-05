@@ -3,12 +3,19 @@
   "$schema": "https://json.schemastore.org/package.json",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
   "dependencies": {
     "styled-components": "^6.1.8",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "brick-theme-ui": "*"
+  },
+
+  "scripts": {
+    "build-cjs": "tsc --project tsconfig-build.json --module CommonJS --outDir dist/cjs",
+    "build": "rimraf dist && tsc --project tsconfig-build.json && yarn build-cjs"
   },
   "engines": {
       "node": ">=20",

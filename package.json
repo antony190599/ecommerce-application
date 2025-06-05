@@ -11,6 +11,7 @@
       "build": "turbo run build",
       "start": "turbo run dev --parallel",
       "start:nextjs": "turbo run dev --filter=min-commerce-nextjs",
+      "start:storybook": "turbo run storybook --filter=storybook",
       "start:react": "turbo run dev --filter=ecommerce-application",
       "build:theme": "turbo run build --filter=brick-theme-ui",
       "build:ui": "turbo run build --filter=brick-ui",
