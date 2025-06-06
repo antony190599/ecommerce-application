@@ -37,6 +37,7 @@ const AddQuantityButton: React.FC<AddQuantityButtonProps> = ({
   disabled = false,
   showZero = false // Default to false to maintain backward compatibility
 }) => {
+  
   const [quantity, setQuantity] = useState(initialQuantity);
   
   const handleIncrease = () => {

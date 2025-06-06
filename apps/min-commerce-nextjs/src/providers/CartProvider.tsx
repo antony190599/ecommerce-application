@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { CartItem, CartContextType } from '../types/cart';
 
+
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const useCart = () => {
