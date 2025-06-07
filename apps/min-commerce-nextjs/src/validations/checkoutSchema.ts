@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const checkoutFormSchema = z.object({
+export const checkoutStep1FormSchema = z.object({
   nombre: z.string()
     .min(2, { message: 'El nombre debe tener al menos 2 caracteres' })
     .max(50, { message: 'El nombre no puede exceder los 50 caracteres' }),
@@ -15,6 +15,10 @@ export const checkoutFormSchema = z.object({
       message: 'El teléfono debe contener solo números'
     }),
   
+  
+});
+
+export  const checkoutStep2FormSchema = z.object({
   direccion: z.string()
     .min(5, { message: 'La dirección debe tener al menos 5 caracteres' })
     .max(100, { message: 'La dirección no puede exceder los 100 caracteres' }),
@@ -25,12 +29,24 @@ export const checkoutFormSchema = z.object({
     .nullable(),
 });
 
-export type CheckoutFormValues = z.infer<typeof checkoutFormSchema>;
+export type CheckoutStep1FormValues = {
+  nombre: string;
+  email: string;
+  telefono: string;
+};
 
-export const initialCheckoutFormValues: CheckoutFormValues = {
+export type CheckoutStep2FormValues = {
+  direccion: string;
+  referencia?: string | null;
+};
+
+export const initialCheckoutStep1FormValues: CheckoutStep1FormValues = {
   nombre: '',
   email: '',
-  telefono: '',
+  telefono: '',  
+} as const;
+
+export const initialCheckoutStep2FormValues: CheckoutStep2FormValues = {
   direccion: '',
   referencia: '',
 } as const;

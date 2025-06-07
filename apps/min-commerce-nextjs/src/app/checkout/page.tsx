@@ -1,9 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useCart } from '@/providers/CartProvider';
 import Navbar from '../../components/Navbar';
 import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { 
+  checkoutStep1FormSchema, 
+  checkoutStep2FormSchema, 
+  CheckoutStep1FormValues, 
+  CheckoutStep2FormValues,
+  initialCheckoutStep1FormValues,
+  initialCheckoutStep2FormValues
+} from '@/validations/checkoutSchema';
+import { z } from 'zod';
 
 const CartContainer = styled.div`
   max-width: 1200px;
@@ -256,27 +268,25 @@ const CustomerInfoText = styled.p`
   color: ${({ theme }) => theme.colors.text};
 `;
 
+const ErrorMessage = styled.p`
+  color: #e53935;
+  font-size: 0.8rem;
+  margin-top: 4px;
+`;
+
 const formatCurrency = (value: number) => {
   return `S/ ${value.toFixed(2)}`;
 };
 
 interface CustomerData {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  needInvoice: boolean;
   paymentMethod: string;
+  needInvoice: boolean;
 }
 
 const CheckoutPage: React.FC = () => {
   const { items, totalAmount } = useCart();
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [customerData, setCustomerData] = useState<CustomerData>({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
     needInvoice: false,
     paymentMethod: 'izipay'
   });
@@ -288,14 +298,30 @@ const CheckoutPage: React.FC = () => {
     payment: { completed: false, editing: false },
   });
 
-  const handleCustomerSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Validar datos del cliente
-    if (!customerData.name || !customerData.email || !customerData.phone) {
-      alert('Por favor complete todos los campos');
-      return;
-    }
-    
+  // Step 1 form
+  const { 
+    register: registerStep1, 
+    handleSubmit: handleSubmitStep1, 
+    formState: { errors: errorsStep1 },
+    getValues: getValuesStep1,
+  } = useForm<CheckoutStep1FormValues>({
+    resolver: zodResolver(checkoutStep1FormSchema),
+    defaultValues: initialCheckoutStep1FormValues,
+  });
+
+  // Step 2 form
+  const { 
+    register: registerStep2, 
+    handleSubmit: handleSubmitStep2, 
+    formState: { errors: errorsStep2 },
+    getValues: getValuesStep2,
+  } = useForm<CheckoutStep2FormValues>({
+    // @ts-expected-error
+    resolver: zodResolver(checkoutStep2FormSchema),
+    defaultValues: initialCheckoutStep2FormValues,
+  });
+
+  const onSubmitStep1 = (data: CheckoutStep1FormValues) => {
     setSectionStatus({
       ...sectionStatus,
       customer: { completed: true, editing: false },
@@ -304,14 +330,7 @@ const CheckoutPage: React.FC = () => {
     setCurrentStep(2);
   };
 
-  const handleAddressSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Validar dirección
-    if (!customerData.address) {
-      alert('Por favor ingrese una dirección');
-      return;
-    }
-    
+  const onSubmitStep2 = (data: CheckoutStep2FormValues) => {
     setSectionStatus({
       ...sectionStatus,
       address: { completed: true, editing: false },
@@ -355,8 +374,15 @@ const CheckoutPage: React.FC = () => {
   };
 
   const handleCheckout = () => {
+    const formData = {
+      ...getValuesStep1(),
+      ...getValuesStep2(),
+      needInvoice: customerData.needInvoice,
+      paymentMethod: customerData.paymentMethod
+    };
+    
     console.log('Procesando compra con datos:', {
-      customer: customerData,
+      customer: formData,
       items,
       total: totalAmount + (totalAmount >= 80 ? 0 : 10)
     });
@@ -393,42 +419,43 @@ const CheckoutPage: React.FC = () => {
 
                 {sectionStatus.customer.completed && !sectionStatus.customer.editing ? (
                   <CustomerInfo>
-                    <CustomerInfoText>{customerData.name}</CustomerInfoText>
-                    <CustomerInfoText>{customerData.email}</CustomerInfoText>
-                    <CustomerInfoText>{customerData.phone}</CustomerInfoText>
+                    <CustomerInfoText>{getValuesStep1().nombre}</CustomerInfoText>
+                    <CustomerInfoText>{getValuesStep1().email}</CustomerInfoText>
+                    <CustomerInfoText>{getValuesStep1().telefono}</CustomerInfoText>
                   </CustomerInfo>
                 ) : (
-                  <form onSubmit={handleCustomerSubmit}>
+                  <form onSubmit={handleSubmitStep1(onSubmitStep1)}>
                     <FormGroup>
-                      <FormLabel htmlFor="name">Nombre completo</FormLabel>
+                      <FormLabel htmlFor="nombre">Nombre completo</FormLabel>
                       <FormInput 
-                        id="name" 
-                        name="name" 
-                        value={customerData.name} 
-                        onChange={handleInputChange}
-                        required 
+                        id="nombre" 
+                        {...registerStep1("nombre")} 
                       />
+                      {errorsStep1.nombre && (
+                        <ErrorMessage>{errorsStep1.nombre.message}</ErrorMessage>
+                      )}
                     </FormGroup>
                     <FormGroup>
                       <FormLabel htmlFor="email">Correo electrónico</FormLabel>
                       <FormInput 
                         id="email" 
-                        name="email" 
                         type="email" 
-                        value={customerData.email} 
-                        onChange={handleInputChange}
-                        required 
+                        {...registerStep1("email")} 
                       />
+                      {errorsStep1.email && (
+                        <ErrorMessage>{errorsStep1.email.message}</ErrorMessage>
+                      )}
                     </FormGroup>
                     <FormGroup>
-                      <FormLabel htmlFor="phone">Teléfono</FormLabel>
+                      <FormLabel htmlFor="telefono">Teléfono</FormLabel>
                       <FormInput 
-                        id="phone" 
-                        name="phone" 
-                        value={customerData.phone} 
-                        onChange={handleInputChange}
-                        required 
+                        id="telefono" 
+                        type="tel"
+                        {...registerStep1("telefono")} 
                       />
+                      {errorsStep1.telefono && (
+                        <ErrorMessage>{errorsStep1.telefono.message}</ErrorMessage>
+                      )}
                     </FormGroup>
                     <FormActions>
                       <ContinueButton type="submit">Continuar</ContinueButton>
@@ -455,21 +482,33 @@ const CheckoutPage: React.FC = () => {
                 ) : sectionStatus.address.completed && !sectionStatus.address.editing ? (
                   <CustomerInfo>
                     <CustomerInfoText>Delivery</CustomerInfoText>
-                    <CustomerInfoText>{customerData.address}</CustomerInfoText>
+                    <CustomerInfoText>{getValuesStep2().direccion}</CustomerInfoText>
+                    <CustomerInfoText>{getValuesStep2().referencia || 'Sin referencia'}</CustomerInfoText>
                     <CustomerInfoText>{customerData.needInvoice ? 'Con factura' : 'Sin factura'}</CustomerInfoText>
                   </CustomerInfo>
                 ) : (
-                  <form onSubmit={handleAddressSubmit}>
+                  <form onSubmit={handleSubmitStep2(onSubmitStep2)}>
                     <FormGroup>
-                      <FormLabel htmlFor="address">Dirección completa</FormLabel>
+                      <FormLabel htmlFor="direccion">Dirección completa</FormLabel>
                       <FormInput 
-                        id="address" 
-                        name="address" 
-                        value={customerData.address} 
-                        onChange={handleInputChange}
+                        id="direccion" 
                         placeholder="Dirección, Número, Distrito, Provincia, Departamento"
-                        required 
+                        {...registerStep2("direccion")} 
                       />
+                      {errorsStep2.direccion && (
+                        <ErrorMessage>{errorsStep2.direccion.message}</ErrorMessage>
+                      )}
+                    </FormGroup>
+                    <FormGroup>
+                      <FormLabel htmlFor="referencia">Referencia (Opcional)</FormLabel>
+                      <FormInput 
+                        id="referencia" 
+                        placeholder="Puntos de referencia para encontrar la dirección"
+                        {...registerStep2("referencia")} 
+                      />
+                      {errorsStep2.referencia && (
+                        <ErrorMessage>{errorsStep2.referencia.message}</ErrorMessage>
+                      )}
                     </FormGroup>
                     <FormGroup>
                       <RadioOption>

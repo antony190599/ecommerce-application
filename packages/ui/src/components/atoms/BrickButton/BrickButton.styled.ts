@@ -164,7 +164,7 @@ export const SpinnerContainer = styled.span<{ size?: ButtonSize }>`
 `;
 
 export const ButtonContent = styled.span<{ isLoading: boolean }>`
-  visibility: ${({ isLoading }) => isLoading ? 'hidden' : 'visible'};
+  //visibility: ${({ isLoading }) => isLoading ? 'hidden' : 'visible'};
   display: flex;
   align-items: center;
   justify-content: center;
