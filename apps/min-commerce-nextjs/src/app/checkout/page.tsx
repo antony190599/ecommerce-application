@@ -98,6 +98,24 @@ const CheckoutButton = styled.button`
   }
 `;
 
+// En la sección de estilos, añade este componente estilizado
+const CancelButton = styled.button`
+  width: 100%;
+  padding: 15px;
+  background-color: white;
+  color: ${({ theme }) => theme.colors.textLight};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+  border-radius: 8px;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray100};
+  }
+`;
+
 const EmptyCartMessage = styled.div`
   text-align: center;
   padding: 60px 20px;
@@ -389,6 +407,14 @@ const CheckoutPage: React.FC = () => {
     // Implementar lógica de checkout
   };
 
+  const handleCancelCheckout = () => {
+    if (window.confirm('¿Estás seguro de que deseas cancelar la compra? Se perderá la información ingresada.')) {
+      // Opcionalmente, puedes limpiar el carrito o guardar el estado actual
+      // cart.clearCart(); // Si quieres vaciar el carrito al cancelar
+      window.location.href = '/';
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -605,6 +631,9 @@ const CheckoutPage: React.FC = () => {
                   {formatCurrency(totalAmount + (totalAmount >= 80 ? 0 : 10))}
                 </TotalValue>
               </SummaryTotal>
+              <CancelButton onClick={handleCancelCheckout}>
+                Cancelar Compra
+              </CancelButton>
               <CheckoutButton 
                 onClick={handleCheckout}
                 disabled={!sectionStatus.customer.completed || !sectionStatus.address.completed || !sectionStatus.payment.completed}
