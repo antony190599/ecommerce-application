@@ -65,7 +65,7 @@ const CartButton: React.FC = () => {
   const handleCheckout = () => {
     console.log('Proceeding to checkout with items:', items);
     // Navigate to checkout or cart page
-    window.location.href = '/cart';
+    window.location.href = '/checkout';
     setIsOpen(false);
   };
 

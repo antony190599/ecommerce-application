@@ -338,7 +338,7 @@ const CartModal: React.FC<CartModalProps> = ({
               Seguir Comprando
             </ContinueShoppingButton>
             {hasItems && (
-              <ViewCartLink href="/cart" onClick={onClose}>
+              <ViewCartLink href="/checkout" onClick={onClose}>
                 Ver Carrito
               </ViewCartLink>
             )}
