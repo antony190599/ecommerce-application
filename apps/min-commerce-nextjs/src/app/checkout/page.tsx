@@ -344,7 +344,7 @@ const CheckoutPage: React.FC = () => {
     });
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     const formData = {
       ...getValuesStep1(),
       ...getValuesStep2(),
@@ -352,12 +352,35 @@ const CheckoutPage: React.FC = () => {
       paymentMethod: customerData.paymentMethod
     };
     
-    console.log('Procesando compra con datos:', {
+    const orderData = {
       customer: formData,
       items,
       total: totalAmount + (totalAmount >= 80 ? 0 : 10)
-    });
-    // Implementar lógica de checkout
+    };
+    
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        // Clear cart or redirect to success page
+        alert('¡Orden creada con éxito! Número de orden: ' + result.order.id);
+        // Optionally clear the cart here
+        window.location.href = '/';
+      } else {
+        alert('Error al procesar la orden: ' + (result.error || 'Intente nuevamente'));
+      }
+    } catch (error) {
+      console.error('Error al enviar la orden:', error);
+      alert('Error al procesar la orden. Por favor intente nuevamente.');
+    }
   };
 
   const handleCancelCheckout = () => {
