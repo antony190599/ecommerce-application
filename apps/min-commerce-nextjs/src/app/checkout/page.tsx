@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -9,13 +9,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { 
   checkoutStep1FormSchema, 
-  checkoutStep2FormSchema, 
   CheckoutStep1FormValues, 
+  checkoutStep2FormSchema,
   CheckoutStep2FormValues,
   initialCheckoutStep1FormValues,
   initialCheckoutStep2FormValues
 } from '@/validations/checkoutSchema';
-import { z } from 'zod';
+import { BrickButton } from 'brick-ui';
 
 const CartContainer = styled.div`
   max-width: 1200px;
@@ -79,41 +79,6 @@ const TotalLabel = styled.span`
 const TotalValue = styled.span`
   font-size: 1.1rem;
   color: ${({ theme }) => theme.colors.primary};
-`;
-
-const CheckoutButton = styled.button`
-  width: 100%;
-  padding: 15px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color ${({ theme }) => theme.transitions.fast};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary};
-  }
-`;
-
-// En la sección de estilos, añade este componente estilizado
-const CancelButton = styled.button`
-  width: 100%;
-  padding: 15px;
-  background-color: white;
-  color: ${({ theme }) => theme.colors.textLight};
-  border: 1px solid ${({ theme }) => theme.colors.gray300};
-  border-radius: 8px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color ${({ theme }) => theme.transitions.fast};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.gray100};
-  }
 `;
 
 const EmptyCartMessage = styled.div`
@@ -215,17 +180,19 @@ const FormLabel = styled.label`
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const FormInput = styled.input`
+const FormInput = styled.input
+  .withConfig({ shouldForwardProp: prop => prop !== 'error' })
+  <{ error?: boolean }>`
   width: 100%;
   padding: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.gray300};
+  border: 1px solid ${({ theme, error }) => error ? theme.colors.error : theme.colors.gray300};
   border-radius: 4px;
   font-size: 1rem;
   
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.primaryLighter};
+    border-color: ${({ theme, error }) => error ? theme.colors.error : theme.colors.primary};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primaryLighter};
   }
 `;
 
@@ -233,21 +200,6 @@ const FormActions = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
-`;
-
-const ContinueButton = styled.button`
-  padding: 10px 20px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  cursor: pointer;
-  transition: background-color ${({ theme }) => theme.transitions.fast};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary};
-  }
 `;
 
 const RadioOption = styled.label`
@@ -323,7 +275,7 @@ const CheckoutPage: React.FC = () => {
     formState: { errors: errorsStep1 },
     getValues: getValuesStep1,
   } = useForm<CheckoutStep1FormValues>({
-    resolver: zodResolver(checkoutStep1FormSchema),
+    resolver: zodResolver(checkoutStep1FormSchema as any),
     defaultValues: initialCheckoutStep1FormValues,
   });
 
@@ -334,11 +286,11 @@ const CheckoutPage: React.FC = () => {
     formState: { errors: errorsStep2 },
     getValues: getValuesStep2,
   } = useForm<CheckoutStep2FormValues>({
-    // @ts-expected-error
-    resolver: zodResolver(checkoutStep2FormSchema),
+    resolver: zodResolver(checkoutStep2FormSchema as any),
     defaultValues: initialCheckoutStep2FormValues,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmitStep1 = (data: CheckoutStep1FormValues) => {
     setSectionStatus({
       ...sectionStatus,
@@ -348,6 +300,7 @@ const CheckoutPage: React.FC = () => {
     setCurrentStep(2);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmitStep2 = (data: CheckoutStep2FormValues) => {
     setSectionStatus({
       ...sectionStatus,
@@ -455,6 +408,7 @@ const CheckoutPage: React.FC = () => {
                       <FormLabel htmlFor="nombre">Nombre completo</FormLabel>
                       <FormInput 
                         id="nombre" 
+                        error={!!errorsStep1.nombre}
                         {...registerStep1("nombre")} 
                       />
                       {errorsStep1.nombre && (
@@ -465,7 +419,8 @@ const CheckoutPage: React.FC = () => {
                       <FormLabel htmlFor="email">Correo electrónico</FormLabel>
                       <FormInput 
                         id="email" 
-                        type="email" 
+                        type="email"
+                        error={!!errorsStep1.email}
                         {...registerStep1("email")} 
                       />
                       {errorsStep1.email && (
@@ -477,6 +432,7 @@ const CheckoutPage: React.FC = () => {
                       <FormInput 
                         id="telefono" 
                         type="tel"
+                        error={!!errorsStep1.telefono}
                         {...registerStep1("telefono")} 
                       />
                       {errorsStep1.telefono && (
@@ -484,7 +440,7 @@ const CheckoutPage: React.FC = () => {
                       )}
                     </FormGroup>
                     <FormActions>
-                      <ContinueButton type="submit">Continuar</ContinueButton>
+                      <BrickButton variant='primary' type="submit">Continuar</BrickButton>
                     </FormActions>
                   </form>
                 )}
@@ -519,6 +475,7 @@ const CheckoutPage: React.FC = () => {
                       <FormInput 
                         id="direccion" 
                         placeholder="Dirección, Número, Distrito, Provincia, Departamento"
+                        error={!!errorsStep2.direccion}
                         {...registerStep2("direccion")} 
                       />
                       {errorsStep2.direccion && (
@@ -530,6 +487,7 @@ const CheckoutPage: React.FC = () => {
                       <FormInput 
                         id="referencia" 
                         placeholder="Puntos de referencia para encontrar la dirección"
+                        error={!!errorsStep2.referencia}
                         {...registerStep2("referencia")} 
                       />
                       {errorsStep2.referencia && (
@@ -549,7 +507,7 @@ const CheckoutPage: React.FC = () => {
                       </RadioOption>
                     </FormGroup>
                     <FormActions>
-                      <ContinueButton type="submit">Continuar</ContinueButton>
+                      <BrickButton variant='primary' type="submit">Continuar</BrickButton>
                     </FormActions>
                   </form>
                 )}
@@ -608,7 +566,7 @@ const CheckoutPage: React.FC = () => {
                       </RadioOption>
                     </FormGroup>
                     <FormActions>
-                      <ContinueButton type="submit">Confirmar</ContinueButton>
+                      <BrickButton variant='primary' type="submit">Confirmar</BrickButton>
                     </FormActions>
                   </form>
                 )}
@@ -631,15 +589,24 @@ const CheckoutPage: React.FC = () => {
                   {formatCurrency(totalAmount + (totalAmount >= 80 ? 0 : 10))}
                 </TotalValue>
               </SummaryTotal>
-              <CancelButton onClick={handleCancelCheckout}>
+              <BrickButton 
+                variant='secondary'
+                style={{ marginBottom: '20px' }}
+                fullWidth
+                size="lg"
+                onClick={handleCancelCheckout}
+              >  
                 Cancelar Compra
-              </CancelButton>
-              <CheckoutButton 
+              </BrickButton>
+              <BrickButton
+                variant="primary"
+                fullWidth
+                size="lg" 
                 onClick={handleCheckout}
                 disabled={!sectionStatus.customer.completed || !sectionStatus.address.completed || !sectionStatus.payment.completed}
               >
                 Finalizar Compra
-              </CheckoutButton>
+              </BrickButton>
             </OrderSummary>
           </CheckoutLayout>
         )}

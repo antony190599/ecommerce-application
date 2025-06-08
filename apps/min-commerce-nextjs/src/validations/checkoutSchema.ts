@@ -29,16 +29,8 @@ export  const checkoutStep2FormSchema = z.object({
     .nullable(),
 });
 
-export type CheckoutStep1FormValues = {
-  nombre: string;
-  email: string;
-  telefono: string;
-};
-
-export type CheckoutStep2FormValues = {
-  direccion: string;
-  referencia?: string | null;
-};
+export type CheckoutStep1FormValues = z.infer<typeof checkoutStep1FormSchema>;
+export type CheckoutStep2FormValues = z.infer<typeof checkoutStep2FormSchema>;
 
 export const initialCheckoutStep1FormValues: CheckoutStep1FormValues = {
   nombre: '',

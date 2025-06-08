@@ -7,6 +7,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import AddQuantityButton from '../AddQuantityButton';
 import { CartItem } from '../../types/cart';
 import Link from 'next/link';
+import { BrickButton } from 'brick-ui';
 
 // Types (ahora importados desde types/cart.ts)
 interface CartModalProps {
@@ -334,13 +335,24 @@ const CartModal: React.FC<CartModalProps> = ({
             </TotalRow>
           )}
           <ActionButtons>
-            <ContinueShoppingButton onClick={onClose}>
-              Seguir Comprando
-            </ContinueShoppingButton>
+            <BrickButton
+              variant='secondary'
+              fullWidth
+              size='lg'
+              onClick={onClose}
+            >
+              Atrás
+            </BrickButton>
             {hasItems && (
-              <ViewCartLink href="/checkout" onClick={onClose}>
-                Ver Carrito
-              </ViewCartLink>
+              <BrickButton 
+                onClick={onCheckout}
+                variant="primary"
+                fullWidth
+                size='lg'
+              >
+                Finalizar Compra
+              </BrickButton>
+
             )}
           </ActionButtons>
         </CartFooter>

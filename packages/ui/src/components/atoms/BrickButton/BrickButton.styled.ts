@@ -43,7 +43,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
         `;
       case 'lg':
         return css`
-          padding: ${theme.spacing.md} ${theme.spacing.xl};
+          padding: ${theme.spacing.md} ${theme.spacing.sm};
           font-size: 1.125rem;
         `;
       case 'md':
