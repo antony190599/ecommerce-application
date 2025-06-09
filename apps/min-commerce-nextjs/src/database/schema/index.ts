@@ -1,4 +1,4 @@
-import { boolean, integer, numeric, pgTable, serial, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, numeric, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 //Create a table for products
 export const products = pgTable('products', {

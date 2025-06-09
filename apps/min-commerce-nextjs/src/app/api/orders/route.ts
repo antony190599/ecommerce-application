@@ -4,37 +4,6 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from 'uuid';
 
-// Define types for our order data
-interface OrderItem {
-  id: string;
-  name: string;
-  imageUrl: string;
-  price: number;
-  quantity: number;
-  unit: string;
-  discount?: number;
-  stock?: number;
-}
-
-interface Customer {
-  needInvoice: boolean;
-  paymentMethod: string;
-  direccion?: string;
-  referencia?: string;
-  nombre?: string;
-  email?: string;
-  telefono?: string;
-}
-
-interface Order {
-  id: string;
-  customer: Customer;
-  items: OrderItem[];
-  total: number;
-  date: string;
-  status: 'pending' | 'processing' | 'completed' | 'cancelled';
-}
-
 export async function POST(req: Request) {
   try {
     // Parse request body
