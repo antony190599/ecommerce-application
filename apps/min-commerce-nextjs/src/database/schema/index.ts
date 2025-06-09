@@ -54,3 +54,23 @@ export const orderItems = pgTable('order_items', {
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().$onUpdate(() => new Date()),
 });
+
+// Create a table for categories with self-referential relationship
+export const categories = pgTable('categories', {
+  id: varchar('id').primaryKey(),
+  name: varchar('name').notNull(),
+  path: varchar('path').notNull().unique(),
+  parentId: varchar('parent_id').references(() => categories.id, { onDelete: 'cascade' }),
+  level: integer('level').notNull().default(0),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().$onUpdate(() => new Date()),
+});
+
+// Add category relationship to products
+export const productCategories = pgTable('product_categories', {
+  id: uuid('id').primaryKey(),
+  productId: uuid('product_id').notNull().references(() => products.id, { onDelete: 'cascade' }),
+  categoryId: varchar('category_id').notNull().references(() => categories.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().$onUpdate(() => new Date()),
+});
