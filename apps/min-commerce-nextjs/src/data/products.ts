@@ -2,7 +2,7 @@ import { ProductCardProps } from "../components/ProductCard";
 
 export const products: ProductCardProps[] = [
   {
-    id: "1",
+    id: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
     name: "Block Arcoiris A4 90 g x 40 Hojas",
     slug: "block-arcoiris-a4-90g-x-40-hojas",
     unit: "UNIDAD",
@@ -14,7 +14,7 @@ export const products: ProductCardProps[] = [
     rating: 4.2,
   },
   {
-    id: "2",
+    id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
     name: "Cinta Masking Tape 500 3/4 in x 40 yd",
     slug: "cinta-masking-tape-500-3-4-in-x-40-yd",
     unit: "UNIDAD",
@@ -25,7 +25,7 @@ export const products: ProductCardProps[] = [
     rating: 4.0,
   },
   {
-    id: "3",
+    id: "a3bb189e-8bf9-3888-9912-ace4e6543002",
     name: "Colores Triangulares Caja x 24 Unidades",
     slug: "colores-triangulares-caja-x-24-unidades",
     unit: "UNIDAD",
@@ -36,7 +36,7 @@ export const products: ProductCardProps[] = [
     rating: 4.7,
   },
   {
-    id: "4",
+    id: "e4eaaaf2-d142-11e1-b3e4-080027620cdd",
     name: "Cuaderno Junior Book Triple Renglón A4 Grapado x 80 Hojas",
     slug: "cuaderno-junior-book-triple-renglon-a4-grapado-x-80-hojas",
     unit: "UNIDAD",
@@ -48,7 +48,7 @@ export const products: ProductCardProps[] = [
     rating: 4.4,
   },
   {
-    id: "5",
+    id: "f81d4fae-7dec-11d0-a765-00a0c91e6bf6",
     name: "Cuaderno Empastado de Índice A5 x 200 Hojas",
     slug: "cuaderno-empastado-de-indice-a5-x-200-hojas",
     unit: "UNIDAD",
@@ -59,7 +59,7 @@ export const products: ProductCardProps[] = [
     rating: 4.3,
   },
   {
-    id: "6",
+    id: "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
     name: "Cuaderno Empastado de Índice A5 x 100 Hojas",
     slug: "cuaderno-empastado-de-indice-a5-x-100-hojas",
     unit: "UNIDAD",
@@ -70,7 +70,7 @@ export const products: ProductCardProps[] = [
     rating: 4.3,
   },
   {
-    id: "7",
+    id: "b4bfb2f7-5c4e-4e8f-9a2b-1c3d4e5f6789",
     name: "Lápiz de Grafito Swano 2B con Borrador",
     slug: "lapiz-de-grafito-swano-2b-con-borrador",
     unit: "UNIDAD",
@@ -81,7 +81,7 @@ export const products: ProductCardProps[] = [
     rating: 4.5,
   },
   {
-    id: "8",
+    id: "c9bf9e57-1685-4c89-bafb-ff5af830be8a",
     name: "Papel Etiqueta Adhesivo Mate A4 x 25 Hojas Blanco",
     slug: "papel-etiqueta-adhesivo-mate-a4-x-25-hojas-blanco",
     unit: "PAQUETE",
@@ -92,7 +92,7 @@ export const products: ProductCardProps[] = [
     rating: 4.6,
   },
   {
-    id: "9",
+    id: "d290f1ee-6c54-4b01-90e6-d701748f0851",
     name: "Pegamento en Barra x 40g",
     slug: "pegamento-en-barra-x-40g",
     unit: "UNIDAD",
@@ -103,7 +103,7 @@ export const products: ProductCardProps[] = [
     rating: 4.1,
   },
   {
-    id: "10",
+    id: "7c9e6679-7425-40de-944b-e07fc1f90ae7",
     name: "Plumón Jumbo 47 Estuche x 6 Unidades",
     slug: "plumon-jumbo-47-estuche-x-6-unidades",
     unit: "UNIDAD",

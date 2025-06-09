@@ -254,7 +254,8 @@ interface CustomerData {
 }
 
 const CheckoutPage: React.FC = () => {
-  const { items, totalAmount } = useCart();
+  const { items, totalAmount, clearCart } = useCart();
+  const [ checkoutLoading, setCheckoutLoading ] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [customerData, setCustomerData] = useState<CustomerData>({
     needInvoice: false,
@@ -345,6 +346,7 @@ const CheckoutPage: React.FC = () => {
   };
 
   const handleCheckout = async () => {
+    setCheckoutLoading(true);
     const formData = {
       ...getValuesStep1(),
       ...getValuesStep2(),
@@ -372,14 +374,21 @@ const CheckoutPage: React.FC = () => {
       if (response.ok) {
         // Clear cart or redirect to success page
         alert('¡Orden creada con éxito! Número de orden: ' + result.order.id);
+        setCheckoutLoading(false);
+
+        // VACIAR EL CARRITO
+        clearCart();
+
         // Optionally clear the cart here
         window.location.href = '/';
       } else {
         alert('Error al procesar la orden: ' + (result.error || 'Intente nuevamente'));
+        setCheckoutLoading(false);
       }
     } catch (error) {
       console.error('Error al enviar la orden:', error);
       alert('Error al procesar la orden. Por favor intente nuevamente.');
+      setCheckoutLoading(false);
     }
   };
 
@@ -623,6 +632,7 @@ const CheckoutPage: React.FC = () => {
               </BrickButton>
               <BrickButton
                 variant="primary"
+                loading={checkoutLoading}
                 fullWidth
                 size="lg" 
                 onClick={handleCheckout}

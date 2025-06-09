@@ -2,7 +2,7 @@ import type { Config } from 'drizzle-kit';
 
 export default {
   dialect: 'postgresql',
-  schema: './src/db/schema/index.ts',
+  schema: './src/database/schema/index.ts',
   out: './drizzle',
   strict: true,
   verbose: true,
