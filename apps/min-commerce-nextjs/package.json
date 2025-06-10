@@ -12,8 +12,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:drop": "drizzle-kit drop",
-    "gen:secret": "auth secret"
+    "db:drop": "drizzle-kit drop"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
