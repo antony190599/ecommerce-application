@@ -1,5 +1,6 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import AuthButton from '@/components/AuthButton'
 import styled from 'styled-components'
 import ProductList from '@/components/ProductList'
 import { products } from '@/data/products'
@@ -38,7 +39,7 @@ export default function Home() {
   return (
     <HomeContainer>
       <Navbar />
-      
+      <AuthButton />
       <MainContent>
         {/* Banner Carousel */}
         <ProductSlider images={bannerImages} />

@@ -8,6 +8,7 @@ import { theme } from "brick-theme-ui";
 import GlobalStyles from "@/GlobalStyles";
 import { CartProvider } from "@/providers/CartProvider";
 import { ConfigProvider } from "@/providers/ConfigProvider";
+import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
   children,
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {/* <AppRouterCacheProvider> */}
+        <SessionProvider>
           <ThemeProvider theme={theme}>
             <GlobalStyles />
             <CartProvider>
@@ -29,6 +31,7 @@ export default function RootLayout({
               </ConfigProvider>
             </CartProvider>
           </ThemeProvider>
+        </SessionProvider>
         {/* </AppRouterCacheProvider> */}
         
       </body>
