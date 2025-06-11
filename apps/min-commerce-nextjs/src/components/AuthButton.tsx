@@ -2,7 +2,7 @@
 import { signIn, signOut, useSession } from "next-auth/react"
 import styled from 'styled-components';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 
 // Estilos para que coincida con tu diseño
 const AuthContainer = styled.div`
@@ -38,18 +38,45 @@ const UserMenuContainer = styled.div`
   right: 0;
   width: 200px;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid ${({ theme }) => theme.colors.gray200};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  box-shadow: ${({ theme }) => theme.shadows.md};
   padding: 15px;
   z-index: 100;
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  /* Triángulo pseudo-elemento */
+  &:before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 20px; /* Ajusta este valor para alinear con el centro del botón */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+  }
 `;
 
 const UserName = styled.p`
   margin: 0;
+  color: ${({ theme }) => theme.colors.text};
+  text-align: left;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+`;
+
+const UserMenuLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.primary};
+  text-align: left;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  transition: color ${({ theme }) => theme.transitions.fast};
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 const SignOutButton = styled.button`
@@ -84,8 +111,8 @@ export default function AuthButton() {
       {session && isOpen && (
         <UserMenuContainer>
           <UserName>Hola, {session.user?.name || 'Usuario'}</UserName>
-          <Link href="/account" style={{ textDecoration: 'none', color: 'inherit' }}>Mi cuenta</Link>
-          <Link href="/orders" style={{ textDecoration: 'none', color: 'inherit' }}>Mis pedidos</Link>
+          <UserMenuLink href="/account">Mi cuenta</UserMenuLink>
+          <UserMenuLink href="/orders">Mis pedidos</UserMenuLink>
           <SignOutButton onClick={() => signOut()}>Cerrar sesión</SignOutButton>
         </UserMenuContainer>
       )}
