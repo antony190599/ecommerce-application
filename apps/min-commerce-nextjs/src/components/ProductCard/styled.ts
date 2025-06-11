@@ -35,7 +35,7 @@ export const AddButtonWrapper = styled.div`
   position: absolute;
   top: 8px;
   right: 8px;
-  z-index: ${props => props.theme.zIndex.dropdown};
+
 `;
 
 export const FavButton = styled.button`
