@@ -2,7 +2,7 @@ import {
     AxiomMiddleware,
   } from "@/lib/middleware";
   import { parse } from "@/lib/middleware/utils";
-  import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+  import { NextFetchEvent, NextRequest } from "next/server";
 
   
   export const config = {

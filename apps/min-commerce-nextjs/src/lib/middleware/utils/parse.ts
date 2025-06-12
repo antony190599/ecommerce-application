@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
 
 export const parse = (req: NextRequest) => {
-  let domain = req.headers.get("host") as string;
+  const domain = req.headers.get("host") as string;
   // path is the path of the URL (e.g. dub.sh/stats/github -> /stats/github)
-  let path = req.nextUrl.pathname;
+  const path = req.nextUrl.pathname;
 
   // remove www. from domain and convert to lowercase
 

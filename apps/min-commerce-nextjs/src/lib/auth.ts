@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import GoogleProvider from "next-auth/providers/google";
 import { db } from "@/database/db";
 import { users } from "@/database/schema";
@@ -96,7 +97,6 @@ export const authOptions = {
         console.log("Session callback:", session, token);
       session.user = {
         id: token.sub,
-        // @ts-ignore
         ...(token),
       };
       return session;

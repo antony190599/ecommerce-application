@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { eq, and } from 'drizzle-orm';
 import { db } from '../../db';
 import { orders, orderItems, products, users, customers } from '../../schema';
