@@ -1,5 +1,19 @@
 import { boolean, integer, numeric, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
+// Create a table for users
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey(),
+  email: varchar('email').notNull().unique(),
+  isAdmin: boolean('is_admin').default(false),
+  password: varchar('password'),
+  provider: varchar('provider').default('credentials'),
+  providerId: varchar('provider_id'),
+  name: varchar('name'),
+  image: text('image'),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().$onUpdate(() => new Date()),
+});
+
 //Create a table for products
 export const products = pgTable('products', {
     id: uuid('id').primaryKey(),
@@ -21,12 +35,13 @@ export const products = pgTable('products', {
 export const customers = pgTable('customers', {
     id: uuid('id').primaryKey(),
     needInvoice: boolean('need_invoice').default(false),
-    paymentMethod: varchar('payment_method').notNull(),
+    userId: uuid('user_id'),
+    paymentMethod: varchar('payment_method'),
     direccion: text('direccion'),
     referencia: text('referencia'),
-    nombre: varchar('nombre').notNull(),
-    email: varchar('email').notNull(),
-    telefono: varchar('telefono').notNull(),
+    name: varchar('nombre'),
+    email: varchar('email'),
+    phone: varchar('telefono'),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().$onUpdate(() => new Date()),
 });
@@ -38,6 +53,11 @@ export const orders = pgTable('orders', {
     customerName: varchar('customer_name').notNull(),
     customerEmail: varchar('customer_email').notNull(),
     customerPhone: varchar('customer_phone').notNull(),
+    customerId: uuid('customer_id'),
+    needInvoice: boolean('need_invoice'),
+    paymentMethod: varchar('payment_method'),
+    direccion: text('direccion'),
+    referencia: text('referencia'),
     total: numeric('price', { precision: 10, scale: 2 }).notNull(),
     status: varchar('status').notNull().default('pending'),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
