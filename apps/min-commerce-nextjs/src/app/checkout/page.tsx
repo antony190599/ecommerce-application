@@ -15,7 +15,7 @@ import {
   initialCheckoutStep2FormValues
 } from '@/validations/checkoutSchema';
 import { BrickButton } from 'brick-ui';
-import Mainlayout from '@/layouts';
+import Mainlayout from '@/layouts/main';
 
 const CartContainer = styled.div`
   max-width: 1200px;

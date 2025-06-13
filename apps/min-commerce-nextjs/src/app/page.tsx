@@ -5,7 +5,7 @@ import ProductList from '@/components/ProductList'
 import { products } from '@/data/products'
 import Navbar from '@/components/Navbar'
 import ProductSlider from '@/components/ProductSlider/ProductSlider'
-import Mainlayout from '@/layouts';
+import Mainlayout from '@/layouts/main';
 
 export default function Home() {
   // Get featured products (those that are on sale)

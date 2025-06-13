@@ -5,7 +5,7 @@ import ProductDetail from '@/components/ProductDetail';
 import { products } from '@/data/products';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import Mainlayout from '@/layouts';
+import Mainlayout from '@/layouts/main';
 
 // Styled Components
 
