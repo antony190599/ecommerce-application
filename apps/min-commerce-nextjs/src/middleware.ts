@@ -2,7 +2,8 @@ import {
     AxiomMiddleware,
   } from "@/lib/middleware";
   import { parse } from "@/lib/middleware/utils";
-  import { NextFetchEvent, NextRequest } from "next/server";
+  import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import AdminMiddleware from "./lib/middleware/admin";
 
   
   export const config = {
@@ -29,5 +30,12 @@ import {
     });
   
     AxiomMiddleware(req, ev);
-  
+
+    // ADMIN MIDDLEWARE
+    // validate /admin path
+    if (path.startsWith("/admin")) {
+        return AdminMiddleware(req);
+    }
+
+    return NextResponse.next();
   }
