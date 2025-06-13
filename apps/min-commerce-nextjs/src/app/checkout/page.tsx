@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useCart } from '@/providers/CartProvider';
-import Navbar from '../../components/Navbar';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,6 +15,7 @@ import {
   initialCheckoutStep2FormValues
 } from '@/validations/checkoutSchema';
 import { BrickButton } from 'brick-ui';
+import Mainlayout from '@/layouts';
 
 const CartContainer = styled.div`
   max-width: 1200px;
@@ -401,8 +401,8 @@ const CheckoutPage: React.FC = () => {
   };
 
   return (
-    <>
-      <Navbar />
+    
+    <Mainlayout>
       <CartContainer>
         <CartHeader>
           <CartTitle>Finalizar Compra</CartTitle>
@@ -644,7 +644,8 @@ const CheckoutPage: React.FC = () => {
           </CheckoutLayout>
         )}
       </CartContainer>
-    </>
+
+    </Mainlayout>
   );
 };
 

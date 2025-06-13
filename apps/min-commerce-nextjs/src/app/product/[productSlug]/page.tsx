@@ -1,22 +1,13 @@
 "use client";
 import React from 'react';
 import styled from 'styled-components';
-import Navbar from '@/components/Navbar';
 import ProductDetail from '@/components/ProductDetail';
 import { products } from '@/data/products';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import Mainlayout from '@/layouts';
 
 // Styled Components
-const ProductScreenContainer = styled.div`
-  margin: 0 auto;
-`;
-
-const MainContent = styled.main`
-//   max-width: 1280px;
-  margin: 0 auto;
-  padding: ${({ theme }) => theme.spacing.lg};
-`;
 
 const ProductNotFound = styled.div`
   text-align: center;
@@ -78,11 +69,8 @@ const ProductPage: React.FC = () => {
     : undefined;
   
   return (
-    <ProductScreenContainer>
-      <Navbar />
-      
-      <MainContent>
-        {extendedProduct ? (
+    <Mainlayout>
+      {extendedProduct ? (
           <ProductDetail product={extendedProduct} />
         ) : (
           <ProductNotFound>
@@ -91,8 +79,7 @@ const ProductPage: React.FC = () => {
             <Link href="/">Volver al inicio</Link>
           </ProductNotFound>
         )}
-      </MainContent>
-    </ProductScreenContainer>
+    </Mainlayout>
   );
 };
 

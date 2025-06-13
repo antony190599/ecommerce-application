@@ -5,19 +5,7 @@ import ProductList from '@/components/ProductList'
 import { products } from '@/data/products'
 import Navbar from '@/components/Navbar'
 import ProductSlider from '@/components/ProductSlider/ProductSlider'
-
-// Styled Components
-
-const HomeContainer = styled.div`
-  margin: 0 auto;
-  text-align: center;
-`;
-
-const MainContent = styled.main`
-  // max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 0;
-`;
+import Mainlayout from '@/layouts';
 
 export default function Home() {
   // Get featured products (those that are on sale)
@@ -36,19 +24,17 @@ export default function Home() {
   ];
   
   return (
-    <HomeContainer>
-      <Navbar />
-      <MainContent>
-        {/* Banner Carousel */}
-        <ProductSlider images={bannerImages} />
+    <Mainlayout>
+      {/* Banner Carousel */}
+      <ProductSlider images={bannerImages} />
 
-        {/* All available products */}
-        <ProductList 
-          products={availableProducts}
-          title="Catálogo de productos" 
-          maxColumns={5}
-        />
-      </MainContent>
-    </HomeContainer>
+      {/* All available products */}
+      <ProductList 
+        products={availableProducts}
+        title="Catálogo de productos" 
+        maxColumns={5}
+      />
+    </Mainlayout>
+        
   )
 }
