@@ -356,7 +356,14 @@ const CheckoutPage: React.FC = () => {
     
     const orderData = {
       customer: formData,
-      items,
+      items: items.map(item => ({
+        id: item.id,
+        name: item.name,            // Explícitamente incluir el nombre
+        price: item.price.toString(),
+        quantity: item.quantity,
+        stock: item.stock,
+        imageUrl: item.imageUrl     // Explícitamente incluir la URL de la imagen
+      })),
       total: totalAmount + (totalAmount >= 80 ? 0 : 10)
     };
     

@@ -69,10 +69,35 @@ export class OrderRepository {
       });
       
       // Convert map to array and sort by most recent
-      const ordersWithItems = Array.from(ordersMap.values())
+      const ordersArray = Array.from(ordersMap.values())
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       
-      return ordersWithItems;
+      // Ahora, busca los datos de productos para cada item en las órdenes
+      const ordersWithProductDetails = await Promise.all(ordersArray.map(async (order) => {
+        // Obtener los detalles de los productos para cada item
+        const itemsWithProductDetails = await Promise.all(order.items.map(async (item) => {
+          // Buscar el producto en la base de datos
+          const productData = await db.query.products.findFirst({
+            where: eq(products.id, item.productId),
+          });
+          
+          return {
+            id: item.id,
+            name: productData?.name || "Producto",
+            price: parseFloat(item.price),
+            quantity: item.quantity,
+            imageUrl: productData?.imageUrl || "",
+            productId: item.productId
+          };
+        }));
+        
+        return {
+          ...order,
+          items: itemsWithProductDetails
+        };
+      }));
+      
+      return ordersWithProductDetails;
     } catch (error) {
       console.error('Error retrieving orders by user ID:', error);
       throw error;
@@ -132,9 +157,11 @@ export class OrderRepository {
     };
     items: Array<{
       id: string;
+      name: string;
       price: string;
       quantity: number;
       stock?: number;
+      imageUrl: string;
     }>;
     total: string;
   }) {
