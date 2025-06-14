@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import styled from 'styled-components';
 import { formatPrice } from '../../utils/formatPrice';
 import ProductTag from '../ProductTag';
@@ -42,11 +42,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
     // Obtener la imagen por defecto (si existe) o usar la proporcionada
     const defaultImage = getDefaultProductImage(id);
     const displayImageUrl = defaultImage ? defaultImage.imageUrl : imageUrl;
-    const { addItem, getItem, updateQuantity } = useCart();
+    const { addItem, getItem, updateQuantity, items } = useCart();
     const [quantity, setQuantity] = useState(() => {
       const cartItem = getItem(id);
       return cartItem ? cartItem.quantity : 0;
     });
+
+    
+    // Update quantity when cart changes
+    useEffect(() => {
+      const cartItem = getItem(id);
+      if (cartItem) {
+        setQuantity(cartItem ? cartItem.quantity : 0);
+      }
+      
+    }, [items, updateQuantity]);
     
     const handleQuantityChange = (newQuantity: number) => {
       setQuantity(newQuantity);

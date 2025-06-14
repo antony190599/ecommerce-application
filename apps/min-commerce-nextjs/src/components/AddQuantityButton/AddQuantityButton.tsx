@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddButton, ButtonContainer, ControlButton, QuantityDisplay, QuantitySelectorContainer } from './styled';
+import { se } from 'date-fns/locale';
 
 // Types
 interface AddQuantityButtonProps {
@@ -39,6 +40,10 @@ const AddQuantityButton: React.FC<AddQuantityButtonProps> = ({
 }) => {
   
   const [quantity, setQuantity] = useState(initialQuantity);
+
+  useEffect(() => {
+    setQuantity(initialQuantity);
+  }, [initialQuantity]);
   
   const handleIncrease = () => {
     if (quantity < maxQuantity) {
