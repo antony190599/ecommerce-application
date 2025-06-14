@@ -7,6 +7,7 @@ import Mainlayout from '@/layouts/main';
 import { BrickButton } from 'brick-ui';
 import Link from 'next/link';
 import OrderProductItem from '@/components/OrderProductItem/OrderProductItem';
+import { ShoppingBag as ShoppingBagIcon } from 'lucide-react'; // Importa el icono
 
 // Tipos
 interface OrderItem {
@@ -79,20 +80,45 @@ const OrderList = styled.div`
   gap: 20px;
 `;
 
-const OrderCard = styled.div`
+const PedidoCard = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 `;
 
-const OrderHeader = styled.div`
+const PedidoHeader = styled.div`
   padding: 15px 20px;
-  background-color: ${({ theme }) => theme.colors.primaryLight || 'rgba(74, 105, 189, 0.05)'};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
+`;
+
+const PedidoTitle = styled.div`
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+`;
+
+const PedidoDate = styled.div`
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.textLight};
+`;
+
+const PedidoStatus = styled.span<{ status: string }>`
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  background-color: ${({ status, theme }) => 
+    status === 'completed' ? theme.colors.success || '#4caf50' :
+    status === 'processing' ? theme.colors.warning || '#ff9800' :
+    status === 'cancelled' ? theme.colors.error || '#f44336' :
+    theme.colors.gray200};
+  color: ${({ status }) => 
+    status === 'completed' ? 'white' :
+    status === 'processing' ? 'white' :
+    status === 'cancelled' ? 'white' :
+    'black'};
 `;
 
 const OrderDetails = styled.div`
@@ -119,27 +145,6 @@ const OrderInfoLabel = styled.span`
 
 const OrderInfoValue = styled.span`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-`;
-
-const OrderStatus = styled.span<{ status: string }>`
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  background-color: ${({ status, theme }) => {
-    switch (status) {
-      case 'completed':
-        return theme.colors.success || '#4caf50';
-      case 'processing':
-        return theme.colors.warning || '#ff9800';
-      case 'cancelled':
-        return theme.colors.error || '#f44336';
-      default:
-        return theme.colors.gray200;
-    }
-  }};
-  color: white;
 `;
 
 const OrderItems = styled.div`
@@ -181,6 +186,75 @@ const LoadingContainer = styled.div`
   color: ${({ theme }) => theme.colors.textLight};
 `;
 
+// Nuevo componente BreadcrumbNav
+const BreadcrumbNav = styled.nav`
+  display: flex;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+`;
+
+const BreadcrumbItem = styled(Link)`
+  color: ${({ theme }) => theme.colors.textLight};
+  text-decoration: none;
+  
+  &:not(:last-child):after {
+    content: "/";
+    margin: 0 8px;
+  }
+  
+  &:last-child {
+    color: ${({ theme }) => theme.colors.text};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  }
+  
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+// Nueva estructura para la caja de búsqueda y el botón de continuar comprando
+const ActionsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+`;
+
+const SearchPedidosBox = styled.div`
+  display: flex;
+  
+  input {
+    padding: 8px 12px;
+    border: 1px solid ${({ theme }) => theme.colors.gray200};
+    border-radius: 4px 0 0 4px;
+    width: 300px;
+  }
+`;
+
+const SearchButton = styled.button`
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 8px 15px;
+  cursor: pointer;
+`;
+
+const ContinueShoppingButton = styled.a`
+  display: flex;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  
+  svg {
+    margin-right: 8px;
+  }
+`;
+
 // Formateador de moneda
 const formatCurrency = (value: number | string) => {
   const numValue = typeof value === 'string' ? parseFloat(value) : value;
@@ -192,6 +266,7 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
       primary: string;
+      secondary?: string;
       primaryLight?: string;
       text: string;
       textLight: string;
@@ -216,6 +291,7 @@ const OrdersPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>(''); // Nuevo estado para búsqueda
 
   useEffect(() => {
     async function fetchOrders() {
@@ -244,19 +320,25 @@ const OrdersPage: React.FC = () => {
 
   // Obtener una lista de pedidos filtrados por fecha si se han establecido filtros
   const filteredOrders = orders.filter(order => {
-    if (!startDate && !endDate) return true;
+    // Filtrar por fecha
+    const passesDateFilter = (!startDate && !endDate) ||
+      (startDate && !endDate && new Date(order.date) >= new Date(startDate)) ||
+      (!startDate && endDate && new Date(order.date) <= new Date(endDate)) ||
+      (startDate && endDate && new Date(order.date) >= new Date(startDate) && new Date(order.date) <= new Date(endDate));
+
+    // Si no pasa el filtro de fecha, retornar falso inmediatamente
+    if (!passesDateFilter) return false;
     
-    const orderDate = new Date(order.date);
+    // Si no hay término de búsqueda, retornar verdadero
+    if (!searchTerm) return true;
     
-    if (startDate && !endDate) {
-      return orderDate >= new Date(startDate);
-    }
+    // Buscar en ID de pedido
+    if (order.id.toLowerCase().includes(searchTerm.toLowerCase())) return true;
     
-    if (!startDate && endDate) {
-      return orderDate <= new Date(endDate);
-    }
-    
-    return orderDate >= new Date(startDate) && orderDate <= new Date(endDate);
+    // Buscar en productos
+    return order.items.some(item => 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   });
 
   // Función para traducir el estado del pedido
@@ -320,6 +402,12 @@ const OrdersPage: React.FC = () => {
         <OrdersHeader>
           <OrdersTitle>Mis pedidos</OrdersTitle>
         </OrdersHeader>
+        
+        <BreadcrumbNav>
+          <BreadcrumbItem href="/">Inicio</BreadcrumbItem>
+          <BreadcrumbItem href="/account">Mi cuenta</BreadcrumbItem>
+          <BreadcrumbItem href="#">Mis pedidos</BreadcrumbItem>
+        </BreadcrumbNav>
 
         <FiltersContainer>
           <DateFilter>
@@ -342,6 +430,23 @@ const OrdersPage: React.FC = () => {
           </DateFilter>
         </FiltersContainer>
 
+        <ActionsContainer>
+          <SearchPedidosBox>
+            <input 
+              type="text" 
+              placeholder="Buscar por número de pedido o producto" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <SearchButton>Buscar</SearchButton>
+          </SearchPedidosBox>
+          <Link href="/" passHref>
+            <ContinueShoppingButton>
+              <ShoppingBagIcon size={16} /> Seguir comprando
+            </ContinueShoppingButton>
+          </Link>
+        </ActionsContainer>
+
         {filteredOrders.length === 0 ? (
           <EmptyOrdersMessage>
             <EmptyOrdersTitle>Aún no tienes pedidos</EmptyOrdersTitle>
@@ -351,16 +456,16 @@ const OrdersPage: React.FC = () => {
         ) : (
           <OrderList>
             {filteredOrders.map((order) => (
-              <OrderCard key={order.id}>
-                <OrderHeader>
+              <PedidoCard key={order.id}>
+                <PedidoHeader>
                   <div>
-                    <strong>Pedido #{order.id}</strong>
-                    <span> - {formatDate(order.date)}</span>
+                    <PedidoTitle>Pedido #{order.id}</PedidoTitle>
+                    <PedidoDate>{formatDate(order.date)}</PedidoDate>
                   </div>
-                  <OrderStatus status={order.status || 'processing'}>
+                  <PedidoStatus status={order.status || 'processing'}>
                     {translateStatus(order.status || 'processing')}
-                  </OrderStatus>
-                </OrderHeader>
+                  </PedidoStatus>
+                </PedidoHeader>
                 <OrderDetails>
                   <OrderInfo>
                     <OrderInfoGroup>
@@ -399,7 +504,7 @@ const OrdersPage: React.FC = () => {
                     </OrderItemsList>
                   </OrderItems>
                 </OrderDetails>
-              </OrderCard>
+              </PedidoCard>
             ))}
           </OrderList>
         )}
