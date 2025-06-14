@@ -34,18 +34,18 @@ export const columns: ColumnDef<ProductProps>[] = [
         accessorKey: "name",
         header: "Nombre",
     },
-    {
-        accessorKey: "slug",
-        header: "Slug",
-    },
-    {
-        accessorKey: "unit",
-        header: "Unidad",
-    },
-    {
-        accessorKey: "meta",
-        header: "Meta",
-    },
+    // {
+    //     accessorKey: "slug",
+    //     header: "Slug",
+    // },
+    // {
+    //     accessorKey: "unit",
+    //     header: "Unidad",
+    // },
+    // {
+    //     accessorKey: "meta",
+    //     header: "Meta",
+    // },
     {
         accessorKey: "price",
         header: "Precio",
@@ -54,15 +54,15 @@ export const columns: ColumnDef<ProductProps>[] = [
         accessorKey: "discountPrice",
         header: "Precio con Descuento",
     },
-    {
-        accessorKey: "isOnSale",
-        header: "En Oferta",
-        cell: ({ row }) => (
-        <Badge variant={row.getValue("isOnSale") ? "default" : "outline"}>
-            {row.getValue("isOnSale") ? "Sí" : "No"}
-        </Badge>
-        ),
-    },
+    // {
+    //     accessorKey: "isOnSale",
+    //     header: "En Oferta",
+    //     cell: ({ row }) => (
+    //     <Badge variant={row.getValue("isOnSale") ? "default" : "outline"}>
+    //         {row.getValue("isOnSale") ? "Sí" : "No"}
+    //     </Badge>
+    //     ),
+    // },
     {
         accessorKey: "stock",
         header: "Stock",
@@ -76,9 +76,9 @@ export const columns: ColumnDef<ProductProps>[] = [
         accessorKey: "createdAt",
         header: "Creado el",
     },
-    {
-        accessorKey: "updatedAt",
-        header: "Actualizado el",
-    },
+    // {
+    //     accessorKey: "updatedAt",
+    //     header: "Actualizado el",
+    // },
     
 ]
