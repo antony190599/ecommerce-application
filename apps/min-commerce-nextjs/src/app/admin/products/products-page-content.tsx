@@ -3,33 +3,59 @@
 import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SearchIcon, PlusIcon } from "lucide-react";
+import { SearchIcon, PlusIcon, Loader2 } from "lucide-react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { ProductProps } from "@/lib/types";
 
-interface ProductsPageContentProps {
-  initialProducts: ProductProps[];
+interface PaginationSummary {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
-export default function ProductsPageContent({ initialProducts }: ProductsPageContentProps) {
-  const [searchTerm, setSearchTerm] = useState("");
+interface ProductsPageContentProps {
+  initialProducts: ProductProps[];
+  paginationSummary?: PaginationSummary;
+  isLoading?: boolean;
+  pageIndex?: number;
+  pageSize?: number;
+  searchTerm?: string;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
+  onSearchChange?: (term: string) => void;
+}
 
-  const filteredProducts = useMemo(() => {
-    if (!searchTerm.trim()) {
-      return initialProducts;
-    }
+export default function ProductsPageContent({ 
+  initialProducts,
+  paginationSummary,
+  isLoading = false,
+  pageIndex = 0,
+  pageSize = 10,
+  searchTerm = "",
+  onPageChange,
+  onPageSizeChange,
+  onSearchChange,
+}: ProductsPageContentProps) {
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
 
-    const lowerSearchTerm = searchTerm.toLowerCase().trim();
+  // Handle search with debounce
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setLocalSearchTerm(value);
     
-    return initialProducts.filter((product) => 
-      product.name.toLowerCase().includes(lowerSearchTerm) ||
-      product.category.toLowerCase().includes(lowerSearchTerm) ||
-      product.slug.toLowerCase().includes(lowerSearchTerm)
-    );
-  }, [initialProducts, searchTerm]);
-
-  console.log("Filtered Products:", filteredProducts);
+    // Debounce the search to avoid unnecessary API calls
+    if (onSearchChange) {
+      const timeoutId = setTimeout(() => {
+        onSearchChange(value);
+        // Reset to page 1 when searching
+        if (onPageChange) onPageChange(0);
+      }, 500);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  };
 
   return (
     <>
@@ -53,16 +79,28 @@ export default function ProductsPageContent({ initialProducts }: ProductsPageCon
           <Input
             placeholder="Buscar productos por nombre o categoría..."
             className="pl-8"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={localSearchTerm}
+            onChange={handleSearch}
           />
         </div>
         <Button variant="outline">Filtros</Button>
       </div>
 
-      <div className="rounded-md border">
-        <DataTable columns={columns} data={filteredProducts} />
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      ) : (
+        <DataTable 
+          columns={columns} 
+          data={initialProducts} 
+          pageCount={paginationSummary?.totalPages}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+        />
+      )}
     </>
   );
 }
