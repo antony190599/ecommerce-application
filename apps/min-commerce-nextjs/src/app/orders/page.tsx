@@ -261,28 +261,6 @@ const formatCurrency = (value: number | string) => {
   return `S/ ${numValue.toFixed(2)}`;
 };
 
-// Add type declaration for theme.colors to fix the TypeScript warning
-declare module 'styled-components' {
-  export interface DefaultTheme {
-    colors: {
-      primary: string;
-      secondary?: string;
-      primaryLight?: string;
-      text: string;
-      textLight: string;
-      gray200: string;
-      success?: string;
-      warning?: string;
-      error?: string;
-    };
-    typography: {
-      fontWeight: {
-        medium: number | string;
-        bold: number | string;
-      };
-    };
-  }
-}
 
 // Componente principal
 const OrdersPage: React.FC = () => {

@@ -20,6 +20,7 @@ export interface ThemeType {
       gray500: string;
       gray600: string;
       error: string;
+      warning: string;
       success: string;
       mutedText: string;
       hoverSurface: string;
@@ -103,6 +104,7 @@ export const theme: ThemeType & DefaultTheme  = {
       gray500: "#a6a6a6",
       gray600: "#8c8c8c",
       error: "#e74c3c",
+      warning: "#f39c12",
       success: "#2ecc71",
 
       mutedText: '#666',
