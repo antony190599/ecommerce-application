@@ -8,8 +8,6 @@ import { formatPrice } from '../../utils/formatPrice';
 import { ProductCardProps } from '../ProductCard';
 import AddQuantityButton from '../AddQuantityButton/AddQuantityButton';
 import { useCart } from '@/providers/CartProvider';
-import Image from 'next/image';
-import { getProductImages } from '@/utils/productImageUtils';
 
 // Types
 export interface ProductDetailProps {
@@ -367,7 +365,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   // Simulate we could have multiple images for products
   const [selectedImage, setSelectedImage] = useState(0);
-  const productImagesData = getProductImages(product.id);
   const images = [product.imageUrl]; // Fallback a la imagen principal si no hay imágenes adicionales
   
   // Stock related
