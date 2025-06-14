@@ -106,7 +106,7 @@ function AdminLayout({
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton isActive={isActivePath("/admin/orders")} asChild>
-                    <a href="/admin/orders" as={Link} href="/admin/orders">
+                    <a href="/admin/orders">
                       <ShoppingCartIcon className="mr-2" />
                       <span>Pedidos</span>
                     </a>
