@@ -2,11 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge";
+import { ProductProps } from "@/lib/types";
 
-const getStatusBadge = (status: string, stock: number) => {
-    if (status === "out_of_stock" || stock === 0) {
+const getStatusBadge = (stock: number) => {
+    if (stock === 0) {
       return <Badge variant="destructive">Sin stock</Badge>;
-    } else if (status === "low_stock" || stock < 20) {
+    } else if (stock < 20) {
       return <Badge variant="secondary">Bajo stock</Badge>;
     } else {
       return <Badge variant="outline">En stock</Badge>;
@@ -15,49 +16,69 @@ const getStatusBadge = (status: string, stock: number) => {
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Product = {
-    id: string;
-    name: string;
-    category: string;
-    price: number;
-    stock: number;
-    status: "active" | "low_stock" | "out_of_stock";
-}
 
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<ProductProps>[] = [
     {
-        accessorKey: "id",
-        header: "ID",
-        
+        accessorKey: "imageUrl",
+        header: "Imagen",
+        cell: ({ row }) => (
+        <img
+            src={row.getValue("imageUrl") as string}
+            alt={row.getValue("name") as string}
+            className="w-16 h-16 object-cover rounded"
+        />
+        ),
     },
     {
         accessorKey: "name",
-        header: "Nombre del Producto",
-        
+        header: "Nombre",
     },
     {
-        accessorKey: "category",
-        header: "Categoría",
-        
+        accessorKey: "slug",
+        header: "Slug",
+    },
+    {
+        accessorKey: "unit",
+        header: "Unidad",
+    },
+    {
+        accessorKey: "meta",
+        header: "Meta",
     },
     {
         accessorKey: "price",
         header: "Precio",
-        
+    },
+    {
+        accessorKey: "discountPrice",
+        header: "Precio con Descuento",
+    },
+    {
+        accessorKey: "isOnSale",
+        header: "En Oferta",
+        cell: ({ row }) => (
+        <Badge variant={row.getValue("isOnSale") ? "default" : "outline"}>
+            {row.getValue("isOnSale") ? "Sí" : "No"}
+        </Badge>
+        ),
     },
     {
         accessorKey: "stock",
         header: "Stock",
-        
+        cell: ({ row }) => getStatusBadge(row.getValue("stock")),
     },
     {
-        accessorKey: "status",
-        header: "Estado",
-        cell: ({ row }) => {
-            const status = row.getValue("status") as string;
-            const stock = row.getValue("stock") as number;
-            return getStatusBadge(status, stock);
-        },
+        accessorKey: "rating",
+        header: "Calificación",
     },
+    {
+        accessorKey: "createdAt",
+        header: "Creado el",
+    },
+    {
+        accessorKey: "updatedAt",
+        header: "Actualizado el",
+    },
+    
 ]
