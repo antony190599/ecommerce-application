@@ -118,13 +118,13 @@ const GlobalStyles = createGlobalStyle`
   }
   
   a {
-    color: var(--color-primary);
-    text-decoration: none;
-    transition: color var(--transition-fast);
+    //color: var(--color-primary);
+    //text-decoration: none;
+    //transition: color var(--transition-fast);
   }
   
   a:hover {
-    color: var(--color-secondary);
+    //color: var(--color-secondary);
   }
   
   /* Make images easier to work with */
