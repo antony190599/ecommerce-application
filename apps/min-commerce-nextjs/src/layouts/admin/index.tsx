@@ -20,6 +20,7 @@ import {
     SettingsIcon,
     TagIcon,
     HomeIcon,
+    Link,
   } from "lucide-react";
 
 function AdminLayout({
@@ -82,7 +83,7 @@ function AdminLayout({
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton>
+                  <SidebarMenuButton as={Link} href="/admin/orders">
                     <ShoppingCartIcon className="mr-2" />
                     <span>Pedidos</span>
                   </SidebarMenuButton>

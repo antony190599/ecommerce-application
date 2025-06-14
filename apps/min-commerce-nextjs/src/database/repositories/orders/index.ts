@@ -39,8 +39,20 @@ export class OrderRepository {
         const { order, item } = row;
         
         if (!ordersMap.has(order.id)) {
+          // Añadir la información del cliente con el mapeo correcto de nombres
           ordersMap.set(order.id, {
             ...order,
+            // Agregar el objeto customer con los nombres de campo esperados por el frontend
+            customer: {
+              id: customer.id,
+              nombre: customer.name || order.customerName || '',
+              telefono: customer.phone || order.customerPhone || '',
+              email: customer.email || order.customerEmail || '',
+              direccion: customer.direccion || '',
+              referencia: customer.referencia || '',
+              needInvoice: customer.needInvoice,
+              paymentMethod: customer.paymentMethod
+            },
             items: []
           });
         }
