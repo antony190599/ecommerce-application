@@ -1,4 +1,3 @@
-
 import {
     Sidebar,
     SidebarContent,
@@ -22,12 +21,26 @@ import {
     HomeIcon,
     Link,
   } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  
+  // Function to check if the current path matches the given route
+  const isActivePath = (path: string): boolean => {
+    // Exact match for dashboard
+    if (path === "/admin" && pathname === "/admin") {
+      return true;
+    }
+    // For other routes, check if pathname starts with the path
+    // This ensures subpages like /admin/products/edit are also highlighted
+    return path !== "/admin" && pathname.startsWith(path);
+  };
+
   return (
     <SidebarProvider 
         defaultOpen={true}
@@ -59,33 +72,43 @@ function AdminLayout({
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton isActive={true}>
-                    <HomeIcon className="mr-2" />
-                    <span>Dashboard</span>
+                  <SidebarMenuButton isActive={isActivePath("/admin")} asChild>
+                    <a href="/admin">
+                        <HomeIcon className="mr-2" />
+                        <span>Dashboard</span>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton>
-                    <Package2Icon className="mr-2" />
-                    <span>Productos</span>
+                  <SidebarMenuButton isActive={isActivePath("/admin/products")} asChild>
+                    <a href="/admin/products">
+                      <Package2Icon className="mr-2" />
+                      <span>Productos</span>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton>
-                    <TagIcon className="mr-2" />
-                    <span>Categorías</span>
+                  <SidebarMenuButton isActive={isActivePath("/admin/categories")} asChild>
+                    <a href="/admin/categories">
+                      <TagIcon className="mr-2" />
+                      <span>Categorías</span>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton>
-                    <UsersIcon className="mr-2" />
-                    <span>Clientes</span>
+                  <SidebarMenuButton isActive={isActivePath("/admin/customers")} asChild>
+                    <a href="/admin/customers">
+                      <UsersIcon className="mr-2" />
+                      <span>Clientes</span>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton as={Link} href="/admin/orders">
-                    <ShoppingCartIcon className="mr-2" />
-                    <span>Pedidos</span>
+                  <SidebarMenuButton isActive={isActivePath("/admin/orders")} asChild>
+                    <a href="/admin/orders" as={Link} href="/admin/orders">
+                      <ShoppingCartIcon className="mr-2" />
+                      <span>Pedidos</span>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
@@ -97,9 +120,11 @@ function AdminLayout({
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton>
-                    <SettingsIcon className="mr-2" />
-                    <span>Ajustes</span>
+                  <SidebarMenuButton isActive={isActivePath("/admin/settings")} asChild>
+                    <a href="/admin/settings">
+                      <SettingsIcon className="mr-2" />
+                      <span>Ajustes</span>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
