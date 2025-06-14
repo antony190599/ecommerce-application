@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Mainlayout from '@/layouts/main';
 import { BrickButton } from 'brick-ui';
 import Link from 'next/link';
+import OrderProductItem from '@/components/OrderProductItem/OrderProductItem';
 
 // Tipos
 interface OrderItem {
@@ -153,42 +154,6 @@ const OrderItemsList = styled.div`
   gap: 10px;
 `;
 
-const OrderItemCard = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.gray200};
-  border-radius: 4px;
-  width: calc(50% - 5px);
-  box-sizing: border-box;
-  
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const OrderItemImage = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 4px;
-`;
-
-const OrderItemDetails = styled.div`
-  flex: 1;
-`;
-
-const OrderItemName = styled.div`
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  margin-bottom: 4px;
-`;
-
-const OrderItemMeta = styled.div`
-  font-size: 0.875rem;
-  color: ${({ theme }) => theme.colors.textLight};
-`;
-
 const FiltersContainer = styled.div`
   display: flex;
   gap: 15px;
@@ -221,6 +186,28 @@ const formatCurrency = (value: number | string) => {
   const numValue = typeof value === 'string' ? parseFloat(value) : value;
   return `S/ ${numValue.toFixed(2)}`;
 };
+
+// Add type declaration for theme.colors to fix the TypeScript warning
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    colors: {
+      primary: string;
+      primaryLight?: string;
+      text: string;
+      textLight: string;
+      gray200: string;
+      success?: string;
+      warning?: string;
+      error?: string;
+    };
+    typography: {
+      fontWeight: {
+        medium: number | string;
+        bold: number | string;
+      };
+    };
+  }
+}
 
 // Componente principal
 const OrdersPage: React.FC = () => {
@@ -398,15 +385,16 @@ const OrdersPage: React.FC = () => {
                     <h3>Productos ({order.items.length})</h3>
                     <OrderItemsList>
                       {order.items.map((item) => (
-                        <OrderItemCard key={item.id}>
-                          <OrderItemImage src={item.imageUrl} alt={item.name} />
-                          <OrderItemDetails>
-                            <OrderItemName>{item.name}</OrderItemName>
-                            <OrderItemMeta>
-                              {formatCurrency(item.price)} x {item.quantity}
-                            </OrderItemMeta>
-                          </OrderItemDetails>
-                        </OrderItemCard>
+                        <div key={item.id} style={{ width: 'calc(50% - 5px)' }}>
+                          <OrderProductItem
+                            key={item.id}
+                            productId={item.id}
+                            name={item.name}
+                            price={item.price}
+                            quantity={item.quantity}
+                            imageUrl={item.imageUrl}
+                          />
+                        </div>  
                       ))}
                     </OrderItemsList>
                   </OrderItems>

@@ -368,9 +368,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   // Simulate we could have multiple images for products
   const [selectedImage, setSelectedImage] = useState(0);
   const productImagesData = getProductImages(product.id);
-  const images = productImagesData.length > 0 
-    ? productImagesData.map(img => img.imageUrl)
-    : [product.imageUrl]; // Fallback a la imagen principal si no hay imágenes adicionales
+  const images = [product.imageUrl]; // Fallback a la imagen principal si no hay imágenes adicionales
   
   // Stock related
   const isOutOfStock = product.stock === 0;

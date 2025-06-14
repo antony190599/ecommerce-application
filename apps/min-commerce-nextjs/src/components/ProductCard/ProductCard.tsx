@@ -8,7 +8,6 @@ import ProductTag from '../ProductTag';
 import AddQuantityButton from '../AddQuantityButton';
 import { useCart } from '@/providers/CartProvider';
 import { AddButtonWrapper, Card, FavButton, ImageWrapper, Info, Meta, Name, OriginalPrice, Price, PriceContainer, ProductLink, Rating, RatingContainer, StockInfo, TagsContainer, Unit } from './styled';
-import { getDefaultProductImage } from '@/utils/productImageUtils';
 // Types
 export interface ProductCardProps {
     id: string;
@@ -40,8 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   rating
 }) => {
     // Obtener la imagen por defecto (si existe) o usar la proporcionada
-    const defaultImage = getDefaultProductImage(id);
-    const displayImageUrl = defaultImage ? defaultImage.imageUrl : imageUrl;
+    
     const { addItem, getItem, updateQuantity, items } = useCart();
     const [quantity, setQuantity] = useState(() => {
       const cartItem = getItem(id);
@@ -81,7 +79,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Card data-product-id={id}>
             <ImageWrapper>
                 <ProductLink href={`/product/${slug}`}>
-                  <img src={displayImageUrl} alt={name}/>
+                  <img
+                    src={imageUrl} 
+                    alt={name}
+                    onError={(e) => {
+                      console.log(`Error cargando imagen para ${name}: ${imageUrl}`);
+                      e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='24' fill='%23999'%3EImagen no disponible%3C/text%3E%3C/svg%3E";
+                    }}
+                  />  
                 </ProductLink>
                 
                 <AddButtonWrapper>
