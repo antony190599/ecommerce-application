@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import { useCart } from '@/providers/CartProvider';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { 
@@ -16,233 +14,9 @@ import {
 } from '@/validations/checkoutSchema';
 import { BrickButton } from 'brick-ui';
 import Mainlayout from '@/layouts/main';
-
-const CartContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-`;
-
-const CartHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-`;
-
-const CartTitle = styled.h1`
-  font-size: 2rem;
-  color: ${({ theme }) => theme.colors.text};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  margin: 0;
-`;
-
-// Componentes para resumen del pedido
-const OrderSummary = styled.div`
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  height: fit-content;
-`;
-
-const SummaryTitle = styled.h2`
-  font-size: 1.2rem;
-  margin: 0 0 20px;
-`;
-
-const SummaryRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-`;
-
-const SummaryLabel = styled.span`
-  color: ${({ theme }) => theme.colors.textLight};
-`;
-
-const SummaryValue = styled.span`
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-`;
-
-const SummaryTotal = styled(SummaryRow)`
-  border-top: 1px solid #eee;
-  margin-top: 15px;
-  padding-top: 15px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-`;
-
-const TotalLabel = styled.span`
-  font-size: 1.1rem;
-`;
-
-const TotalValue = styled.span`
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-const EmptyCartMessage = styled.div`
-  text-align: center;
-  padding: 60px 20px;
-`;
-
-const EmptyCartTitle = styled.h2`
-  margin-bottom: 20px;
-`;
-
-const ShopNowButton = styled(Link)`
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  transition: background-color ${({ theme }) => theme.transitions.fast};
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.secondary};
-  }
-`;
-
-// Componentes para el formulario de checkout
-const CheckoutLayout = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  gap: 30px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const CheckoutFormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const FormSection = styled.section`
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-`;
-
-const SectionHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-`;
-
-const SectionTitle = styled.h2`
-  font-size: 1.1rem;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  
-  span {
-    background-color: ${({ theme }) => theme.colors.primaryLight};
-    color: ${({ theme }) => theme.colors.primary};
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 8px;
-    font-size: 0.9rem;
-  }
-`;
-
-const EditButton = styled.button`
-  background: none;
-  border: none;
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: 0.9rem;
-  cursor: pointer;
-  text-decoration: underline;
-  
-  &:hover {
-    color: ${({ theme }) => theme.colors.secondary};
-  }
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 15px;
-`;
-
-const FormLabel = styled.label`
-  display: block;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const FormInput = styled.input
-  .withConfig({ shouldForwardProp: prop => prop !== 'error' })
-  <{ error?: boolean }>`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid ${({ theme, error }) => error ? theme.colors.error : theme.colors.gray300};
-  border-radius: 4px;
-  font-size: 1rem;
-  
-  &:focus {
-    outline: none;
-    border-color: ${({ theme, error }) => error ? theme.colors.error : theme.colors.primary};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.primaryLighter};
-  }
-`;
-
-const FormActions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-`;
-
-const RadioOption = styled.label`
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  cursor: pointer;
-  padding: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.gray300};
-  border-radius: 4px;
-  transition: all ${({ theme }) => theme.transitions.fast};
-  
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.gray100};
-  }
-  
-  input {
-    margin-right: 12px;
-  }
-`;
-
-const PaymentIcon = styled.span`
-  display: inline-flex;
-  align-items: center;
-  margin-left: 8px;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-const CustomerInfo = styled.div`
-  margin-top: 10px;
-`;
-
-const CustomerInfoText = styled.p`
-  margin: 5px 0;
-  color: ${({ theme }) => theme.colors.text};
-`;
-
-const ErrorMessage = styled.p`
-  color: #e53935;
-  font-size: 0.8rem;
-  margin-top: 4px;
-`;
+import { CartContainer, CartHeader, CartTitle, CheckoutFormContainer, CheckoutLayout, CustomerInfo, CustomerInfoText, EditButton, EmptyCartMessage, EmptyCartTitle, ErrorMessage, FormActions, FormGroup, FormInput, FormLabel, FormSection, OrderSummary, PaymentIcon, RadioOption, SectionHeader, SectionTitle, ShopNowButton, SummaryLabel, SummaryRow, SummaryTitle, SummaryTotal, SummaryValue, TotalLabel, TotalValue } from './styled';
+import useSWR from 'swr';
+import { fetcher } from '@/utils/fetcher';
 
 const formatCurrency = (value: number) => {
   return `S/ ${value.toFixed(2)}`;
@@ -251,15 +25,42 @@ const formatCurrency = (value: number) => {
 interface CustomerData {
   paymentMethod: string;
   needInvoice: boolean;
+  email?: string;
+  nombre?: string;
+  telefono?: string;
+  referencia?: string;
+  direccion?: string;
 }
 
 const CheckoutPage: React.FC = () => {
+
+  const { data } = useSWR<{
+    customer: {
+      name: string;
+      email: string;
+      phone: string;
+      needInvoice?: boolean;
+      paymentMethod?: string;
+      direccion?: string;
+      referencia?: string;
+    }
+  }>(
+    `/api/me`,
+    fetcher,
+  );
+
+
   const { items, totalAmount, clearCart } = useCart();
   const [ checkoutLoading, setCheckoutLoading ] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [customerData, setCustomerData] = useState<CustomerData>({
-    needInvoice: false,
-    paymentMethod: 'izipay'
+    needInvoice: data?.customer?.needInvoice || false,
+    paymentMethod: data?.customer?.paymentMethod || 'izipay',
+    referencia: data?.customer?.referencia || '',
+    direccion: data?.customer?.direccion || '',
+    email: data?.customer?.email || '',
+    nombre: data?.customer?.name || '',
+    telefono: data?.customer?.phone || ''
   });
   
   // Estado para controlar qué secciones están completadas y editables
@@ -275,9 +76,15 @@ const CheckoutPage: React.FC = () => {
     handleSubmit: handleSubmitStep1, 
     formState: { errors: errorsStep1 },
     getValues: getValuesStep1,
+    reset: resetStep1,
   } = useForm<CheckoutStep1FormValues>({
     resolver: zodResolver(checkoutStep1FormSchema as any),
-    defaultValues: initialCheckoutStep1FormValues,
+    defaultValues: {
+      ...initialCheckoutStep1FormValues,
+      nombre: data?.customer?.name || '',
+      email: data?.customer?.email,
+      telefono: data?.customer?.phone,
+    },
   });
 
   // Step 2 form
@@ -286,10 +93,30 @@ const CheckoutPage: React.FC = () => {
     handleSubmit: handleSubmitStep2, 
     formState: { errors: errorsStep2 },
     getValues: getValuesStep2,
+    reset: reseStep2,
   } = useForm<CheckoutStep2FormValues>({
     resolver: zodResolver(checkoutStep2FormSchema as any),
-    defaultValues: initialCheckoutStep2FormValues,
+    defaultValues: {
+      ...initialCheckoutStep2FormValues,
+      direccion: data?.customer?.direccion || '',
+      referencia: data?.customer?.referencia || ''
+    },
   });
+
+  useEffect(() => {
+    if (data?.customer) {
+      resetStep1({
+        nombre: data.customer.name,
+        email: data.customer.email,
+        telefono: data.customer.phone,
+      })
+
+      reseStep2({
+        direccion: data.customer.direccion || '',
+        referencia: data.customer.referencia || ''
+      });
+    }
+  }, [data, resetStep1, reseStep2]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmitStep1 = (data: CheckoutStep1FormValues) => {
@@ -448,6 +275,7 @@ const CheckoutPage: React.FC = () => {
                       <FormInput 
                         id="nombre" 
                         error={!!errorsStep1.nombre}
+                        value={getValuesStep1().nombre}
                         {...registerStep1("nombre")} 
                       />
                       {errorsStep1.nombre && (

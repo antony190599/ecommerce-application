@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import GoogleProvider from "next-auth/providers/google";
 import { db } from "@/database/db";
-import { users } from "@/database/schema";
+import { users, customers } from "@/database/schema";
 import { eq } from "drizzle-orm";
 import { v4 as uuidv4 } from 'uuid';
 import { JWT } from "next-auth/jwt";
@@ -63,14 +63,27 @@ export const authOptions = {
     
             if (!existingUser) {
                 // Create a new user in the database
+                const userId = uuidv4();
                 await db.insert(users).values({
-                    id: uuidv4(),
+                    id: userId,
                     email: user.email,
                     isAdmin: false,
                     name: user.name || "",
                     image: user.image || null,
                     provider: "google",
                     providerId: profile?.sub,
+                });
+
+                await db.insert(customers).values({
+                  id: uuidv4(),
+                  userId: userId,
+                  needInvoice: false,
+                  paymentMethod: "",
+                  direccion: null,
+                  referencia: null,
+                  name: user.name || "",
+                  email: user.email,
+                  phone: "",
                 });
             }
         }
@@ -116,8 +129,9 @@ export const authOptions = {
 
           if (!existingUser) {
             // Create new user
+            const userId = uuidv4();
             await db.insert(users).values({
-              id: uuidv4(),
+              id: userId,
               email: user.email,
               isAdmin: false,
               name: user.name || "",
@@ -125,6 +139,21 @@ export const authOptions = {
               provider: "google",
               providerId: profile?.id,
             });
+
+            // Create new customer
+
+            await db.insert(customers).values({
+              id: uuidv4(),
+              userId: userId,
+              needInvoice: false,
+              paymentMethod: "",
+              direccion: null,
+              referencia: null,
+              name: user.name || "",
+              email: user.email,
+              phone: "",
+            });
+
           } else {
             // Update existing user
             await db.update(users)
