@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface SWRError extends Error {
     info: any;
     status: number;

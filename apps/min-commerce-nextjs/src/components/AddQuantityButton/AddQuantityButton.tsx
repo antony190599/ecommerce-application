@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { AddButton, ButtonContainer, ControlButton, QuantityDisplay, QuantitySelectorContainer } from './styled';
-import { se } from 'date-fns/locale';
 
 // Types
 interface AddQuantityButtonProps {

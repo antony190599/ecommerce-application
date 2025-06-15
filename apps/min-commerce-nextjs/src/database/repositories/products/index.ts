@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/database/db";
-import { products, productCategories, categories } from "@/database/schema";
-import { and, count, eq, ilike, sql } from "drizzle-orm";
+import { products, productCategories } from "@/database/schema";
+import { count, eq, ilike } from "drizzle-orm";
 
 
 export class ProductRepository {

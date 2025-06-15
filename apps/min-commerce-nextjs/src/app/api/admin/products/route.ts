@@ -1,5 +1,3 @@
-import { products } from "@/database/schema";
-import { db } from "@/database/db";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
@@ -7,9 +5,7 @@ import { ProductRepository } from "@/database/repositories/products";
 import { getSearchParams } from "@/utils/url";
 
 // GET /api/products
-export async function GET(req: Request, args: {
-    params: Promise<Record<string, string> | undefined>;
-}) {
+export async function GET(req: Request) {
     try {
         // Query all products from the database
         const session = await getServerSession(authOptions);

@@ -10,18 +10,12 @@
     "styled-components": "^6.1.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "brick-theme-ui": "*"
+    "brick-theme-ui": "workspace:*"
   },
-
   "scripts": {
     "build-cjs": "tsc --project tsconfig-build.json --module CommonJS --outDir dist/cjs",
-    "build": "rimraf dist && tsc --project tsconfig-build.json && yarn build-cjs"
+    "build": "rimraf dist && tsc --project tsconfig-build.json && pnpm build-cjs"
   },
-  "engines": {
-      "node": ">=20",
-      "npm": "please-use-yarn",
-      "yarn": "1.X.X"
-    },
   "author": "",
   "license": "ISC",
   "description": ""
