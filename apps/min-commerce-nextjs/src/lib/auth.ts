@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { JWT } from "next-auth/jwt";
 import { Account, Profile, User, type NextAuthOptions } from "next-auth";
 import { AdapterUser } from "next-auth/adapters";
-import NextAuth, { SessionStrategy } from "next-auth";
+import NextAuth, { SessionStrategy, getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
 import { Session } from "next-auth";
 
@@ -173,3 +173,6 @@ export const authOptions = {
     },
   },
 }
+
+// Exportar la función auth para usar en middleware
+export const auth = () => getServerSession(authOptions);
