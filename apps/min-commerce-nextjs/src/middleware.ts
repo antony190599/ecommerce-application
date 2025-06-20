@@ -48,7 +48,7 @@ import AuthMiddleware from "./lib/middleware/auth";
     
     // AUTH MIDDLEWARE
     // validate protected routes
-    if (path.startsWith("/admin") || path === "/profile") {
+    if (path === "/profile") {
         const authResult = AuthMiddleware(req);
         
         // Si hay un problema de autorización pero el usuario está autenticado
