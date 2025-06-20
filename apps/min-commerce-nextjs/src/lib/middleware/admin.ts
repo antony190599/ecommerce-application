@@ -17,3 +17,7 @@ export default async function AdminMiddleware(req: NextRequest) {
     // Continue with the request
     return NextResponse.next();
 };
+
+export const config = {
+  matcher: ["/admin/:path*"], // Match admin paths and profile
+};
