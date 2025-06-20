@@ -35,13 +35,29 @@ import AuthMiddleware from "./lib/middleware/auth";
     // ADMIN MIDDLEWARE
     // validate /admin path
     if (path.startsWith("/admin")) {
-        return AdminMiddleware(req);
+        const adminResult = AdminMiddleware(req);
+        
+        // Si el usuario está autenticado pero no tiene permisos de admin
+        if (adminResult instanceof NextResponse && adminResult.status === 401) {
+            // Redirigir a la página personalizada de no autorizado
+            return NextResponse.redirect(new URL('/unauthorized', req.url));
+        }
+        
+        return adminResult;
     }
     
     // AUTH MIDDLEWARE
     // validate protected routes
     if (path.startsWith("/admin") || path === "/profile") {
-        return AuthMiddleware(req);
+        const authResult = AuthMiddleware(req);
+        
+        // Si hay un problema de autorización pero el usuario está autenticado
+        if (authResult instanceof NextResponse && authResult.status === 401) {
+            // Redirigir a la página personalizada de no autorizado
+            return NextResponse.redirect(new URL('/unauthorized', req.url));
+        }
+        
+        return authResult;
     }
 
     return NextResponse.next();
