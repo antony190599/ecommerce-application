@@ -1,10 +1,10 @@
-import { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { getUserViaToken } from "./utils/get-user-via-token";
 
-export default async function middleware(req: NextRequest) {
-  const session = await auth();
+export default async function AuthMiddleware(req: NextRequest) {
+  const user = await getUserViaToken(req);
   
-  if (!session) {
+  if (!user) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 }

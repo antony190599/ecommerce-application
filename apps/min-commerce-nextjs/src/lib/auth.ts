@@ -173,6 +173,3 @@ export const authOptions = {
     },
   },
 }
-
-// Exportar la función auth para usar en middleware
-export const auth = () => getServerSession(authOptions);
