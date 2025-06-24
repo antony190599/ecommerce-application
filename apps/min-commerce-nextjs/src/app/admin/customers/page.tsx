@@ -1,40 +1,25 @@
 // filepath: c:\Users\jdies\dev\antony190599\ecommerce-application\apps\min-commerce-nextjs\src\app\admin\customers\page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useSWR from "swr";
 import AdminLayout from "@/layouts/admin";
 import { DataTable } from "../products/data-table"; // Reutiliza el componente de tabla
 import { Customer, columns } from "./columns";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from 'lucide-react';
+import { fetcher } from "@/utils/fetcher";
+
 
 export default function CustomersPage() {
-  const [data, setData] = useState<Customer[]>([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    async function fetchCustomers() {
-      try {
-        const response = await fetch("/api/admin/customers");
-        if (!response.ok) {
-          throw new Error("Error fetching customers");
-        }
-        const responseData = await response.json();
-        setData(responseData.data);
-      } catch (error) {
-        console.error("Error loading customers:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchCustomers();
-  }, []);
+  // Use SWR for data fetching
+  const { data, error, isLoading } = useSWR<any>('/api/admin/customers', fetcher);
 
   // Filtrar clientes basados en el término de búsqueda
-  const filteredData = data.filter((customer) => {
+  const filteredData = (data?.data || []).filter((customer: Customer) => {
     return (
       customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -67,9 +52,13 @@ export default function CustomersPage() {
         </div>
       </div>
 
-      {loading ? (
+      {isLoading ? (
         <div className="flex justify-center items-center h-64">
           <p>Cargando clientes...</p>
+        </div>
+      ) : error ? (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-red-500">Error al cargar clientes: {error.message}</p>
         </div>
       ) : (
         <DataTable columns={columns} data={filteredData} />
