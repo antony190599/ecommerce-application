@@ -86,7 +86,7 @@ export default function UnauthorizedPage() {
         <Button onClick={() => router.push("/")}>Volver a Inicio</Button>
         <Button
           variant="outline"
-          onClick={() => signIn("google")}
+          onClick={() => signIn("google", { callbackUrl: "/admin" })}
         >
           Iniciar sesión con otra cuenta
         </Button>
