@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -85,7 +86,7 @@ export default function UnauthorizedPage() {
         <Button onClick={() => router.push("/")}>Volver a Inicio</Button>
         <Button
           variant="outline"
-          onClick={() => router.push("/auth/login")}
+          onClick={() => signIn("google", { callbackUrl: "/admin" })}
         >
           Iniciar sesión con otra cuenta
         </Button>

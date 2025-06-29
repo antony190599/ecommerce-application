@@ -9,8 +9,8 @@ export default async function AdminMiddleware(req: NextRequest) {
 
     console.log("AdminMiddleware - User:", user);
 
-    if (!user.isAdmin) {
-        // If the user is not an admin, redirect to unauthorized page
+    if (!user?.isAdmin) {
+        // If the user is not an admin, redirect to unauthorized page, also add query string to redirect to the correct page
         return NextResponse.redirect(new URL('/unauthorized', req.url));
     }
     
