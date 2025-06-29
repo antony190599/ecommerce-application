@@ -3,7 +3,7 @@ import { signIn, signOut, useSession } from "next-auth/react"
 import styled from 'styled-components';
 import Link from 'next/link';
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 // Estilos para que coincida con tu diseño
 const AuthContainer = styled.div`
@@ -122,20 +122,23 @@ export default function AuthButton() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   const toggleAdminView = () => {
-    const currentPath = window.location.pathname;
-    if (currentPath.startsWith('/admin')) {
+    
+    if (pathname.startsWith('/admin')) {
       router.push('/');
     } else {
       router.push('/admin');
     }
     setIsOpen(false);
   };
+
+  const isAdminView = pathname.startsWith('/admin');
 
   console.log("Estado de admin:", session?.user?.isAdmin);
 
@@ -156,16 +159,16 @@ export default function AuthButton() {
           {session.user?.isAdmin && (
             <AdminButton onClick={toggleAdminView}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                {window.location.pathname.startsWith('/admin') ? (
+                {isAdminView ? (
                   // Icono de tienda si está en vista de admin
-                  <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12zm-7-8c-1.66 0-3-1.34-3-3H7c0 2.76 2.24 5 5 5s5-2.24 5-5h-2c0 1.66-1.34 3-3 3z" />
+                  <path d="M21.9 8.89l-1.05-4.37c-.22-.9-1-1.52-1.91-1.52H5.05c-.9 0-1.69.63-1.9 1.52L2.1 8.89c-.24.99.38 1.96 1.35 2.23.33.09.68.18.96.18h.1C5.32 12.58 6.87 14 9 14c2.12 0 3.68-1.41 4.48-2.69h.02c.8 1.28 2.36 2.69 4.48 2.69 2.13 0 3.68-1.41 4.48-2.69h.1c.28 0 .63-.09.96-.18.98-.27 1.6-1.24 1.36-2.24zM7.5 14c-.83 0-1.5-.67-1.5-1.5S6.67 11 7.5 11s1.5.67 1.5 1.5S8.33 14 7.5 14zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
                 ) : (
                   // Icono de dashboard si está en vista de tienda
                   <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
                 )}
               </svg>
               <span>
-                {window.location.pathname.startsWith('/admin') ? 'Ir a Tienda' : 'Ir a Admin'}
+                {isAdminView ? 'Ir a Tienda' : 'Ir a Admin'}
               </span>  
             </AdminButton>
           )}
