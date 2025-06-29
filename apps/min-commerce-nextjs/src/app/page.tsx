@@ -6,8 +6,22 @@ import { products } from '@/data/products'
 import Navbar from '@/components/Navbar'
 import ProductSlider from '@/components/ProductSlider/ProductSlider'
 import Mainlayout from '@/layouts/main';
+import { useSession
+ } from 'next-auth/react';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 export default function Home() {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    // If the user is not authenticated, redirect to the login page
+    if (session?.user?.isAdmin) {
+      router.push('/admin');
+    }
+  }, [session, router]);
   // Get featured products (those that are on sale)
   const featuredProducts = products.filter(product => Boolean(product.isOnSale));
   
