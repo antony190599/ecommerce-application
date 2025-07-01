@@ -54,18 +54,6 @@ export const columns: ColumnDef<ProductProps>[] = [
           )
         }
     },
-    // {
-    //     accessorKey: "slug",
-    //     header: "Slug",
-    // },
-    // {
-    //     accessorKey: "unit",
-    //     header: "Unidad",
-    // },
-    // {
-    //     accessorKey: "meta",
-    //     header: "Meta",
-    // },
     {
         accessorKey: "price",
         header: "Precio",
@@ -74,23 +62,6 @@ export const columns: ColumnDef<ProductProps>[] = [
           return <span>${price.toFixed(2)}</span>;
         }
     },
-    // {
-    //     accessorKey: "discountPrice",
-    //     header: "Precio c/ desc",
-    //     cell: ({ row }) => {
-    //       const price = parseFloat(row.getValue("discountPrice"));
-    //       return price > 0 ? <span>${price.toFixed(2)}</span> : <span>-</span>;
-    //     }
-    // },
-    // {
-    //     accessorKey: "isOnSale",
-    //     header: "En Oferta",
-    //     cell: ({ row }) => (
-    //     <Badge variant={row.getValue("isOnSale") ? "default" : "outline"}>
-    //         {row.getValue("isOnSale") ? "Sí" : "No"}
-    //     </Badge>
-    //     ),
-    // },
     {
         accessorKey: "stock",
         header: "Stock",

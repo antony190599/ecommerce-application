@@ -26,3 +26,20 @@ export interface ProductProps {
     updatedAt: string;
     category?: string; // Optional, if you want to include category in the table
 }
+
+
+export interface OrdersProps {
+    id: string;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+    customerId: string;
+    needInvoice: boolean;
+    paymentMethod: string;
+    direccion: string;
+    referencia: string;
+    total: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+}

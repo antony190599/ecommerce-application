@@ -46,6 +46,14 @@ export const columns: ColumnDef<Customer>[] = [
     header: "Email",
   },
   {
+    accessorKey: "isAdmin",
+    header: "Es admin",
+    cell: ({ row }) => {
+      const isAdmin = row.getValue("isAdmin") as boolean;
+      return <Badge variant={isAdmin ? "default" : "outline"}>{isAdmin ? "Sí" : "No"}</Badge>;
+    },
+  },
+  {
     accessorKey: "phone",
     header: "Teléfono",
   },

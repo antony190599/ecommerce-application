@@ -29,6 +29,7 @@ export class CustomersRepository {
           name: customers.name,
           email: customers.email,
           phone: customers.phone,
+          isAdmin: users.isAdmin,
           direccion: customers.direccion,
           referencia: customers.referencia,
           needInvoice: customers.needInvoice,

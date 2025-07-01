@@ -1,10 +1,47 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { eq, and } from 'drizzle-orm';
+import { eq, and, count, ilike, desc } from 'drizzle-orm';
 import { db } from '../../db';
 import { orders, orderItems, products, users, customers } from '../../schema';
 import { v4 as uuidv4 } from 'uuid';
 
 export class OrderRepository {
+
+  /**
+   * Retrieves all orders
+   * @returns Array of orders
+   */
+  static async findAllPaginated(
+    page: number = 1,
+    limit: number = 10,
+    searchTerm?: string,
+  ) {
+    const offset = (page - 1) * limit;
+
+    let query = db.select().from(orders);
+    let countQuery = db.select({ count: count() }).from(orders);
+
+    if (searchTerm) {
+      const searchFilter = ilike(orders.customerName, `%${searchTerm}%`);
+      query = query.where(searchFilter) as any;
+      countQuery = countQuery.where(searchFilter) as any;
+    }
+
+    const finalQuery = query
+      .orderBy(desc(orders.createdAt))
+      .limit(limit)
+      .offset(offset);
+
+    const [ordersArray, total] = await Promise.all([
+      finalQuery as any,
+      countQuery as any
+    ]);
+
+    return {
+      ordersArray,
+      total
+    };
+  }
+
   /**
    * Retrieves all orders associated with a specific user ID
    * @param userId - The UUID of the user
